@@ -22,8 +22,9 @@ port.on('error', (err) => {
     console.log('Error: ', err.message)
 })
 
-export const encender = () => {
-    port.write("65")
+export const encender = ({ secs }) => {
+    // port.write(`A-${secs}`)
+    port.write("A-" + secs)
 }
 
 export const apagar = () => {

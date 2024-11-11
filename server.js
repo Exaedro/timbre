@@ -4,7 +4,9 @@ import { encender, apagar } from './index.js'
 const app = express()
 
 app.get('/timbre/encender', (req, res) => {
-    encender()
+    const { secs } = req.query
+
+    encender({ secs })
     res.send('timbre encendido')
 })
 

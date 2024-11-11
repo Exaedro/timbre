@@ -1,27 +1,28 @@
 #include <Arduino.h>
+#include <stdlib.h>
+#include <string.h>
 
-int dato;
+String dato;
+String tipo;
+String segundos;
 
-// 65 = A
-// 66 = B
-
-int main() {
-  sei();
-  init();
-
+void setup() {
+  pinMode(2, OUTPUT);
   Serial.begin(9600);
+}
 
-  DDRD |= 0b00000100;
+void loop() { 
+  while(Serial.available() > 0) {
+    dato = Serial.readString();
 
-  while(1){
-    while(Serial.available() > 0) {
-      if(dato == 65) {
-        PORTD |= 0b00000100;
-      }
+    tipo = dato.charAt(0);
+    segundos = dato.charAt(2);
+    int sec = segundos.toInt();
 
-      if(dato == 66) {
-        PORTD |= ~0b00000100;
-      }
+    if(tipo == "A") {
+      digitalWrite(2, HIGH);
+      _delay_ms(sec);
+      digitalWrite(2, LOW);
     }
   }
 }
