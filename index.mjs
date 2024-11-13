@@ -1,12 +1,13 @@
 import chalk from "chalk"
 import { SerialPort, ReadlineParser } from "serialport"
-const serverPort = 3000
 
 import './api/index.mjs'
 import './web/main.js'
 
+const PUERTO_USB = 'com3'
+
 const port = new SerialPort({
-    path: 'com3',
+    path: PUERTO_USB,
     baudRate: 9600,
 }).setEncoding('utf-8')
 
@@ -24,9 +25,13 @@ port.on('open', () => {
 port.on('error', (err) => {
     console.log('---------------------')
     
-
     if(err.message.includes('File not found')) {
         console.log(chalk.redBright('ADVERTENCIA: EL ARDUINO ESTA DESCONECTADO O EL PUERTO ES INCORRECTO'))
+        console.log(chalk.blueBright('PUERTO ACTUAL: ') + PUERTO_USB)
+    }
+
+    if(err.message.includes('Access denied')) {
+        console.log(chalk.redBright('ADVERTENCIA: EL PUERTO ' + PUERTO_USB + ' YA ESTA SIENDO UTILIZADO. ARDUINO SIN FUNCIONAR.'))
     }
 
     else {
@@ -35,10 +40,5 @@ port.on('error', (err) => {
 })
 
 export const encender = ({ secs }) => {
-    // port.write(`A-${secs}`)
-    port.write("A-" + secs)
-}
-
-export const apagar = () => {
-    port.write("APAGAR")
+    port.write(secs)
 }

@@ -8,10 +8,7 @@
 // IPAddress ip(192,168,1,177); //Asignamos  la IP al Arduino
 // EthernetServer server(80);
 
-String dato;
-String tipo;
-String segundos;
-
+int segundos;
 int LED_VERDE = 5;
 int LED_ROJO = 7;
 
@@ -22,8 +19,8 @@ void setup() {
   // Ethernet.begin(mac, ip);
   // server.begin();
 
-  pinMode(5, OUTPUT);
-  pinMode(7, OUTPUT);
+  pinMode(LED_VERDE, OUTPUT);
+  pinMode(LED_ROJO, OUTPUT);
 }
 
 void loop() { 
@@ -33,15 +30,9 @@ void loop() {
   while(Serial.available() > 0) {        
     digitalWrite(LED_ROJO, LOW);
 
-    dato = Serial.readString();
+    segundos = Serial.readString().toInt();
 
-    tipo = dato.charAt(0);
-    segundos = dato.charAt(2);
-    int segundosEntero = segundos.toInt();
-
-    if(dato == "A") {
-      encenderTimbre(segundosEntero);
-    }
+    encenderTimbre(segundos);
   }
 }
 
