@@ -15,6 +15,8 @@ String segundos;
 int LED_VERDE = 5;
 int LED_ROJO = 7;
 
+void encenderTimbre(int secs);
+
 void setup() {
   Serial.begin(9600);
   // Ethernet.begin(mac, ip);
@@ -29,21 +31,22 @@ void loop() {
   digitalWrite(LED_ROJO, HIGH);
 
   while(Serial.available() > 0) {        
+    digitalWrite(LED_ROJO, LOW);
+
     dato = Serial.readString();
 
     tipo = dato.charAt(0);
     segundos = dato.charAt(2);
+    int segundosEntero = segundos.toInt();
 
-    digitalWrite(LED_ROJO, LOW);
-    digitalWrite(LED_VERDE, HIGH);
-
-    if(tipo == "A") {
-      digitalWrite(2, HIGH);
-      _delay_ms(1000);
-      digitalWrite(2, LOW);
-
-      // Apagar led
-      digitalWrite(LED_VERDE, LOW);
+    if(dato == "A") {
+      encenderTimbre(segundosEntero);
     }
   }
 }
+
+void encenderTimbre(int secs) {
+  digitalWrite(LED_VERDE, HIGH);
+  delay(secs * 1000);
+  digitalWrite(LED_VERDE, LOW);
+} 

@@ -1,3 +1,4 @@
+import chalk from "chalk"
 import { SerialPort, ReadlineParser } from "serialport"
 const serverPort = 3000
 
@@ -16,16 +17,26 @@ port.on('data', (data) => {
 })
 
 port.on('open', () => {
-    console.log('---------------------\nARDUINO FUNCIONANDO')
+    console.log('---------------------')
+    console.log(chalk.greenBright('ARDUINO FUNCIONANDO'))
 })
 
 port.on('error', (err) => {
-    console.log('Error: ', err.message)
+    console.log('---------------------')
+    
+
+    if(err.message.includes('File not found')) {
+        console.log(chalk.redBright('ADVERTENCIA: EL ARDUINO ESTA DESCONECTADO O EL PUERTO ES INCORRECTO'))
+    }
+
+    else {
+        console.log('ERROR DESCONOCIDO: ' + err.message)
+    }
 })
 
 export const encender = ({ secs }) => {
     // port.write(`A-${secs}`)
-    port.write("ENCENDER-" + secs)
+    port.write("A-" + secs)
 }
 
 export const apagar = () => {
