@@ -1,7 +1,8 @@
 import { SerialPort, ReadlineParser } from "serialport"
 const serverPort = 3000
 
-import './server.js'
+import './api/index.mjs'
+import './web/main.js'
 
 const port = new SerialPort({
     path: 'com3',
@@ -15,7 +16,7 @@ port.on('data', (data) => {
 })
 
 port.on('open', () => {
-    console.log('Puerto del arduino abierto')
+    console.log('---------------------\nARDUINO FUNCIONANDO')
 })
 
 port.on('error', (err) => {
@@ -24,9 +25,9 @@ port.on('error', (err) => {
 
 export const encender = ({ secs }) => {
     // port.write(`A-${secs}`)
-    port.write("A-" + secs)
+    port.write("ENCENDER-" + secs)
 }
 
 export const apagar = () => {
-    port.write("66")
+    port.write("APAGAR")
 }

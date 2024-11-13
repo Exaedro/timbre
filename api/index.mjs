@@ -1,5 +1,5 @@
 import express from 'express'
-import { encender, apagar } from './index.js'
+import { encender, apagar } from '../index.mjs'
 
 const app = express()
 
@@ -16,5 +16,5 @@ app.get('/timbre/apagar', (req, res) => {
 })
 
 app.listen(3000, () => {
-    console.log('Servidor en funcionamiento|')
+    console.log('API: localhost:3000')
 })
