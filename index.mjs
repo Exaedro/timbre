@@ -28,17 +28,21 @@ port.on('error', (err) => {
     if(err.message.includes('File not found')) {
         console.log(chalk.redBright('ADVERTENCIA: EL ARDUINO ESTA DESCONECTADO O EL PUERTO ES INCORRECTO'))
         console.log(chalk.blueBright('PUERTO ACTUAL: ') + PUERTO_USB)
+        return
     }
 
     if(err.message.includes('Access denied')) {
         console.log(chalk.redBright('ADVERTENCIA: EL PUERTO ' + PUERTO_USB + ' YA ESTA SIENDO UTILIZADO. ARDUINO SIN FUNCIONAR.'))
+        return
     }
 
-    else {
-        console.log('ERROR DESCONOCIDO: ' + err.message)
-    }
+    console.log('ERROR DESCONOCIDO: ' + err.message)
 })
 
 export const encender = ({ secs }) => {
-    port.write(secs)
+    try {
+        port.write(secs)
+    } catch(e) {
+        console.error(e)
+    }
 }

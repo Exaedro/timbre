@@ -26,7 +26,7 @@ app.listen(4000, () => {
 module.exports = app
 
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('timbre')
 })
 
 app.get('/index', (req, res) => {
