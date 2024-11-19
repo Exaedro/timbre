@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calendario</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
+
 <body>
-    <header></header>
-    <h1>Hola mundo</h1>
+    <main>
+        <%- include('menu.ejs') %>
+            <div id="cont_main">
+                <div id="panel_options">
+                    <h1>Bienvenido al sistema de automatización del timbre</h1>
+                </div>
+                <div id="cont_calendario">
+                    <div class="calendario">
+                        <div class="calendario-header">
+                            <button id="prevMonth"><i class="fa fa-chevron-left"></i></button>
+                            <h2 id="monthYear"></h2>
+                            <button id="nextMonth"><i class="fa fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendario-body">
+                            <div class="calendario-dias">
+                                <span>D</span><span>L</span><span>M</span><span>X</span>
+                                <span>J</span><span>V</span><span>S</span>
+                            </div>
+                            <div class="calendario-fechas" id="calendarioFechas"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+    <script src="js/calendario.js"></script>
 </body>
+
 </html>
