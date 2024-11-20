@@ -95,12 +95,23 @@ body main #cont_main #cont_calendario {
   width: auto;
   height: auto;
   margin-top: 20px;
-  padding-left: 5%;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+}
+body main #cont_main #cont_calendario .cont_year {
+  padding-left: 5%;
+  width: 100%;
+  border-bottom: 1px solid rgba(161, 161, 161, 0.171);
+}
+body main #cont_main #cont_calendario .cont_year #year_text {
+  padding-left: 10px;
+  font-size: 3em;
+  color: blue;
 }
 body main #cont_main #cont_calendario .calendario-body {
+  padding-left: 5%;
   width: 80%;
   height: 100%;
   display: grid;
@@ -118,6 +129,22 @@ body main #cont_main #cont_calendario .calendario-body .div_mes {
   height: auto;
   width: auto;
 }
+body main #cont_main #cont_calendario .calendario-body .div_mes .header_dias {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1px;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .header_dias span {
+  background-color: red;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 52.5px;
+  height: 50px;
+}
 body main #cont_main #cont_calendario .calendario-body .div_mes .text_mes {
   font-size: 1.8em;
   font-weight: bold;
@@ -134,9 +161,19 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias {
   grid-template-rows: repeat(6, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  color: black;
+  text-decoration: none;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_vacio {
+  width: 40px;
+  height: 40px;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes {
+  color: black;
+  text-decoration: none;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy {
-  color: white;
+  color: white !important;
   background-color: blue;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy:hover {
@@ -155,4 +192,11 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes:hover {
   background-color: rgba(201, 201, 201, 0.397);
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes a {
+  text-decoration: none;
+  color: black;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes a:hover {
+  color: white;
 }/*# sourceMappingURL=estilo.css.map */

@@ -66,5 +66,12 @@ app.get('/iniciar_sesion', async (req, res) => {
 app.get('/index', (req, res) => {
     res.render('index')
 })
+app.get('/calendar_dia', (req, res) => {
+   
+    const dia = req.query.dia; 
+    const mes = req.query.mes;
+
+    res.render('calendar_dia', { dia, mes });
+});
 
 app.use(express.static(path.join(__dirname, 'public')))

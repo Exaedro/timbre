@@ -7,7 +7,6 @@
 
 html {
     height: auto;
-
 }
 
 body {
@@ -15,7 +14,6 @@ body {
 
     main {
         display: flex;
-
         height: auto;
 
         #menu_lateral {
@@ -32,7 +30,6 @@ body {
             #cont_us {
                 width: 80%;
                 height: auto;
-
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -97,7 +94,6 @@ body {
             display: flex;
             flex-direction: column;
 
-
             #panel_options {
                 width: 100%;
                 height: auto;
@@ -106,17 +102,28 @@ body {
             }
 
             #cont_calendario {
-
                 width: auto;
                 height: auto;
                 margin-top: 20px;
-                padding-left: 5%;
                 display: flex;
                 justify-content: flex-start;
-                align-items: center;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .cont_year {
+                    padding-left: 5%;
+                    width: 100%;
+                    border-bottom: 1px solid rgba(161, 161, 161, 0.171);
+
+                    #year_text {
+                        padding-left: 10px;
+                        font-size: 3em;
+                        color: blue;
+                    }
+                }
 
                 .calendario-body {
-
+                    padding-left: 5%;
                     width: 80%;
                     height: 100%;
                     display: grid;
@@ -130,10 +137,28 @@ body {
                         justify-content: flex-start;
                         align-items: flex-start;
                         flex-direction: column;
-
                         gap: 10px;
                         height: auto;
                         width: auto;
+
+                        .header_dias {
+                            width: 100%;
+                            
+                           
+                            display: flex;
+                            justify-content:flex-start;
+                            align-items: center;
+                            gap: 1px    ;                            
+                            span {
+                                background-color: red;
+                                padding: 10px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                width: 52.5px;
+                                height: 50px;
+                            }
+                        }
 
                         .text_mes {
                             font-size: 1.8em;
@@ -153,11 +178,19 @@ body {
                             grid-template-rows: repeat(6, 1fr);
                             grid-column-gap: 0px;
                             grid-row-gap: 0px;
+                            color: black;
+                            text-decoration: none;
+                            .dia_vacio{
+                                width: 40px;
+                                height: 40px;
+                            }
+                            .dia_mes {
+                                color: black;
+                                text-decoration: none;
+                            }
 
                             .hoy {
-
-
-                                color: white;
+                                color: white !important;
                                 background-color: blue;
 
                                 &:hover {
@@ -179,10 +212,18 @@ body {
                                 &:hover {
                                     background-color: rgba(201, 201, 201, 0.397);
                                 }
+
+                                a {
+                                    text-decoration: none;
+                                    color: black;
+
+                                    &:hover {
+                                        color: white;
+                                    }
+                                }
                             }
                         }
                     }
-
                 }
             }
         }
