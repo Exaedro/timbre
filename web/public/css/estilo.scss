@@ -5,14 +5,23 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+html {
+    height: auto;
+
+}
+
 body {
+    height: auto;
+
     main {
         display: flex;
+
+        height: auto;
 
         #menu_lateral {
             height: auto;
             min-height: 100vh;
-            width: 15%;
+            width: 20%;
             background-color: rgb(223, 223, 223);
             display: flex;
             justify-content: flex-start;
@@ -44,54 +53,50 @@ body {
 
             #nav {
                 display: flex;
+                justify-content: center;
+                align-items: center;
                 flex-direction: column;
                 padding-top: 40px;
+                gap: 40px;
                 height: auto;
                 width: 100%;
 
                 .cont_item {
-                    width: 100%;
+                    width: 80%;
                     display: flex;
                     justify-content: center;
                     gap: 10px;
                     align-items: center;
-                    height: 8vh;
+                    height: 6vh;
+                    background-color: #007bff;
+                    border-radius: 20px;
                     transition: all 0.2s ease-in-out;
                     cursor: pointer;
 
                     .icon {
-                        color: rgb(78, 78, 78);
+                        color: rgb(255, 255, 255);
                         font-size: 1.4em;
                     }
 
                     .text {
                         font-weight: bold;
-                        color: rgb(78, 78, 78);
+                        color: rgb(255, 255, 255);
                         font-size: 1.4em;
                     }
 
                     &:hover {
-                        border-left: 10px solid rgba(0, 0, 255, 0.589);
-                        background-color: rgba(105, 105, 105, 0.253);
-
-                        .icon {
-                            color: rgba(0, 0, 255, 0.589);
-                        }
-
-                        .text {
-                            color: black;
-                        }
+                        background-color: #0d6fd8;
                     }
                 }
             }
         }
 
         #cont_main {
-            height: 100vh;
+            height: auto;
             width: 100vw;
             display: flex;
             flex-direction: column;
-           
+
 
             #panel_options {
                 width: 100%;
@@ -101,70 +106,83 @@ body {
             }
 
             #cont_calendario {
-              
-                width: 100%;
+
+                width: auto;
+                height: auto;
                 margin-top: 20px;
                 padding-left: 5%;
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
 
-                .calendario {
-                    background: #fff;
-                    border: 1px solid #ddd;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    overflow: hidden;
+                .calendario-body {
 
-                    .calendario-header {
+                    width: 80%;
+                    height: 100%;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    grid-template-rows: repeat(4, 1fr);
+                    grid-column-gap: 20px;
+                    grid-row-gap: 60px;
+
+                    .div_mes {
                         display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 10px 15px;
-                        background: #007bff;
-                        color: white;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        flex-direction: column;
 
-                        button {
-                            background: none;
-                            border: none;
-                            color: white;
-                            font-size: 1.2rem;
-                            cursor: pointer;
-                        }
-                    }
+                        gap: 10px;
+                        height: auto;
+                        width: auto;
 
-                    .calendario-body {
-
-                        .calendario-dias,
-                        .calendario-fechas {
-                            display: grid;
-                            grid-template-columns: repeat(7, 1fr);
-                            text-align: center;
-                        }
-
-                        .calendario-dias span {
+                        .text_mes {
+                            font-size: 1.8em;
                             font-weight: bold;
-                            padding: 10px 0;
-                        }
+                            padding-left: 3%;
 
-                        .calendario-fechas div {
-                            padding: 10px;
-                            margin: 5px;
-                            border-radius: 50%;
-                            cursor: pointer;
-                            transition: background 0.3s;
-
-                            &:hover {
-                                background: #f1f1f1;
+                            &.mes_hoy {
+                                color: blue;
                             }
                         }
 
-                        .calendario-fechas .hoy {
-                            background: #007bff;
-                            color: white;
-                            font-weight: bold;
+                        .cont_dias {
+                            height: 100%;
+                            width: 100%;
+                            display: grid;
+                            grid-template-columns: repeat(7, 1fr);
+                            grid-template-rows: repeat(6, 1fr);
+                            grid-column-gap: 0px;
+                            grid-row-gap: 0px;
+
+                            .hoy {
+
+
+                                color: white;
+                                background-color: blue;
+
+                                &:hover {
+                                    background-color: rgb(14, 14, 219) !important;
+                                }
+                            }
+
+                            .dia_mes {
+                                width: 40px;
+                                height: 40px;
+                                border-radius: 50%;
+                                padding: 10px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                cursor: pointer;
+                                transition: all .1s ease-in-out;
+
+                                &:hover {
+                                    background-color: rgba(201, 201, 201, 0.397);
+                                }
+                            }
                         }
                     }
+
                 }
             }
         }
