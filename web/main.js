@@ -37,7 +37,7 @@ app.get('/login', (req, res) => {
     }
 })
 app.get('/iniciar_sesion', async (req, res) => {
-    
+
     // try {
     //     const { user_name, password } = req.query;
 
@@ -67,11 +67,13 @@ app.get('/index', (req, res) => {
     res.render('index')
 })
 app.get('/calendar_dia', (req, res) => {
-   
-    const dia = req.query.dia; 
-    const mes = req.query.mes;
 
-    res.render('calendar_dia', { dia, mes });
+    const dia = req.query.dia;
+    const mes = req.query.mes;
+    const nombre_dia = req.query.nombre_dia;
+    const año = req.query.año;
+
+    res.render('calendar_dia', { dia, mes, nombre_dia, año });
 });
 
 app.use(express.static(path.join(__dirname, 'public')))

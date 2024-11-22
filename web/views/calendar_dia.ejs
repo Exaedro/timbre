@@ -11,14 +11,63 @@
 
 <body>
     <main>
-        <%- include('menu.ejs') %>
-            <div id="cont_main">
-              
-              
-        
-                </div>
+        <aside id="menu_lateral"> <%- include('menu.ejs') %></aside>
+        <div id="cont_main">
+            <div class="cont_header">
+
+                <% const meses=["Enero", "Febrero" , "Marzo" , "Abril" , "Mayo" , "Junio" , "Julio" , "Agosto"
+                    , "Septiembre" , "Octubre" , "Noviembre" , "Diciembre" ];%>
+                    <% const diasSemana=["Dom", "Lun" , "Mar" , "Mie" , "Jue" , "Vie" , "Sab" ];%>
+                        <div class="cont_dia">
+                            <span class="nombre_dia"> <%-diasSemana[nombre_dia]%> </span>
+                            <span class="dia">
+                                <%-dia%>
+                            </span>
+                        </div>
+
+                        <span><%-meses[mes]%></span>
+                        <span> <%-año%></span>
+
             </div>
+            <section id="calendar_dia">
+                <% for (let i=0; i < 24; i++) { const hour=i===0 ? "12 AM" : i < 12 ? i + " AM" : (i===12 ? "12 PM" : (i
+                    - 12) + " PM" ); %>
+                    <div class="horario" data-hora="<%= hour %>">
+                        <h4 class="hour-item">
+                            <%= hour %>
+                        </h4>
+                    </div>
+                    <% } %>
+            </section>
+        </div>
     </main>
+    <form action="" id="form_enviar_horario">
+        <h4>Agregar horario</h4>
+        <div class="cont_input">
+
+            <input type="text" id="input_name_horario" name="input_name_horario" placeholder=" Nombre del horario"
+                required>
+        </div>
+        <div class="cont_input">
+
+            <input type="date" id="input_fecha" name="input_fecha" placeholder="Nombre del horario" required>
+        </div>
+        <div class="cont_input">
+
+            <input type="time" id="activity_time" name="activity_time" placeholder="hoararo" value="20:00" required>
+
+        </div>
+        <div class="cont_input">
+
+            <input type="number" id="input_duracion" name="input_duracion" placeholder="Duracion del sonido" min="1"
+                required>
+        </div>
+        <div class="cont_botones">
+            <button type="submit" id="enviar">Guardar</button>
+            <button type="button" id="close_form">Cancelar</button>
+        </div>
+    </form>
+    <script src="js/calendario_dia.js"></script>
 </body>
 
 </html>

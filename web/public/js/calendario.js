@@ -2,7 +2,7 @@ const year_text = document.getElementById('year_text');
 const calendario_body = document.querySelector(".calendario-body");
 let currentDate = new Date();
 
-const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const diasSemana = ["D", "L", "M", "X", "J", "V", "S"];
 
 function renderCalendar() {
@@ -15,11 +15,11 @@ function renderCalendar() {
         text_mes.classList.add("text_mes");
         div_mes.classList.add("div_mes");
 
-        // Contenedor para los días de la semana
+      
         const header_dias = document.createElement("div");
         header_dias.classList.add("header_dias");
 
-        // Agregar los días de la semana al encabezado
+      
         diasSemana.forEach((dia) => {
             const diaSemana = document.createElement("span");
             diaSemana.textContent = dia;
@@ -27,7 +27,6 @@ function renderCalendar() {
             header_dias.appendChild(diaSemana);
         });
 
-        // Contenedor para los días del mes
         const dias = document.createElement("div");
         dias.classList.add("cont_dias");
 
@@ -35,7 +34,7 @@ function renderCalendar() {
         const firstDay = new Date(year, index, 1).getDay();
         const lastDate = new Date(year, index + 1, 0).getDate();
 
-        // Agregar espacios vacíos para alinear los días con el primer día de la semana
+        // Agregar espacios vacíos 
         for (let empty = 0; empty < firstDay; empty++) {
             const emptyDay = document.createElement("span");
             emptyDay.classList.add("dia_vacio");
@@ -45,9 +44,12 @@ function renderCalendar() {
         // Agregar los días del mes con enlaces
         for (let date = 1; date <= lastDate; date++) {
             const link_dia = document.createElement('a');
+            const currentDate = new Date(year, index, date);
+            const nombre_dia = currentDate.getDay(); 
+
             link_dia.textContent = date;
             link_dia.classList.add("dia_mes");
-            link_dia.href = `/calendar_dia?dia=${date}&mes=${index}`;
+            link_dia.href = `/calendar_dia?dia=${date}&mes=${index}&nombre_dia=${nombre_dia}&año=${year}`;
 
             // Marcar el día actual
             if (
@@ -61,15 +63,15 @@ function renderCalendar() {
             dias.appendChild(link_dia);
         }
 
-        // Agregar el mes y sus días al contenedor principal
+
         text_mes.textContent = meses[index];
         if (index === new Date().getMonth() && year === new Date().getFullYear()) {
             text_mes.classList.add('mes_hoy');
         }
 
         div_mes.appendChild(text_mes);
-        div_mes.appendChild(header_dias); // Encabezado con días de la semana
-        div_mes.appendChild(dias); // Días del mes
+        div_mes.appendChild(header_dias); 
+        div_mes.appendChild(dias); 
         calendario_body.appendChild(div_mes);
     }
 }

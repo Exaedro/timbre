@@ -17,73 +17,118 @@ body main {
   height: auto;
 }
 body main #menu_lateral {
+  position: relative;
+  left: 0;
+  top: 0;
   height: auto;
-  min-height: 100vh;
-  width: 20%;
-  background-color: rgb(223, 223, 223);
+  width: 17.6vw;
+  padding: 0px;
+}
+body main #menu_lateral #cont_fixed {
+  padding-top: 20px;
+  height: 100%;
+  width: 15%;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
+  border-right: 1px solid rgba(134, 134, 134, 0.233);
+  position: fixed;
+}
+body main #menu_lateral #cont_fixed img {
+  height: auto;
+  width: auto;
+}
+body main #menu_lateral #cont_fixed #cont_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+  height: 75%;
+  width: 80%;
+  list-style: none;
+}
+body main #menu_lateral #cont_fixed #cont_item a {
+  width: 100%;
+  height: 10%;
+  text-decoration: none;
+}
+body main #menu_lateral #cont_fixed #cont_item a .item {
   display: flex;
   justify-content: flex-start;
-  padding-top: 50px;
+  padding-left: 20px;
   align-items: center;
-  flex-direction: column;
+  gap: 10px;
+  background-color: #4180ab;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
-body main #menu_lateral #cont_us {
-  width: 80%;
+body main #menu_lateral #cont_fixed #cont_item a .item span {
+  font-weight: bolder;
+  font-size: 0.9em;
+  color: white;
   height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
 }
-body main #menu_lateral #cont_us img {
-  height: 60px;
-  width: 60px;
-  border-radius: 30%;
-}
-body main #menu_lateral #cont_us #nombre_us {
-  font-weight: bold;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+body main #menu_lateral #cont_fixed #cont_item a .item i {
+  color: white;
   font-size: 1.2em;
 }
-body main #menu_lateral #nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 40px;
-  gap: 40px;
-  height: auto;
-  width: 100%;
-}
-body main #menu_lateral #nav .cont_item {
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  align-items: center;
-  height: 6vh;
-  background-color: #007bff;
-  border-radius: 20px;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-}
-body main #menu_lateral #nav .cont_item .icon {
-  color: rgb(255, 255, 255);
-  font-size: 1.4em;
-}
-body main #menu_lateral #nav .cont_item .text {
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  font-size: 1.4em;
-}
-body main #menu_lateral #nav .cont_item:hover {
-  background-color: #0d6fd8;
+body main #menu_lateral #cont_fixed #cont_item a .item:hover {
+  background-color: #3b7399;
+  transform: scale(1.05);
 }
 body main #cont_main {
   height: auto;
   width: 100vw;
   display: flex;
   flex-direction: column;
+}
+body main #cont_main .cont_header {
+  display: flex;
+  align-items: center;
+  left: 15%;
+  background-color: white;
+  height: 10%;
+  width: 85%;
+  z-index: 1000000;
+  position: fixed;
+  top: 0;
+  border-bottom: 1px solid #bdd1de;
+  padding-left: 5%;
+  gap: 10px;
+}
+body main #cont_main .cont_header span {
+  font-size: 1.5em;
+  font-weight: 100;
+}
+body main #cont_main .cont_header span.nombre_dia {
+  font-size: 1em;
+  color: #25379b;
+}
+body main #cont_main .cont_header .cont_dia {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 18px;
+}
+body main #cont_main .cont_header .cont_dia .dia {
+  background-color: #4180ab;
+  padding: 15px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: white;
 }
 body main #cont_main #panel_options {
   width: 100%;
@@ -108,16 +153,18 @@ body main #cont_main #cont_calendario .cont_year {
 body main #cont_main #cont_calendario .cont_year #year_text {
   padding-left: 10px;
   font-size: 3em;
-  color: blue;
+  color: #4180ab;
 }
 body main #cont_main #cont_calendario .calendario-body {
+  padding-top: 2%;
   padding-left: 5%;
-  width: 80%;
+  padding-right: 5%;
+  width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  grid-column-gap: 20px;
+  grid-column-gap: 60px;
   grid-row-gap: 60px;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes {
@@ -131,16 +178,16 @@ body main #cont_main #cont_calendario .calendario-body .div_mes {
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .header_dias {
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .header_dias span {
-  background-color: red;
-  padding: 10px;
   display: flex;
   justify-content: center;
+  padding-right: 10px;
   align-items: center;
   width: 52.5px;
   height: 50px;
@@ -151,7 +198,7 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .text_mes {
   padding-left: 3%;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .text_mes.mes_hoy {
-  color: blue;
+  color: #4180ab;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias {
   height: 100%;
@@ -174,10 +221,10 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy {
   color: white !important;
-  background-color: blue;
+  background-color: #4180ab;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy:hover {
-  background-color: rgb(14, 14, 219) !important;
+  background-color: #3b7399 !important;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes {
   width: 40px;
@@ -199,4 +246,98 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes a:hover {
   color: white;
+}
+body main #cont_main #calendar_dia {
+  padding-top: 7%;
+  padding-left: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+body main #cont_main #calendar_dia .horario {
+  display: flex;
+  height: 7vh;
+  width: 100%;
+}
+body main #cont_main #calendar_dia .horario .hour-item {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  margin: 10px 0;
+  font-weight: 100;
+  color: rgba(102, 102, 102, 0.8156862745);
+}
+body main #cont_main #calendar_dia .horario .hour-item::after {
+  content: "";
+  margin-left: 4px;
+  position: absolute;
+  left: 100%;
+  top: 10%;
+  width: 80vw;
+  height: 1px;
+  background-color: rgba(102, 102, 102, 0.26);
+}
+
+#form_enviar_horario {
+  display: none;
+}
+#form_enviar_horario.active {
+  position: absolute;
+  top: 0;
+  left: 60%;
+  transform: translate(-50%, -50%); /* Para centrar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 40px;
+  padding-top: 30px;
+  height: 500px;
+  width: 400px;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+#form_enviar_horario .cont_input {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+#form_enviar_horario .cont_input input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgba(87, 87, 87, 0.336);
+  width: 60%;
+}
+#form_enviar_horario .cont_botones {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 10px;
+}
+#form_enviar_horario .cont_botones button {
+  border-radius: 10px;
+  width: 30%;
+  border: none;
+  height: 40px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+#form_enviar_horario .cont_botones button:hover {
+  background-color: #dddddd;
+}
+#form_enviar_horario .cont_botones button#enviar {
+  color: white;
+  background-color: #4180ab;
+}
+#form_enviar_horario .cont_botones button#enviar:hover {
+  background-color: #3b7399;
 }/*# sourceMappingURL=estilo.css.map */
