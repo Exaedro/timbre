@@ -75,5 +75,11 @@ app.get('/calendar_dia', (req, res) => {
 
     res.render('calendar_dia', { dia, mes, nombre_dia, año });
 });
+app.get('/horarios_fijos', (req, res) => {
+
+
+
+    res.render('horarios_fijos', {});
+});
 
 app.use(express.static(path.join(__dirname, 'public')))
