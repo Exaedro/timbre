@@ -30,14 +30,22 @@
 
             </div>
             <section id="calendar_dia">
-                <% for (let i=0; i < 24; i++) { const hour=i===0 ? "12 AM" : i < 12 ? i + " AM" : (i===12 ? "12 PM" : (i
-                    - 12) + " PM" ); %>
-                    <div class="horario" data-hora="<%= hour %>">
-                        <h4 class="hour-item">
-                            <%= hour %>
-                        </h4>
-                    </div>
-                    <% } %>
+                <% for (let i = 0; i < 24; i++) { 
+                    const hour = i === 0 ? "12 AM" : i < 12 ? i + " AM" : (i === 12 ? "12 PM" : (i - 12) + " PM"); 
+               %>
+                   <div class="horario" data-hora="<%= hour %>">
+                       <h4 class="hour-item">
+                           <%= hour %>
+                       </h4>
+                       <% if (hour === "6 AM") { %>
+                           <div class="cont_horario_timbre">
+                               <h5 class="nombre_actividad">Primer timbre</h5>
+                               <h5>6 AM - 1s</h5>
+                              
+                           </div>
+                       <% } %>
+                   </div>
+               <% } %>
             </section>
         </div>
     </main>
