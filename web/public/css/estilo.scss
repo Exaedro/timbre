@@ -115,7 +115,16 @@ body {
             width: 100vw;
             display: flex;
             flex-direction: column;
-
+            #text_main_horarios_fijos{
+                margin-top: 3%;
+                font-size: 2.5em;
+                font-family:Arial, Helvetica, sans-serif;
+                font-weight: bolder;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
             .cont_header {
                 display: flex;
                 align-items: center;
@@ -376,19 +385,42 @@ body {
                 align-items: center;
                 height: auto;
                 width: 100%;
-                padding-top: 4%;
+                gap: 20px;
+                padding: 4% 0px;
 
                 .cont_horario {
                     display: flex;
-                    justify-content: space-around;
-                    padding-left: 3%;
+                    justify-content: space-between;
+                    padding: 0% 3%;
                     align-items: center;
                     height: 6vh;
                     width: 50%;
 
                     border: 1px solid $complemento2-color;
                     border-radius: 10px;
-
+                    .desac{
+                        display: none;
+                    }
+                    .cont_text{
+                        width: auto;
+                     
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        flex-direction: column;
+                        gap:10px;
+                        .cont_sub_text{
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            .nombre_horario{
+                                font-size: 1.2em;
+                            }
+                            width: 100%;
+                            gap:10px;
+                            display: flex;
+                        }
+                    }
                     .cont_butones {
                         height: 100%;
                         display: flex;

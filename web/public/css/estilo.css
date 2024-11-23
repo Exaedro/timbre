@@ -89,6 +89,16 @@ body main #cont_main {
   display: flex;
   flex-direction: column;
 }
+body main #cont_main #text_main_horarios_fijos {
+  margin-top: 3%;
+  font-size: 2.5em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 body main #cont_main .cont_header {
   display: flex;
   align-items: center;
@@ -309,17 +319,40 @@ body main #cont_main #cont_horarios_fijos {
   align-items: center;
   height: auto;
   width: 100%;
-  padding-top: 4%;
+  gap: 20px;
+  padding: 4% 0px;
 }
 body main #cont_main #cont_horarios_fijos .cont_horario {
   display: flex;
-  justify-content: space-around;
-  padding-left: 3%;
+  justify-content: space-between;
+  padding: 0% 3%;
   align-items: center;
   height: 6vh;
   width: 50%;
   border: 1px solid #bdd1de;
   border-radius: 10px;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .desac {
+  display: none;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_text {
+  width: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_text .cont_sub_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  display: flex;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_text .cont_sub_text .nombre_horario {
+  font-size: 1.2em;
 }
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones {
   height: 100%;

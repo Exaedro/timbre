@@ -13,34 +13,50 @@
     <main>
         <aside id="menu_lateral"> <%- include('menu.ejs') %></aside>
         <div id="cont_main">
-            <h1>Horarios fijos</h1>
+            <h1 id="text_main_horarios_fijos">Horarios fijos</h1>
             <section id="cont_horarios_fijos">
 
-                <div class="cont_horario">
 
 
-                    <h4 class="nombre_horario">
-                        Primer recreo
-                    </h4>
-                    <p class="hora"></p>
-                    <p class="duracion"></p>
-                    <div class="cont_butones">
+                <% results.forEach(actividad=> { %>
+
+                    <div class="cont_horario">
+
+                        <input type="text" data-id="<%-actividad.HorarioID -%>" class="desac">
+                        <div class="cont_text">
+                            <div class="cont_sub_text">
+                                <h4 class="nombre_horario">
+                                    <%-actividad.NombreHorario -%>
+                                </h4>
+                                <p class="hora">
+                                    <%-actividad.HoraInicio -%>
+                                </p>
+                            </div>
+                           
+                            <p class="duracion">
+                                Duracion:
+                                <%-actividad.duracion -%>s
+                            </p>
+                        </div>
+
+                       
+                        <div class="cont_butones">
+
+                            <button id="editar">
+                                Editar</button>
+                            <form action="/eliminar_horario_fijo/">
+
+                                <button type="submit" id="eliminar">
+
+                                    Borrar</button>
+                            </form>
 
 
-                        <button id="editar">
-                            Editar</button>
-                        <form action="/eliminar_horario_fijo/">
-
-                            <button type="submit" id="eliminar">
-
-                                Borrar</button>
-                        </form>
-
+                        </div>
 
                     </div>
-
-                </div>
-                <button id="boton_agregar">Agregar más horarios</button>
+                    <% }) %>
+                        <button id="boton_agregar">Agregar más horarios</button>
             </section>
         </div>
 
