@@ -358,7 +358,7 @@ body {
 
                         h5 {
                             font-size: .9em;
-                           
+
                             height: 100%;
                             text-align: center;
                         }
@@ -368,7 +368,93 @@ body {
                     }
                 }
             }
+
+            #cont_horarios_fijos {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                height: auto;
+                width: 100%;
+                padding-top: 4%;
+
+                .cont_horario {
+                    display: flex;
+                    justify-content: space-around;
+                    padding-left: 3%;
+                    align-items: center;
+                    height: 6vh;
+                    width: 50%;
+
+                    border: 1px solid $complemento2-color;
+                    border-radius: 10px;
+
+                    .cont_butones {
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 10px;
+
+
+                        button {
+                            height: 3.2vh;
+                            border-radius: 6px;
+                            border: none;
+                            cursor: pointer;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 10px;
+                            font-size: 1em;
+                            font-weight: 600;
+                            transition: all .2s ease-in-out;
+                            width: 5vw;
+                            color: white;
+
+                            &#editar {
+                                color: gray;
+                                background-color: transparent;
+
+                                &:hover {
+                                    background-color: rgba(128, 128, 128, 0.09) !important;
+                                }
+
+                            }
+
+                            &#eliminar {
+                                background-color: rgb(42, 82, 155);
+
+                                &:hover {
+                                    background-color: rgb(40, 88, 177);
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                #boton_agregar {
+                    margin-top: 3%;
+                    width: 15%;
+                    height: 5vh;
+                    border-radius: 6px;
+                    border: none;
+                    background-color: $primary-color;
+                    color: white;
+                    font-size: 1em;
+                    font-weight: bolder;
+                    cursor: pointer;
+                    transition: all .2s ease-in-out;
+
+                    &:hover {
+                        transform: scale(1.03);
+                        background-color: $primary-color-efect;
+                    }
+                }
+            }
         }
+
     }
 }
 

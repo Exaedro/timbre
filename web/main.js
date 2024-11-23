@@ -77,8 +77,6 @@ app.get('/calendar_dia', (req, res) => {
 });
 app.get('/horarios_fijos', (req, res) => {
 
-
-
     res.render('horarios_fijos', {});
 });
 

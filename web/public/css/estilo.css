@@ -302,6 +302,77 @@ body main #cont_main #calendar_dia .horario .cont_horario_timbre h5 {
   height: 100%;
   text-align: center;
 }
+body main #cont_main #cont_horarios_fijos {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  padding-top: 4%;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 3%;
+  align-items: center;
+  height: 6vh;
+  width: 50%;
+  border: 1px solid #bdd1de;
+  border-radius: 10px;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button {
+  height: 3.2vh;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  width: 5vw;
+  color: white;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button#editar {
+  color: gray;
+  background-color: transparent;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button#editar:hover {
+  background-color: rgba(128, 128, 128, 0.09) !important;
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button#eliminar {
+  background-color: rgb(42, 82, 155);
+}
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button#eliminar:hover {
+  background-color: rgb(40, 88, 177);
+}
+body main #cont_main #cont_horarios_fijos #boton_agregar {
+  margin-top: 3%;
+  width: 15%;
+  height: 5vh;
+  border-radius: 6px;
+  border: none;
+  background-color: #4180ab;
+  color: white;
+  font-size: 1em;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
+  transform: scale(1.03);
+  background-color: #3b7399;
+}
 
 #form_enviar_horario {
   display: none;
