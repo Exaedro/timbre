@@ -22,7 +22,7 @@
 
                     <div class="cont_horario">
 
-                        <input type="text" data-id="<%-actividad.HorarioID -%>" class="desac">
+                        <input type="text" id="HorarioID" value="<%-actividad.HorarioID -%>" class="desac">
                         <div class="cont_text">
                             <div class="cont_sub_text">
                                 <h4 class="nombre_horario">
@@ -32,22 +32,22 @@
                                     <%-actividad.HoraInicio -%>
                                 </p>
                             </div>
-                           
+
                             <p class="duracion">
                                 Duracion:
                                 <%-actividad.duracion -%>s
                             </p>
                         </div>
 
-                       
+
                         <div class="cont_butones">
 
-                            <button id="editar">
+                            <button class="editar">
                                 Editar</button>
-                            <form action="/eliminar_horario_fijo/">
-
-                                <button type="submit" id="eliminar">
-
+                            <form action="/eliminar_horario_fijo/" method="post">
+                                <input type="text" id="input_id" class="desac" name="input_id"
+                                    value="<%-actividad.HorarioID -%>">
+                                <button type="submit" class="eliminar">
                                     Borrar</button>
                             </form>
 
@@ -63,6 +63,57 @@
     </main>
 
 </body>
-<form action="/agregar_horario_fijo"></form>
+
+<div id="conts_form">
+    <form action="agregar_horario_fijo" method="post" id="agregar_horario_fijo" class="forms_class">
+        <h4>Agregar horario</h4>
+        <div class="cont_input">
+            <input type="text" id="input_name_horario" name="input_name_horario" placeholder=" Nombre del timbre"
+                required>
+        </div>
+        <div class="cont_input">
+            <input type="time" id="input_horario" name="input_horario" placeholder="Horario del timbre" required>
+        </div>
+        <div class="cont_input">
+            <input type="number" id="input_duracion" name="input_duracion" placeholder="Duracion del sonido" min="1"
+                required>
+        </div>
+        <div class="cont_botones">
+            <button type="submit" id="enviar">Guardar</button>
+            <button type="button" id="close_form_agregar">Cancelar</button>
+        </div>
+    </form>
+
+    <form action="/editar_horario_fijo" method="post" id="editar_horario_fijo" class="forms_class">
+        <h4>Editar Horario</h4>
+
+        <!-- Campo input_id (asegúrate de que tiene un name correcto) -->
+        <input type="text" class="desac" id="input_id" name="input_id">
+
+        <div class="cont_input">
+            <label for="input_name_horario">Nombre del horario</label>
+            <input type="text" id="input_name_horario" name="input_name_horario" placeholder="Nombre del horario"
+                required>
+        </div>
+        <div class="cont_input">
+            <label for="input_horario">Horario del timbre</label>
+            <input type="time" id="input_horario" name="input_horario" placeholder="Horario del timbre" required>
+        </div>
+        <div class="cont_input">
+            <label for="input_duracion">Duración del sonido</label>
+            <input type="number" id="input_duracion" name="input_duracion" placeholder="Duración del sonido" min="1"
+                required>
+        </div>
+        <div class="cont_botones">
+            <button type="submit" id="enviar">Guardar</button>
+            <button type="button" id="close_form">Cancelar</button>
+        </div>
+    </form>
+
+
+</div>
+
+
+<script src="js/horarios_fijos.js"></script>
 
 </html>

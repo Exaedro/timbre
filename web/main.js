@@ -9,6 +9,10 @@ const session = require('express-session')
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+// Middleware para procesar JSON y datos de formularios
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // Conexión a la base de datos
 const connection = mysql.createConnection({
@@ -53,8 +57,8 @@ async function verifyPassword(plainPassword, hashedPassword) {
 app.get('/iniciar_sesion', async (req, res) => {
     try {
         const { user_name, password } = req.query; // Asegúrate de que `password` está correctamente definido
-        console.log("Usuario:", user_name);
-        console.log("Contraseña:", password);
+        // console.log("Usuario:", user_name);
+        // console.log("Contraseña:", password);
 
 
         const query_ini = 'SELECT `UsuarioID`, `NombreUsuario`, `Contrasena`, `FechaCreacion` FROM `usuario` WHERE NombreUsuario=?';
@@ -95,7 +99,7 @@ app.get('/calendar_dia', (req, res) => {
     res.render('calendar_dia', { dia, mes, nombre_dia, año });
 });
 app.get('/horarios_fijos', (req, res) => {
-    const query_act_dia = 'SELECT * FROM `horarios` WHERE 1'
+    const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
     connection.query(query_act_dia, [], (err, results) => {
         if (err) {
             console.error('Error al buscar los datos:', err);
@@ -103,8 +107,73 @@ app.get('/horarios_fijos', (req, res) => {
 
         }
 
-        res.render('horarios_fijos', { results})
+        res.render('horarios_fijos', { results })
     })
 });
 
+
+app.post('/editar_horario_fijo', (req, res) => {
+    const { input_id, input_name_horario, input_horario, input_duracion } = req.body;
+
+    if (!input_id || !input_name_horario || !input_horario || !input_duracion) {
+        console.error('Datos incompletos recibidos:', req.body);
+        return res.status(400).send('Datos incompletos');
+    }
+
+    const datatime = Datatime();
+    const sql = `UPDATE horarios SET NombreHorario=?,HoraInicio=?,Activo=?,FechaCreacion=?,duracion=? WHERE HorarioID=?`;
+    connection.query(sql, [input_name_horario, input_horario, 1, datatime, input_duracion, input_id], (err, result) => {
+        if (err) {
+            console.error('Error actualizando datos:', err);
+            res.status(500).send('Error actualizando los datos');
+        } else {
+            res.redirect('/horarios_fijos');
+        }
+    });
+});
+
+app.post('/eliminar_horario_fijo', (req, res) => {
+    const { input_id } = req.body;
+
+    const sql = `DELETE FROM horarios WHERE HorarioID=?`;
+    connection.query(sql, [ input_id], (err, result) => {
+        if (err) {
+            console.error('Error actualizando datos:', err);
+            res.status(500).send('Error actualizando los datos');
+        } else {
+            res.redirect('/horarios_fijos');
+        }
+    });
+});
+
+app.post('/agregar_horario_fijo', (req, res) => {
+    const {  input_name_horario, input_horario, input_duracion } = req.body;
+
+    const datatime = Datatime();
+    const sql = `INSERT INTO horarios (NombreHorario, HoraInicio, Activo, FechaCreacion, duracion) VALUES (?,?,?,?,?)`;
+    connection.query(sql, [input_name_horario, input_horario, 1, datatime, input_duracion], (err, result) => {
+        if (err) {
+            console.error('Error agregar un timbre ', err);
+            res.status(500).send('Error actualizando los datos');
+        } else {
+            res.redirect('/horarios_fijos');
+        }
+    });
+});
+
+
+
 app.use(express.static(path.join(__dirname, 'public')))
+
+function Datatime() {
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Mes empieza en 0
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}

@@ -115,16 +115,18 @@ body {
             width: 100vw;
             display: flex;
             flex-direction: column;
-            #text_main_horarios_fijos{
+
+            #text_main_horarios_fijos {
                 margin-top: 3%;
                 font-size: 2.5em;
-                font-family:Arial, Helvetica, sans-serif;
+                font-family: Arial, Helvetica, sans-serif;
                 font-weight: bolder;
                 width: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
+
             .cont_header {
                 display: flex;
                 align-items: center;
@@ -398,29 +400,35 @@ body {
 
                     border: 1px solid $complemento2-color;
                     border-radius: 10px;
-                    .desac{
+
+                    .desac {
                         display: none;
                     }
-                    .cont_text{
+
+                    .cont_text {
                         width: auto;
-                     
+
                         display: flex;
                         justify-content: flex-start;
                         align-items: flex-start;
                         flex-direction: column;
-                        gap:10px;
-                        .cont_sub_text{
+                        gap: 10px;
+
+                        .cont_sub_text {
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            .nombre_horario{
+
+                            .nombre_horario {
                                 font-size: 1.2em;
                             }
+
                             width: 100%;
                             gap:10px;
                             display: flex;
                         }
                     }
+
                     .cont_butones {
                         height: 100%;
                         display: flex;
@@ -444,7 +452,7 @@ body {
                             width: 5vw;
                             color: white;
 
-                            &#editar {
+                            &.editar {
                                 color: gray;
                                 background-color: transparent;
 
@@ -454,8 +462,8 @@ body {
 
                             }
 
-                            &#eliminar {
-                                background-color: rgb(42, 82, 155);
+                            &.eliminar {
+                                background-color: rgb(42, 82, 155) !important;
 
                                 &:hover {
                                     background-color: rgb(40, 88, 177);
@@ -490,35 +498,14 @@ body {
     }
 }
 
-#form_enviar_horario {
-    display: none;
-
-    &.active {
-        position: absolute;
-        top: 0;
-        left: 60%;
-        transform: translate(-50%, -50%);
-        /* Para centrar */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 40px;
-        padding-top: 30px;
-
-        height: 500px;
-        width: 400px;
-        border-radius: 20px;
-        background-color: white;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-    }
-
-
+.forms_class {
     .cont_input {
         width: 100%;
         display: flex;
         justify-content: center;
-        align-items: flex-start;
+        gap: 10px;
+        align-items: center;
+        flex-direction: column;
 
         input {
             background-color: transparent;
@@ -527,6 +514,12 @@ body {
             border-bottom: 1px solid rgba(87, 87, 87, 0.336);
             width: 60%;
 
+        }
+
+        label {
+            width: 60%;
+            font-weight: bold;
+            text-align: start;
         }
     }
 
@@ -562,4 +555,80 @@ body {
             }
         }
     }
+}
+
+#form_enviar_horario {
+    display: none;
+
+    &.active {
+        position: absolute;
+        top: 0;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        /* Para centrar */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 40px;
+        padding-top: 30px;
+
+        height: 500px;
+        width: 400px;
+        border-radius: 20px;
+        background-color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+
+}
+
+#conts_form {
+    display: none;
+
+    &.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        /* Asegura cubrir al menos toda la ventana */
+        background: rgba(0, 0, 58, 0.459);
+        z-index: 1;
+        backdrop-filter: blur(100px);
+
+
+    }
+
+    form {
+        display: none;
+
+        &.active {
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            height: 600px;
+            width: 500px;
+            padding-top: 3%;
+
+            justify-content: flex-start;
+            align-items: center;
+            gap: 40px;
+            flex-direction: column;
+
+            h4 {
+                font-size: 1.5em;
+                font-weight: bolder;
+            }
+        }
+
+    }
+}
+
+.desac {
+    display: none;
 }

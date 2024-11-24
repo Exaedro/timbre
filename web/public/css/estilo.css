@@ -376,17 +376,17 @@ body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button {
   width: 5vw;
   color: white;
 }
-body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button#editar {
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.editar {
   color: gray;
   background-color: transparent;
 }
-body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button#editar:hover {
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.editar:hover {
   background-color: rgba(128, 128, 128, 0.09) !important;
 }
-body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button#eliminar {
-  background-color: rgb(42, 82, 155);
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.eliminar {
+  background-color: rgb(42, 82, 155) !important;
 }
-body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button#eliminar:hover {
+body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.eliminar:hover {
   background-color: rgb(40, 88, 177);
 }
 body main #cont_main #cont_horarios_fijos #boton_agregar {
@@ -404,6 +404,53 @@ body main #cont_main #cont_horarios_fijos #boton_agregar {
 }
 body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   transform: scale(1.03);
+  background-color: #3b7399;
+}
+
+.forms_class .cont_input {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  flex-direction: column;
+}
+.forms_class .cont_input input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgba(87, 87, 87, 0.336);
+  width: 60%;
+}
+.forms_class .cont_input label {
+  width: 60%;
+  font-weight: bold;
+  text-align: start;
+}
+.forms_class .cont_botones {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 10px;
+}
+.forms_class .cont_botones button {
+  border-radius: 10px;
+  width: 30%;
+  border: none;
+  height: 40px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.forms_class .cont_botones button:hover {
+  background-color: #dddddd;
+}
+.forms_class .cont_botones button#enviar {
+  color: white;
+  background-color: #4180ab;
+}
+.forms_class .cont_botones button#enviar:hover {
   background-color: #3b7399;
 }
 
@@ -428,42 +475,46 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   background-color: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
-#form_enviar_horario .cont_input {
-  width: 100%;
+
+#conts_form {
+  display: none;
+}
+#conts_form.active {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-}
-#form_enviar_horario .cont_input input {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid rgba(87, 87, 87, 0.336);
-  width: 60%;
-}
-#form_enviar_horario .cont_botones {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  gap: 10px;
+  height: auto;
+  min-height: 100%;
+  /* Asegura cubrir al menos toda la ventana */
+  background: rgba(0, 0, 58, 0.459);
+  z-index: 1;
+  -webkit-backdrop-filter: blur(100px);
+          backdrop-filter: blur(100px);
 }
-#form_enviar_horario .cont_botones button {
+#conts_form form {
+  display: none;
+}
+#conts_form form.active {
+  background-color: white;
   border-radius: 10px;
-  width: 30%;
-  border: none;
-  height: 40px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  display: flex;
+  height: 600px;
+  width: 500px;
+  padding-top: 3%;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px;
+  flex-direction: column;
 }
-#form_enviar_horario .cont_botones button:hover {
-  background-color: #dddddd;
+#conts_form form.active h4 {
+  font-size: 1.5em;
+  font-weight: bolder;
 }
-#form_enviar_horario .cont_botones button#enviar {
-  color: white;
-  background-color: #4180ab;
-}
-#form_enviar_horario .cont_botones button#enviar:hover {
-  background-color: #3b7399;
+
+.desac {
+  display: none;
 }/*# sourceMappingURL=estilo.css.map */
