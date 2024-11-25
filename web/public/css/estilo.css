@@ -5,16 +5,22 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-html {
-  height: auto;
-}
-
 body {
   height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  overflow-x: hidden;
 }
 body main {
   display: flex;
   height: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-width: 100vw;
+  overflow-x: hidden;
+  width: 100%;
 }
 body main #menu_lateral {
   position: relative;
@@ -84,6 +90,7 @@ body main #menu_lateral #cont_fixed #cont_item a .item:hover {
   transform: scale(1.05);
 }
 body main #cont_main {
+  overflow-x: hidden;
   height: auto;
   width: 100vw;
   display: flex;
@@ -166,10 +173,11 @@ body main #cont_main #cont_calendario .cont_year #year_text {
   color: #4180ab;
 }
 body main #cont_main #cont_calendario .calendario-body {
+  overflow-x: hidden;
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 5%;
-  width: 100%;
+  width: 85vw;
   height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -274,6 +282,7 @@ body main #cont_main #calendar_dia .horario {
   min-height: 8vh;
   height: auto;
   width: 100%;
+  gap: 10px;
 }
 body main #cont_main #calendar_dia .horario .hour-item {
   position: relative;
@@ -305,7 +314,15 @@ body main #cont_main #calendar_dia .horario .cont_horario_timbre {
   height: 20px;
   width: 40%;
   color: white;
+}
+body main #cont_main #calendar_dia .horario .cont_horario_timbre.s1 {
+  background-color: #4a86b3;
+}
+body main #cont_main #calendar_dia .horario .cont_horario_timbre.s2 {
   background-color: #47b9a6;
+}
+body main #cont_main #calendar_dia .horario .cont_horario_timbre.s3 {
+  background-color: #8d71c4;
 }
 body main #cont_main #calendar_dia .horario .cont_horario_timbre h5 {
   font-size: 0.9em;
@@ -482,7 +499,8 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
 #conts_form.active {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 5%;
   position: absolute;
   top: 0;
   left: 0;
@@ -490,7 +508,7 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   height: auto;
   min-height: 100%;
   /* Asegura cubrir al menos toda la ventana */
-  background: rgba(0, 0, 58, 0.459);
+  background: rgba(0, 64, 107, 0.562);
   z-index: 1;
   -webkit-backdrop-filter: blur(100px);
           backdrop-filter: blur(100px);
@@ -517,4 +535,86 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
 
 .desac {
   display: none;
+}
+
+@media (max-width: 1560px) {
+  .calendario-body {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 1000px) {
+  .calendario-body {
+    grid-template-columns: repeat(1, 1fr) !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .calendario-body .div_mes {
+    width: 80% !important;
+  }
+}
+@media (max-width: 800px) {
+  .calendario-body {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+  .calendario-body .div_mes {
+    width: 80% !important;
+    font-size: 0.8em;
+  }
+  .calendario-body .div_mes .header_dias {
+    width: 70% !important;
+  }
+  .calendario-body .div_mes .header_dias .dia_semana {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 30px !important;
+  }
+  .calendario-body .div_mes .cont_dias {
+    width: 70% !important;
+  }
+  .calendario-body .div_mes .cont_dias .dia_mes, .calendario-body .div_mes .cont_dias .dia_vacio {
+    width: 30px !important;
+  }
+}
+@media (max-width: 1360px) {
+  #menu_lateral {
+    width: 200px !important;
+  }
+  #menu_lateral #cont_fixed {
+    width: 200px !important;
+  }
+  .item {
+    padding-left: 0px !important;
+    display: flex;
+    gap: 3px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+@media (max-width: 550px) {
+  #menu_lateral {
+    width: 100px !important;
+  }
+  #menu_lateral #cont_fixed {
+    width: 100px !important;
+  }
+  #menu_lateral #cont_fixed img {
+    display: none;
+  }
+  #menu_lateral #cont_fixed a .item span {
+    display: none;
+  }
+  .item {
+    padding-left: 0px !important;
+    display: flex;
+    gap: 3px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column;
+    text-align: center;
+  }
 }/*# sourceMappingURL=estilo.css.map */

@@ -31,28 +31,55 @@
             </div>
             <section id="calendar_dia">
                 <% for (let i = 0; i < 24; i++) { 
-                    const hour = i === 0 ? "12 AM" : i < 12 ? i + " AM" : (i === 12 ? "12 PM" : (i - 12) + " PM"); 
-               %>
-                   <div class="horario" data-hora="<%= hour %>">
-                       <h4 class="hour-item">
-                           <%= hour %>
-                       </h4>
-                       <% if (hour === "6 AM") { %>
-                           <div class="cont_horario_timbre">
-                               <h5 class="nombre_actividad">Primer timbre</h5>
-                               <h5>6 AM - 1s</h5>
-                              
-                           </div>
-                       <% } %>
-                   </div>
-               <% } %>
+                    const hour = i === 0 ? 12 : (i <= 12 ? i : i - 12);
+                    const displayHour = i === 0 ? "12 AM" : i < 12 ? i + " AM" : (i === 12 ? "12 PM" : (i - 12) + " PM");
+                %>
+                <div class="horario" data-hora="<%= hour %>">
+                    <h4 class="hour-item">
+                        <%= displayHour %>
+                    </h4>
+                    <% if (diasSemana[nombre_dia] != "Sab" && diasSemana[nombre_dia] != "Dom") { %>
+                        <% 
+                        // Recorremos los resultados de la base de datos
+                        results.forEach((horario) => {
+                            const getHourFromTime = (time) => time.split(":")[0];
+                            const horaInicio = getHourFromTime(horario.HoraInicio || "00:00:00");
+            
+                            if (parseInt(horaInicio, 10) == i) { 
+                        %>
+                        <% if (horario.duracion==1) { %>
+                            <div class="cont_horario_timbre s1" >
+                                <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
+                                <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
+                            </div>
+                            <% } %>  
+                            
+                            <% if (horario.duracion==2) { %>
+                                <div class="cont_horario_timbre s2"  >
+                                    <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
+                                    <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
+                                </div>
+                                <% } %>  
+                                <% if (horario.duracion==3) { %>
+                                    <div class="cont_horario_timbre s3" >
+                                        <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
+                                        <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
+                                    </div>
+                                    <% } %>  
+                        <% 
+                            }
+                        });
+                        %>
+                    <% } %>
+                </div>
+                <% } %>
             </section>
         </div>
     </main>
     <form action="" id="form_enviar_horario" class="forms_class">
         <h4>Agregar horario</h4>
         <div class="cont_input">
-            label
+       
             <input type="text" id="input_name_horario" name="input_name_horario" placeholder=" Nombre del horario"
                 required>
         </div>

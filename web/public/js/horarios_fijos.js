@@ -3,8 +3,8 @@ const conts_form = document.getElementById("conts_form");
 const form_editar = document.getElementById("editar_horario_fijo");
 const agregar_horario_fijo = document.getElementById("agregar_horario_fijo");
 const boton_agregar = document.getElementById("boton_agregar")
-
-
+const close_form_agregar = document.getElementById("close_form_agregar")
+const close_form_editar = document.getElementById("close_form_editar")
 editar.forEach((button) => {
     button.addEventListener("click", () => {
 
@@ -41,6 +41,15 @@ boton_agregar.addEventListener("click", () => {
 
     window.addEventListener("load", adjustHeight());
     window.addEventListener("resize", adjustHeight());
+})
+
+close_form_agregar.addEventListener("click",()=>{
+    conts_form.classList.remove("active")
+    agregar_horario_fijo.classList.remove("active")
+})
+close_form_editar.addEventListener("click",()=>{
+    conts_form.classList.remove("active")
+    form_editar.classList.remove("active")
 })
 
 function adjustHeight() {

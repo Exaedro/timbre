@@ -22,16 +22,23 @@ $horario4-color-efect: #8d71c4;
 $font-stack: 'Arial, sans-serif';
 
 
-html {
-    height: auto;
-}
 
 body {
     height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    overflow-x: hidden;
 
     main {
         display: flex;
         height: auto;
+        justify-content: flex-start;
+        align-items: flex-start;
+        min-width: 100vw;
+        overflow-x: hidden;
+        width: 100%;
 
         #menu_lateral {
             position: relative;
@@ -111,6 +118,7 @@ body {
         }
 
         #cont_main {
+            overflow-x: hidden;
             height: auto;
             width: 100vw;
             display: flex;
@@ -204,10 +212,12 @@ body {
                 }
 
                 .calendario-body {
+                    overflow-x: hidden;
                     padding-top: 2%;
                     padding-left: 5%;
                     padding-right: 5%;
-                    width: 100%;
+                    width: 85vw;
+                  
                     height: 100%;
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
@@ -331,6 +341,7 @@ body {
                     min-height: 8vh;
                     height: auto;
                     width: 100%;
+                    gap: 10px;
 
                     .hour-item {
                         position: relative;
@@ -365,7 +376,19 @@ body {
                         height: 20px;
                         width: 40%;
                         color: white;
-                        background-color: $horario3-color-efect;
+
+                        &.s1 {
+                            background-color: $horario2-color-efect;
+                        }
+
+                        &.s2 {
+                            background-color: $horario3-color-efect;
+                        }
+
+                        &.s3 {
+                            background-color: $horario4-color-efect;
+                        }
+
 
                         h5 {
                             font-size: .9em;
@@ -589,7 +612,8 @@ body {
     &.active {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
+        padding-top: 5%;
         position: absolute;
         top: 0;
         left: 0;
@@ -597,7 +621,7 @@ body {
         height: auto;
         min-height: 100%;
         /* Asegura cubrir al menos toda la ventana */
-        background: rgba(0, 0, 58, 0.459);
+        background: rgba(0, 64, 107, 0.562);
         z-index: 1;
         backdrop-filter: blur(100px);
 
@@ -631,4 +655,108 @@ body {
 
 .desac {
     display: none;
+}
+
+@media (max-width: 1560px) {
+    .calendario-body {
+    
+        grid-template-columns: repeat(2, 1fr) !important;
+
+    }
+}
+
+@media (max-width: 1000px) {
+    .calendario-body {
+    
+        grid-template-columns: repeat(1, 1fr) !important;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: center !important;
+        .div_mes {
+          
+            width: 80% !important;
+         
+        }
+    }
+}
+@media (max-width: 800px) {
+    .calendario-body {
+     
+        grid-template-columns: repeat(1, 1fr) !important;
+
+        .div_mes {
+            width: 80% !important;
+          
+            font-size: .8em ;
+            .header_dias{
+                width: 70% !important;
+                .dia_semana{
+                    display: flex;
+                    justify-content: center !important;
+                    align-items: center !important;
+                    width: 30px !important;
+                }
+            }
+            .cont_dias{
+                width: 70% !important;
+                .dia_mes,.dia_vacio{
+                    width: 30px !important;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 1360px) {
+    #menu_lateral {
+        width: 200px !important;
+
+        #cont_fixed {
+            width: 200px !important;
+        }
+    }
+
+    .item {
+        padding-left: 0px !important;
+        display: flex;
+        gap: 3px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: column;
+        text-align: center;
+    }
+
+}
+
+@media (max-width: 550px) {
+    #menu_lateral {
+        width: 100px !important;
+
+        #cont_fixed {
+            width: 100px !important;
+
+            img {
+                display: none;
+            }
+
+            a {
+                .item {
+                    span {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .item {
+        padding-left: 0px !important;
+        display: flex;
+        gap: 3px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: column;
+        text-align: center;
+    }
+
 }

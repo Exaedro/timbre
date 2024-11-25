@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             let y = event.clientY;
+
             y = y + 250
             //  posicion del formulario
-            formPopup.style.top = `${y}px`;
-         
 
+            formPopup.style.top = `${y}px`;
             formPopup.classList.add("active");
         }
     });

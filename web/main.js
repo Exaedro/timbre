@@ -5,7 +5,8 @@ const mysql = require('mysql2');
 const { View } = require('electron');
 const app = express()
 const bcrypt = require('bcrypt');
-const session = require('express-session')
+const session = require('express-session');
+const { console } = require('node:inspector');
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -55,38 +56,40 @@ async function verifyPassword(plainPassword, hashedPassword) {
 }
 
 app.get('/iniciar_sesion', async (req, res) => {
-    try {
-        const { user_name, password } = req.query; // Asegúrate de que `password` está correctamente definido
-        // console.log("Usuario:", user_name);
-        // console.log("Contraseña:", password);
+    // try {
+    //     const { user_name, password } = req.query; // Asegúrate de que `password` está correctamente definido
+    //     // console.log("Usuario:", user_name);
+    //     // console.log("Contraseña:", password);
 
 
-        const query_ini = 'SELECT `UsuarioID`, `NombreUsuario`, `Contrasena`, `FechaCreacion` FROM `usuario` WHERE NombreUsuario=?';
-        const [userResults] = await connection.promise().query(query_ini, [user_name]);
+    //     const query_ini = 'SELECT `UsuarioID`, `NombreUsuario`, `Contrasena`, `FechaCreacion` FROM `usuario` WHERE NombreUsuario=?';
+    //     const [userResults] = await connection.promise().query(query_ini, [user_name]);
 
-        if (userResults.length === 0) {
-            return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
-        }
+    //     if (userResults.length === 0) {
+    //         return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
+    //     }
 
-        const hashedPassword = userResults[0].Contrasena;
+    //     const hashedPassword = userResults[0].Contrasena;
 
-        // Verifica si la contraseña coincide
-        const isMatch = await verifyPassword(password, hashedPassword);
+    //     // Verifica si la contraseña coincide
+    //     const isMatch = await verifyPassword(password, hashedPassword);
 
-        if (isMatch) {
-            return res.redirect('/index'); // Redirige al inicio si coincide
-        } else {
+    //     if (isMatch) {
+    //         return res.redirect('/index'); // Redirige al inicio si coincide
+    //     } else {
 
-            return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
-        }
-    } catch (err) {
-        console.error('Error al iniciar sesión:', err);
-        return res.render('login.ejs', { error: 'Error al verificar los datos' });
-    }
+    //         return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
+    //     }
+    // } catch (err) {
+    //     console.error('Error al iniciar sesión:', err);
+    //     return res.render('login.ejs', { error: 'Error al verificar los datos' });
+    // }
+    return res.redirect('/index'); // Redirige al inicio si coincide
 });
 
 
 app.get('/index', (req, res) => {
+
     res.render('index')
 })
 app.get('/calendar_dia', (req, res) => {
@@ -95,8 +98,18 @@ app.get('/calendar_dia', (req, res) => {
     const mes = req.query.mes;
     const nombre_dia = req.query.nombre_dia;
     const año = req.query.año;
+    const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
+    connection.query(query_act_dia, [], (err, results) => {
+        if (err) {
+            console.error('Error al buscar los datos:', err);
+            return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
 
-    res.render('calendar_dia', { dia, mes, nombre_dia, año });
+        }
+        console.log("ss")
+        console.log(results.HoraInicio)
+        res.render('calendar_dia', { results,dia, mes, nombre_dia, año });
+    })
+  
 });
 app.get('/horarios_fijos', (req, res) => {
     const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
@@ -136,7 +149,7 @@ app.post('/eliminar_horario_fijo', (req, res) => {
     const { input_id } = req.body;
 
     const sql = `DELETE FROM horarios WHERE HorarioID=?`;
-    connection.query(sql, [ input_id], (err, result) => {
+    connection.query(sql, [input_id], (err, result) => {
         if (err) {
             console.error('Error actualizando datos:', err);
             res.status(500).send('Error actualizando los datos');
@@ -147,7 +160,7 @@ app.post('/eliminar_horario_fijo', (req, res) => {
 });
 
 app.post('/agregar_horario_fijo', (req, res) => {
-    const {  input_name_horario, input_horario, input_duracion } = req.body;
+    const { input_name_horario, input_horario, input_duracion } = req.body;
 
     const datatime = Datatime();
     const sql = `INSERT INTO horarios (NombreHorario, HoraInicio, Activo, FechaCreacion, duracion) VALUES (?,?,?,?,?)`;
