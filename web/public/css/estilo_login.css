@@ -42,7 +42,7 @@ main {
 }
 
 form {
-  height: 700px;
+  height: 600px;
   width: 450px;
   background-color: rgb(252, 252, 252);
   padding: 0px 0px;
@@ -63,8 +63,8 @@ form .cont_logo {
   border-bottom: 1px solid rgba(131, 131, 131, 0.253);
 }
 form .cont_logo img {
-  height: 100%;
-  width: 6vw;
+  height: 100px;
+  width: 100px;
 }
 form #cont_main_inputs {
   padding: 50px 20px;
@@ -111,4 +111,17 @@ form #cont_main_inputs button {
 }
 form #cont_main_inputs button:hover {
   background-color: rgb(38, 38, 245);
+}
+
+@media (max-width: 770px) {
+  form {
+    height: 500px;
+    width: 350px;
+  }
+}
+@media (max-width: 450px) {
+  form {
+    height: 450px;
+    width: 300px;
+  }
 }/*# sourceMappingURL=estilo_login.css.map */

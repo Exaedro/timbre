@@ -25,41 +25,39 @@ $font-stack: 'Arial, sans-serif';
 
 body {
     height: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100vw;
     overflow-x: hidden;
 
     main {
         display: flex;
         height: auto;
+        min-height: 100%;
         justify-content: flex-start;
         align-items: flex-start;
-        min-width: 100vw;
         overflow-x: hidden;
-        width: 100%;
+        width: 100vw;
 
         #menu_lateral {
-            position: relative;
-            left: 0;
-            top: 0;
-            height: auto;
-            width: 17.6vw;
-            padding: 0px;
+
+            height: 100%;
+            width: 15vw;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            background-color: $backgroung-color;
 
             #cont_fixed {
+
                 padding-top: 20px;
-                height: 100%;
-                width: 15%;
+                height: 100vh;
+                width: 100%;
                 display: flex;
                 gap: 10px;
                 flex-direction: column;
-                justify-content: flex-start;
+                justify-content: center;
                 align-items: center;
-                background-color: $backgroung-color;
-                border-right: 1px solid rgba(134, 134, 134, 0.233);
-                position: fixed;
+
+
 
                 img {
                     height: auto;
@@ -71,14 +69,15 @@ body {
                     justify-content: center;
                     align-items: center;
                     flex-direction: column;
+                    position: fixed;
                     gap: 40px;
-                    height: 75%;
-                    width: 80%;
+                    height: auto;
+                    width: 11%;
                     list-style: none;
 
                     a {
                         width: 100%;
-                        height: 10%;
+                        height: 6vh;
                         text-decoration: none;
 
                         .item {
@@ -123,6 +122,7 @@ body {
             width: 100vw;
             display: flex;
             flex-direction: column;
+            border-left: 1px solid rgba(134, 134, 134, 0.233);
 
             #text_main_horarios_fijos {
                 margin-top: 3%;
@@ -136,51 +136,90 @@ body {
             }
 
             .cont_header {
-                display: flex;
-                align-items: center;
-                left: 15%;
-                background-color: white;
-                height: 10%;
-                width: 85%;
-                z-index: 1000000;
-                position: fixed;
-                top: 0;
-                border-bottom: 1px solid $complemento2-color;
-                padding-left: 5%;
-                gap: 10px;
-
-                span {
-                    font-size: 1.5em;
-                    font-weight: 100;
-
-                    &.nombre_dia {
-                        font-size: 1em;
-                        color: #25379b;
-                    }
-                }
-
-                .cont_dia {
-                    height: 100%;
-
+                width: 85vw;
+                height: 12vh;
+               
+                #cont_fixed_mes {
                     display: flex;
-                    justify-content: center;
                     align-items: center;
-                    flex-direction: column;
-                    padding-bottom: 18px;
+                    padding: 10px;
+                    background-color: white;
+                    height: 12%;
+                    width: 100%;
+                    z-index: 100;
+                    position: fixed;
+                    top: 0;
+                    border-bottom: 1px solid $complemento2-color;
+                    padding-left: 5%;
+                    gap: 10px;
 
-                    .dia {
-                        background-color: $primary-color;
-                        padding: 15px;
-                        height: 40px;
-                        width: 40px;
+                    span {
+                        font-size: 1.5em;
+                        font-weight: 100;
+
+                        &.nombre_dia {
+                            font-size: 1em;
+                            color: #25379b;
+                        }
+                    }
+
+                    .cont_dia {
+                        height: 100%;
+
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        border-radius: 50%;
-                        color: white;
+                        flex-direction: column;
+                        padding-bottom: 18px;
 
+                        .dia {
+                            background-color: $primary-color;
+                            padding: 15px;
+                            height: 40px;
+                            width: 40px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            color: white;
+
+                        }
+                    }
+
+                    span {
+                        font-size: 1.5em;
+                        font-weight: 100;
+
+                        &.nombre_dia {
+                            font-size: 1em;
+                            color: #25379b;
+                        }
+                    }
+
+                    .cont_dia {
+                        height: 100%;
+
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        padding-bottom: 18px;
+
+                        .dia {
+                            background-color: $primary-color;
+                            padding: 15px;
+                            height: 40px;
+                            width: 40px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            color: white;
+
+                        }
                     }
                 }
+
             }
 
             #panel_options {
@@ -217,7 +256,7 @@ body {
                     padding-left: 5%;
                     padding-right: 5%;
                     width: 85vw;
-                  
+
                     height: 100%;
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
@@ -358,7 +397,7 @@ body {
                             left: 10;
                             top: 45%;
 
-                            width: 80vw;
+                            width: 85vw;
                             height: 1px;
                             background-color: rgba(102, 102, 102, 0.26);
                         }
@@ -367,22 +406,52 @@ body {
                     .cont_horario_timbre {
                         border-radius: 5px;
                         display: flex;
-                        justify-content: flex-start;
+                        justify-content: space-around;
                         align-items: center;
                         padding-left: 20px;
                         font-size: 1em;
                         gap: 40px;
                         margin-left: 3%;
-                        height: 20px;
-                        width: 40%;
+                        padding: 30px;
+                        height: 40px;
+                        width: 60%;
                         color: white;
 
+                        .cont_icons {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 10px;
+
+                            i {
+                                cursor: pointer;
+                                font-size: 1.2em;
+                                color: white;
+                                border-radius: 50%;
+                                padding: 10px;
+                                transition: all .2s ease-in-out;
+
+                                &:hover {
+                                    background-color: rgba(100, 100, 100, 0.185);
+                                }
+                            }
+
+                            button {
+                                border: none;
+                                background-color: transparent;
+                            }
+                        }
+
+                        .desac {
+                            display: none;
+                        }
+
                         &.s1 {
-                            background-color: $horario2-color-efect;
+                            background-color: #25379b;
                         }
 
                         &.s2 {
-                            background-color: $horario3-color-efect;
+                            background-color: #3e9e8e;
                         }
 
                         &.s3 {
@@ -392,7 +461,9 @@ body {
 
                         h5 {
                             font-size: .9em;
-
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
                             height: 100%;
                             text-align: center;
                         }
@@ -584,11 +655,7 @@ body {
     display: none;
 
     &.active {
-        position: absolute;
-        top: 0;
-        left: 60%;
-        transform: translate(-50%, -50%);
-        /* Para centrar */
+     
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -622,7 +689,7 @@ body {
         min-height: 100%;
         /* Asegura cubrir al menos toda la ventana */
         background: rgba(0, 64, 107, 0.562);
-        z-index: 1;
+        z-index: 10000;
         backdrop-filter: blur(100px);
 
 
@@ -645,68 +712,104 @@ body {
             flex-direction: column;
 
             h4 {
+                text-align: center;
                 font-size: 1.5em;
                 font-weight: bolder;
+              
             }
         }
 
     }
 }
-
+#cont_horario_nuevo{
+    position: fixed;
+    left: 94%;
+    top: 90%;
+    background-color: rgb(226, 226, 226);
+    color: white;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    i{
+        color: rgb(44, 44, 44);
+        font-size: 1.5em;
+    }
+    &:hover{
+        background-color: rgb(230, 230, 230);
+    }
+}
 .desac {
     display: none;
 }
 
 @media (max-width: 1560px) {
     .calendario-body {
-    
+
         grid-template-columns: repeat(2, 1fr) !important;
 
     }
 }
 
 @media (max-width: 1000px) {
+
+#cont_horario_nuevo{
+    left: 90%;
+}
+
     .calendario-body {
-    
+
         grid-template-columns: repeat(1, 1fr) !important;
         display: flex !important;
         flex-direction: column;
         justify-content: center !important;
         align-items: center !important;
+
         .div_mes {
-          
+
             width: 80% !important;
-         
+
         }
     }
 }
+
 @media (max-width: 800px) {
     .calendario-body {
-     
+
         grid-template-columns: repeat(1, 1fr) !important;
 
         .div_mes {
             width: 80% !important;
-          
-            font-size: .8em ;
-            .header_dias{
+
+            font-size: .8em;
+
+            .header_dias {
                 width: 70% !important;
-                .dia_semana{
+
+                .dia_semana {
                     display: flex;
                     justify-content: center !important;
                     align-items: center !important;
                     width: 30px !important;
                 }
             }
-            .cont_dias{
+
+            .cont_dias {
                 width: 70% !important;
-                .dia_mes,.dia_vacio{
+
+                .dia_mes,
+                .dia_vacio {
                     width: 30px !important;
                 }
             }
         }
     }
 }
+
 @media (max-width: 1360px) {
     #menu_lateral {
         width: 200px !important;
@@ -716,19 +819,33 @@ body {
         }
     }
 
-    .item {
-        padding-left: 0px !important;
-        display: flex;
-        gap: 3px !important;
-        justify-content: center !important;
-        align-items: center !important;
-        flex-direction: column;
-        text-align: center;
+    #cont_item {
+        width: 180px !important;
+
+
+        .item {
+
+            padding-left: 0px !important;
+            display: flex;
+            gap: 3px !important;
+            width: 100% !important;
+            justify-content: center !important;
+            align-items: center !important;
+            flex-direction: column;
+            text-align: center;
+        }
+
     }
 
 }
 
-@media (max-width: 550px) {
+@media (max-width: 613px) {
+
+    #cont_horario_nuevo{
+        left: 89%;
+        width: 50px;
+        height: 50px;
+    }
     #menu_lateral {
         width: 100px !important;
 
@@ -749,14 +866,48 @@ body {
         }
     }
 
-    .item {
-        padding-left: 0px !important;
-        display: flex;
-        gap: 3px !important;
-        justify-content: center !important;
-        align-items: center !important;
-        flex-direction: column;
-        text-align: center;
+    #cont_item {
+
+        width: 80px !important;
+
+        .item {
+            padding-left: 0px !important;
+            display: flex;
+            width: auto !important;
+            gap: 3px !important;
+            justify-content: center !important;
+            align-items: center !important;
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+}
+
+@media (max-width: 850px) {
+    .horario {
+        .cont_horario_timbre {
+            width: 80% !important;
+
+        }
+    }
+
+}
+
+@media (max-width: 450px) {
+    .horario {
+        .cont_horario_timbre {
+            width: 90% !important;
+            gap: 20px !important;
+            h5 {
+                font-size: .7em !important;
+            }
+
+            .cont_icons {
+                
+                font-size: .8em !important;
+            }
+        }
     }
 
 }

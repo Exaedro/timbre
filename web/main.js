@@ -96,6 +96,7 @@ app.get('/calendar_dia', (req, res) => {
 
     const dia = req.query.dia;
     const mes = req.query.mes;
+    let mes_enviar = parseInt(mes) + 1;
     const nombre_dia = req.query.nombre_dia;
     const año = req.query.año;
     const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
@@ -107,9 +108,9 @@ app.get('/calendar_dia', (req, res) => {
         }
         console.log("ss")
         console.log(results.HoraInicio)
-        res.render('calendar_dia', { results,dia, mes, nombre_dia, año });
+        res.render('calendar_dia', { results, dia, mes, nombre_dia, año, mes_enviar});
     })
-  
+
 });
 app.get('/horarios_fijos', (req, res) => {
     const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
@@ -162,7 +163,7 @@ app.post('/eliminar_horario_fijo', (req, res) => {
 app.post('/agregar_horario_fijo', (req, res) => {
     const { input_name_horario, input_horario, input_duracion } = req.body;
 
-    const datatime = Datatime();
+    let datatime = Datatime();
     const sql = `INSERT INTO horarios (NombreHorario, HoraInicio, Activo, FechaCreacion, duracion) VALUES (?,?,?,?,?)`;
     connection.query(sql, [input_name_horario, input_horario, 1, datatime, input_duracion], (err, result) => {
         if (err) {
@@ -173,6 +174,32 @@ app.post('/agregar_horario_fijo', (req, res) => {
         }
     });
 });
+
+
+app.post('/form_enviar_horario', (req, res) => {
+    const { dia_enviar, mes_enviar, semana_enviar, año_enviar, fecha_enviar, input_name_horario_enviar, Descripcion, activity_time_enviar, input_duracion_enviar } = req.body;
+    //dia, mes, nombre_dia, año
+    let datatime = Datatime();
+    console.log(fecha_enviar)
+    const sql = `INSERT INTO eventos(NombreEvento, Fecha, Horario,Duracion, TimbreActivo, Descripcion, FechaCreacion)  VALUES (?,?,?,?,?,?,?)`;
+    connection.query(sql, [input_name_horario_enviar, fecha_enviar, activity_time_enviar, input_duracion_enviar, 1, Descripcion, datatime], (err, result) => {
+        if (err) {
+            console.error('Error agregar un timbre ', err);
+            res.status(500).send('Error actualizando los datos');
+        } else {
+            const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&semana=${semana_enviar}&año=${año_enviar}`;
+            res.redirect(redirectUrl);
+        }
+    });
+});
+app.post('/cerrar_sesion', (req, res) => {
+
+            res.redirect("/iniciar_sesion");
+     
+});
+
+
+
 
 
 

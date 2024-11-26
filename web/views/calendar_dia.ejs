@@ -14,7 +14,9 @@
         <aside id="menu_lateral"> <%- include('menu.ejs') %></aside>
         <div id="cont_main">
             <div class="cont_header">
+                <div id="cont_fixed_mes">
 
+            
                 <% const meses=["Enero", "Febrero" , "Marzo" , "Abril" , "Mayo" , "Junio" , "Julio" , "Agosto"
                     , "Septiembre" , "Octubre" , "Noviembre" , "Diciembre" ];%>
                     <% const diasSemana=["Dom", "Lun" , "Mar" , "Mie" , "Jue" , "Vie" , "Sab" ];%>
@@ -27,7 +29,7 @@
 
                         <span><%-meses[mes]%></span>
                         <span> <%-año%></span>
-
+                    </div>
             </div>
             <section id="calendar_dia">
                 <% for (let i = 0; i < 24; i++) { 
@@ -51,19 +53,49 @@
                             <div class="cont_horario_timbre s1" >
                                 <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
                                 <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
+                                <div class="cont_icons" data-nombre="<%= horario.NombreHorario %>"  data-horario="<%= horario.HoraInicio %>"  data-duracion="<%= horario.duracion %>" data-FechaCreacion="<%= horario.FechaCreacion %>">
+                                    <i class="fa-solid fa-pen edit"></i>
+                                    <form action="">
+                                        <button type="submit">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                        
+                                    </form>
+                                   
+                                </div>
                             </div>
                             <% } %>  
                             
                             <% if (horario.duracion==2) { %>
-                                <div class="cont_horario_timbre s2"  >
+                                <div class="cont_horario_timbre s2" >
                                     <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
                                     <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
+                                    <div class="cont_icons" data-nombre="<%= horario.NombreHorario %>"  data-horario="<%= horario.HoraInicio %>"  data-duracion="<%= horario.duracion %>" data-FechaCreacion="<%= horario.FechaCreacion %>">
+                                        <i class="fa-solid fa-pen edit"></i>
+                                        <form action="">
+                                            <button type="submit">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </button>
+                                            
+                                        </form>
+                                       
+                                    </div>
                                 </div>
                                 <% } %>  
                                 <% if (horario.duracion==3) { %>
                                     <div class="cont_horario_timbre s3" >
                                         <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
                                         <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
+                                        <div class="cont_icons" data-nombre="<%= horario.NombreHorario %>"  data-horario="<%= horario.HoraInicio %>"  data-duracion="<%= horario.duracion %>" data-FechaCreacion="<%= horario.FechaCreacion %>">
+                                            <i class="fa-solid fa-pen edit"></i>
+                                            <form action="">
+                                                <button type="submit">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                </button>
+                                                
+                                            </form>
+                                           
+                                        </div>
                                     </div>
                                     <% } %>  
                         <% 
@@ -75,33 +107,70 @@
                 <% } %>
             </section>
         </div>
+        <div id="cont_horario_nuevo">
+            <i class="fa-solid fa-plus"></i>
+        </div>
     </main>
-    <form action="" id="form_enviar_horario" class="forms_class">
-        <h4>Agregar horario</h4>
-        <div class="cont_input">
-       
-            <input type="text" id="input_name_horario" name="input_name_horario" placeholder=" Nombre del horario"
-                required>
-        </div>
-        <div class="cont_input">
+   
 
-            <input type="date" id="input_fecha" name="input_fecha" placeholder="Nombre del horario" required>
-        </div>
-        <div class="cont_input">
+    <div id="conts_form">
+        <form action="/form_enviar_horario" method="post"  id="form_enviar_horario" class="forms_class">
+            <h4>Agregar horario para el dia <%-dia%> de <%-meses[mes]%></h4>
+            <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
+            <input type="text" name="mes_enviar" class="desac" value=" <%-mes%>">
+            <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
+            <input type="text" name="año_enviar" class="desac" value="<%-año%>">
 
-            <input type="time" id="activity_time" name="activity_time" placeholder="hoararo" value="20:00" required>
+            <input type="text" class="desac" name="fecha_enviar" value="<%-año%>-<%-mes_enviar%>-<%-dia%>">
+            
+            <div class="cont_input">
+                <input type="text" id="input_name_horario_enviar" name="input_name_horario_enviar" placeholder="Nombre del horario"
+                    required>
+            </div>
+            <div class="cont_input">
+                <input type="text" id="Descripcion" name="Descripcion" placeholder="Descripción del evento" required>
+            </div>
+            <div class="cont_input">
+                <input type="time" id="activity_time_enviar" name="activity_time_enviar" required>
+            </div>
+         
+            <div class="cont_input">
+                <input type="number" id="input_duracion_enviar" name="input_duracion_enviar" placeholder="Duracion del sonido" min="1" required>
+            </div>
+            <div class="cont_botones">
+                <button type="submit" id="enviar">Guardar</button>
+                <button type="button" class="close_form">Cancelar</button>
+            </div>
+        </form>
 
-        </div>
-        <div class="cont_input">
 
-            <input type="number" id="input_duracion" name="input_duracion" placeholder="Duracion del sonido" min="1"
-                required>
-        </div>
-        <div class="cont_botones">
-            <button type="submit" id="enviar">Guardar</button>
-            <button type="button" id="close_form">Cancelar</button>
-        </div>
-    </form>
+
+
+        <form action="/form_editar_horario_dia"  method="post" id="form_editar_horario_dia" class="forms_class">
+            <h4>Editar horario</h4>
+            <div class="cont_input">
+                <input type="text" id="input_name_horario" name="input_name_horario" placeholder=" Nombre del horario"
+                    required>
+            </div>
+            <div class="cont_input">
+    
+                <input type="time" id="activity_time" name="activity_time"  required>
+    
+            </div>
+            <div class="cont_input">
+    
+                <input type="number" id="input_duracion" name="input_duracion" placeholder="Duracion del sonido" min="1"
+                    required>
+            </div>
+            <div class="cont_botones">
+                <button type="submit" id="enviar">Guardar</button>
+                <button type="button" class="close_form">Cancelar</button>
+            </div>
+            
+        </form>
+    </div>
+    
+
     <script src="js/calendario_dia.js"></script>
 </body>
 

@@ -40,7 +40,7 @@ main {
 }
 
 form {
-    height: 700px;
+    height: 600px;
     width: 450px;
     background-color: rgb(252, 252, 252);
     padding: 0px 0px;
@@ -59,14 +59,15 @@ form {
         align-items: center;
         padding: auto;
         border-bottom: 1px solid rgba(131, 131, 131, 0.253);
-        img{
-            height: 100%;
-            width: 6vw;
+
+        img {
+            height: 100px;
+            width: 100px;
         }
     }
 
     #cont_main_inputs {
-       
+
         padding: 50px 20px;
         display: flex;
         align-items: center;
@@ -95,11 +96,11 @@ form {
 
                 border: none;
                 background-color: transparent;
- 
+
                 outline: none;
                 width: 100%;
                 height: 20px;
-               
+
                 font-size: 1em !important;
                 color: black;
             }
@@ -122,5 +123,20 @@ form {
                 background-color: rgb(38, 38, 245);
             }
         }
+    }
+}
+
+@media (max-width: 770px) {
+
+    form {
+        height: 500px;
+        width: 350px;
+    }
+}
+@media (max-width: 450px) {
+
+    form {
+        height: 450px;
+        width: 300px;
     }
 }

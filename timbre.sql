@@ -3,19 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2024 a las 02:45:01
+-- Tiempo de generación: 26-11-2024 a las 19:36:42
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `timbre`
@@ -45,10 +39,27 @@ CREATE TABLE `eventos` (
   `EventoID` int(11) NOT NULL,
   `NombreEvento` varchar(100) NOT NULL,
   `Fecha` date NOT NULL,
+  `Horario` time NOT NULL,
+  `Duracion` int(11) NOT NULL,
   `TimbreActivo` tinyint(1) DEFAULT 0,
   `Descripcion` text DEFAULT NULL,
   `FechaCreacion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `eventos`
+--
+
+INSERT INTO `eventos` (`EventoID`, `NombreEvento`, `Fecha`, `Horario`, `Duracion`, `TimbreActivo`, `Descripcion`, `FechaCreacion`) VALUES
+(1, 'salida anticipada de CS', '0000-00-00', '21:35:00', 3, 1, 'salida anticipada de ciclo Superior por motivos escolares', '2024-11-26 15:06:54'),
+(2, 'salida anticipada de CS', '0000-00-00', '21:35:00', 3, 1, 'salida anticipada de ciclo Superior por motivos escolares', '2024-11-26 15:08:24'),
+(3, 'salida anticipada de CS', '0000-00-00', '20:45:00', 3, 1, 'salida anticipada de ciclo Superior por motivos escolares', '2024-11-26 15:09:24'),
+(4, 'salida anticipada de todo el colegio', '0000-00-00', '20:20:00', 3, 1, '..', '2024-11-26 15:15:47'),
+(5, 'salida anticipada de CSasda', '0000-00-00', '20:10:00', 12321, 1, 'asd', '2024-11-26 15:17:18'),
+(6, 'salida anticipada de CSasdaasd', '2024-11-26', '21:29:00', 3, 1, '..', '2024-11-26 15:23:10'),
+(7, 'adasadas', '2024-11-26', '19:30:00', 3, 1, '..', '2024-11-26 15:26:22'),
+(8, 'salida anticipada de todo el colegio', '2024-11-26', '20:12:00', 2, 1, 'asd', '2024-11-26 15:30:27'),
+(9, 'adasadasas12121', '2024-11-27', '12:12:00', 2, 1, 'asd', '2024-11-26 15:30:55');
 
 -- --------------------------------------------------------
 
@@ -85,12 +96,11 @@ CREATE TABLE `horarios` (
 --
 
 INSERT INTO `horarios` (`HorarioID`, `NombreHorario`, `HoraInicio`, `Activo`, `FechaCreacion`, `duracion`) VALUES
-(1, 'Timbre 1', '07:35:00', 1, '2024-11-23 00:00:00', 1),
 (2, 'Timbre 2', '08:35:00', 1, '2024-11-23 00:00:00', 1),
 (3, 'Timbre 3', '09:35:00', 1, '2024-11-23 00:00:00', 1),
 (4, 'Timbre 4', '09:55:00', 1, '2024-11-23 00:00:00', 1),
 (5, 'Timbre 5', '10:55:00', 1, '2024-11-23 00:00:00', 1),
-(6, 'Timbre 6', '11:55:00', 1, '2024-11-23 00:00:00', 1),
+(6, 'Timbre 6', '11:55:00', 1, '2024-11-24 02:17:25', 1),
 (7, 'Timbre 7', '12:55:00', 1, '2024-11-23 00:00:00', 1),
 (8, 'Timbre 8', '13:55:00', 1, '2024-11-23 00:00:00', 1),
 (9, 'Timbre 9', '14:55:00', 1, '2024-11-23 00:00:00', 1),
@@ -99,7 +109,9 @@ INSERT INTO `horarios` (`HorarioID`, `NombreHorario`, `HoraInicio`, `Activo`, `F
 (12, 'Timbre 12', '17:15:00', 1, '2024-11-23 00:00:00', 1),
 (13, 'Timbre 13', '17:35:00', 1, '2024-11-23 00:00:00', 1),
 (14, 'Timbre 14', '18:35:00', 1, '2024-11-23 00:00:00', 1),
-(15, 'Timbre 15', '19:35:00', 1, '2024-11-23 00:00:00', 1);
+(15, 'Timbre 15', '19:35:00', 1, '2024-11-23 00:00:00', 1),
+(17, 'Timbre 1 (Inicio de jornada)', '07:35:00', 1, '2024-11-24 02:50:20', 2),
+(18, 'timbre15', '20:35:00', 1, '2024-11-25 16:21:53', 3);
 
 -- --------------------------------------------------------
 
@@ -174,7 +186,7 @@ ALTER TABLE `configuraciontimbre`
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `EventoID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `EventoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `historialtimbre`
@@ -186,7 +198,7 @@ ALTER TABLE `historialtimbre`
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
-  MODIFY `HorarioID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `HorarioID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -212,7 +224,3 @@ ALTER TABLE `historialtimbre`
   ADD CONSTRAINT `historialtimbre_ibfk_1` FOREIGN KEY (`HorarioID`) REFERENCES `horarios` (`HorarioID`),
   ADD CONSTRAINT `historialtimbre_ibfk_2` FOREIGN KEY (`EventoID`) REFERENCES `eventos` (`EventoID`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
