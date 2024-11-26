@@ -399,7 +399,7 @@ body main #cont_main #cont_horarios_fijos .cont_horario {
   justify-content: space-between;
   padding: 0% 3%;
   align-items: center;
-  height: 6vh;
+  height: 80px;
   width: 50%;
   border: 1px solid #bdd1de;
   border-radius: 10px;

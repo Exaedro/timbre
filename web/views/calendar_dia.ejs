@@ -21,14 +21,14 @@
                     , "Septiembre" , "Octubre" , "Noviembre" , "Diciembre" ];%>
                     <% const diasSemana=["Dom", "Lun" , "Mar" , "Mie" , "Jue" , "Vie" , "Sab" ];%>
                         <div class="cont_dia">
-                            <span class="nombre_dia"> <%-diasSemana[nombre_dia]%> </span>
+                            <span class="nombre_dia"><%-diasSemana[nombre_dia]%></span>
                             <span class="dia">
                                 <%-dia%>
                             </span>
                         </div>
 
-                        <span><%-meses[mes]%></span>
-                        <span> <%-año%></span>
+                        <span id="mes"><%-meses[mes]%></span>
+                        <span id="año"><%-año%></span>
                     </div>
             </div>
             <section id="calendar_dia">
@@ -43,12 +43,14 @@
                     <% if (diasSemana[nombre_dia] != "Sab" && diasSemana[nombre_dia] != "Dom") { %>
                         <% 
                         // Recorremos los resultados de la base de datos
-                        results.forEach((horario) => {
+                        results_fijo.forEach((horario) => {
                             const getHourFromTime = (time) => time.split(":")[0];
                             const horaInicio = getHourFromTime(horario.HoraInicio || "00:00:00");
-            
+                            
                             if (parseInt(horaInicio, 10) == i) { 
+                                
                         %>
+                        
                         <% if (horario.duracion==1) { %>
                             <div class="cont_horario_timbre s1" >
                                 <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
@@ -117,7 +119,7 @@
         <form action="/form_enviar_horario" method="post"  id="form_enviar_horario" class="forms_class">
             <h4>Agregar horario para el dia <%-dia%> de <%-meses[mes]%></h4>
             <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
-            <input type="text" name="mes_enviar" class="desac" value=" <%-mes%>">
+            <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
             <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
             <input type="text" name="año_enviar" class="desac" value="<%-año%>">
 

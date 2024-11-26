@@ -99,16 +99,26 @@ app.get('/calendar_dia', (req, res) => {
     let mes_enviar = parseInt(mes) + 1;
     const nombre_dia = req.query.nombre_dia;
     const año = req.query.año;
+    const fecha_comp = `/${año}-${mes_enviar}-${dia}`;
+
     const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
-    connection.query(query_act_dia, [], (err, results) => {
+    connection.query(query_act_dia, [], (err, results_fijo) => {
         if (err) {
             console.error('Error al buscar los datos:', err);
             return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
 
         }
-        console.log("ss")
-        console.log(results.HoraInicio)
-        res.render('calendar_dia', { results, dia, mes, nombre_dia, año, mes_enviar});
+        const query_evento = 'SELECT * FROM eventos WHERE Fecha="?" ORDER BY Horario ASC;'
+        connection.query(query_evento, [fecha_comp], (err, results) => {
+            if (err) {
+                console.error('Error al buscar los datos:', err);
+                return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
+
+            }
+            let horario_comp=results+results_fijo
+            
+            res.render('calendar_dia', { results, results_fijo, dia, mes, nombre_dia, año, mes_enviar });
+        })
     })
 
 });
@@ -187,15 +197,15 @@ app.post('/form_enviar_horario', (req, res) => {
             console.error('Error agregar un timbre ', err);
             res.status(500).send('Error actualizando los datos');
         } else {
-            const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&semana=${semana_enviar}&año=${año_enviar}`;
+            const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
             res.redirect(redirectUrl);
         }
     });
 });
 app.post('/cerrar_sesion', (req, res) => {
 
-            res.redirect("/iniciar_sesion");
-     
+    res.redirect("/iniciar_sesion");
+
 });
 
 

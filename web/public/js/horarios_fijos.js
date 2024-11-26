@@ -32,6 +32,10 @@ editar.forEach((button) => {
 
         window.addEventListener("load", adjustHeight());
         window.addEventListener("resize", adjustHeight());
+        form_editar.scrollIntoView({
+            behavior: "smooth", 
+            block: "center", 
+        });
     });
 });
 
@@ -41,6 +45,10 @@ boton_agregar.addEventListener("click", () => {
 
     window.addEventListener("load", adjustHeight());
     window.addEventListener("resize", adjustHeight());
+    agregar_horario_fijo.scrollIntoView({
+        behavior: "smooth", 
+        block: "center", 
+    });
 })
 
 close_form_agregar.addEventListener("click",()=>{

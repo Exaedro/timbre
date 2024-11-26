@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             activity_time.value = horario_formateado;
             input_duracion.value = data_duracion;
 
-
+ 
             conts_form.classList.add('active');
             form_editar_horario_dia.classList.add('active');
 
