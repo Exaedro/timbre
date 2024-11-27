@@ -1,3 +1,11 @@
+document.getElementById("checkbox").addEventListener("change", function () {
+    document.getElementById("enviar_dia_apagado").submit();
+    alert("ss")
+});
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const cont_horario_nuevo = document.getElementById("cont_horario_nuevo");
     const formPopup = document.getElementById("form_enviar_horario");
@@ -17,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("resize", adjustHeight);
         // Desplazar hacia el elemento
         form_enviar_horario.scrollIntoView({
-            behavior: "smooth", 
-            block: "center", 
+            behavior: "smooth",
+            block: "center",
         });
     });
     btn_editar.forEach(horario => {
@@ -40,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             activity_time.value = horario_formateado;
             input_duracion.value = data_duracion;
 
- 
+
             conts_form.classList.add('active');
             form_editar_horario_dia.classList.add('active');
 

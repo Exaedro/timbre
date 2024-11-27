@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2024 a las 19:36:42
+-- Tiempo de generación: 27-11-2024 a las 19:07:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,6 +32,26 @@ CREATE TABLE `configuraciontimbre` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `dias_apagado`
+--
+
+CREATE TABLE `dias_apagado` (
+  `Id_dia` int(11) NOT NULL,
+  `Fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `dias_apagado`
+--
+
+INSERT INTO `dias_apagado` (`Id_dia`, `Fecha`) VALUES
+(1, '2024-11-27'),
+(3, '2024-11-28'),
+(4, '2024-11-28');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `eventos`
 --
 
@@ -40,8 +60,8 @@ CREATE TABLE `eventos` (
   `NombreEvento` varchar(100) NOT NULL,
   `Fecha` date NOT NULL,
   `Horario` time NOT NULL,
-  `Duracion` int(11) NOT NULL,
-  `TimbreActivo` tinyint(1) DEFAULT 0,
+  `duracion` int(11) NOT NULL,
+  `Activo` tinyint(1) DEFAULT 0,
   `Descripcion` text DEFAULT NULL,
   `FechaCreacion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -50,16 +70,18 @@ CREATE TABLE `eventos` (
 -- Volcado de datos para la tabla `eventos`
 --
 
-INSERT INTO `eventos` (`EventoID`, `NombreEvento`, `Fecha`, `Horario`, `Duracion`, `TimbreActivo`, `Descripcion`, `FechaCreacion`) VALUES
+INSERT INTO `eventos` (`EventoID`, `NombreEvento`, `Fecha`, `Horario`, `duracion`, `Activo`, `Descripcion`, `FechaCreacion`) VALUES
 (1, 'salida anticipada de CS', '0000-00-00', '21:35:00', 3, 1, 'salida anticipada de ciclo Superior por motivos escolares', '2024-11-26 15:06:54'),
 (2, 'salida anticipada de CS', '0000-00-00', '21:35:00', 3, 1, 'salida anticipada de ciclo Superior por motivos escolares', '2024-11-26 15:08:24'),
 (3, 'salida anticipada de CS', '0000-00-00', '20:45:00', 3, 1, 'salida anticipada de ciclo Superior por motivos escolares', '2024-11-26 15:09:24'),
 (4, 'salida anticipada de todo el colegio', '0000-00-00', '20:20:00', 3, 1, '..', '2024-11-26 15:15:47'),
 (5, 'salida anticipada de CSasda', '0000-00-00', '20:10:00', 12321, 1, 'asd', '2024-11-26 15:17:18'),
 (6, 'salida anticipada de CSasdaasd', '2024-11-26', '21:29:00', 3, 1, '..', '2024-11-26 15:23:10'),
-(7, 'adasadas', '2024-11-26', '19:30:00', 3, 1, '..', '2024-11-26 15:26:22'),
+(7, 'adasadas', '2024-12-26', '19:30:00', 3, 1, '..', '2024-11-26 15:26:22'),
 (8, 'salida anticipada de todo el colegio', '2024-11-26', '20:12:00', 2, 1, 'asd', '2024-11-26 15:30:27'),
-(9, 'adasadasas12121', '2024-11-27', '12:12:00', 2, 1, 'asd', '2024-11-26 15:30:55');
+(9, 'adasadasas12121', '2024-11-26', '12:12:00', 2, 0, 'asd', '2024-11-26 15:30:55'),
+(10, 'salida anticipada de CS', '2024-11-27', '21:20:00', 2, 0, 'salida anticipada de ciclo Superior por motivos escolares', '2024-11-27 10:52:55'),
+(11, 'timbre15', '2024-11-27', '20:35:00', 3, 0, '..', '2024-11-27 11:25:04');
 
 -- --------------------------------------------------------
 
@@ -146,6 +168,12 @@ ALTER TABLE `configuraciontimbre`
   ADD KEY `EventoID` (`EventoID`);
 
 --
+-- Indices de la tabla `dias_apagado`
+--
+ALTER TABLE `dias_apagado`
+  ADD PRIMARY KEY (`Id_dia`);
+
+--
 -- Indices de la tabla `eventos`
 --
 ALTER TABLE `eventos`
@@ -183,10 +211,16 @@ ALTER TABLE `configuraciontimbre`
   MODIFY `ConfigID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `dias_apagado`
+--
+ALTER TABLE `dias_apagado`
+  MODIFY `Id_dia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `EventoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `EventoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `historialtimbre`

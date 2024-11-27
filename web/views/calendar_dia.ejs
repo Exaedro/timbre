@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario</title>
+    <link rel="shortcut icon" href="/resources/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
@@ -15,91 +16,75 @@
         <div id="cont_main">
             <div class="cont_header">
                 <div id="cont_fixed_mes">
-
-            
-                <% const meses=["Enero", "Febrero" , "Marzo" , "Abril" , "Mayo" , "Junio" , "Julio" , "Agosto"
-                    , "Septiembre" , "Octubre" , "Noviembre" , "Diciembre" ];%>
-                    <% const diasSemana=["Dom", "Lun" , "Mar" , "Mie" , "Jue" , "Vie" , "Sab" ];%>
-                        <div class="cont_dia">
-                            <span class="nombre_dia"><%-diasSemana[nombre_dia]%></span>
-                            <span class="dia">
-                                <%-dia%>
-                            </span>
-                        </div>
-
-                        <span id="mes"><%-meses[mes]%></span>
-                        <span id="año"><%-año%></span>
+                    <% const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", 
+                        "Septiembre", "Octubre", "Noviembre", "Diciembre"]; %>
+                    <% const diasSemana = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"]; %>
+                    <div class="cont_dia">
+                        <span class="nombre_dia"><%- diasSemana[nombre_dia] %></span>
+                        <span class="dia"><%- dia %></span>
                     </div>
+                    <span id="mes"><%- meses[mes] %></span>
+                    <span id="año"><%- año %></span>
+                </div>
             </div>
+            <section id="cont_dia_apagado">
+                <form action="/enviar_dia_apagado" method="post" id="enviar_dia_apagado">
+                    <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
+                    <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
+                    <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
+                    <input type="text" name="año_enviar" class="desac" value="<%-año%>">
+                    <span><%= results_dia_apagado.Fecha %></span>
+                    <% if (!results_dia_apagado) { %>
+                        <span class="checkmark">Activar timbre</span>
+                        <input type="checkbox" id="checkbox" value="1" name="valor" checked>
+                    <% } else { %>
+                        <span class="checkmark">Desactivar timbre</span>
+                        <input type="checkbox" id="checkbox" value="0" name="valor">
+                    <% } %>
+                </form>
+            </section>
             <section id="calendar_dia">
-                <% for (let i = 0; i < 24; i++) { 
+                <% for (let i = 0; i < 24; i++) {
                     const hour = i === 0 ? 12 : (i <= 12 ? i : i - 12);
                     const displayHour = i === 0 ? "12 AM" : i < 12 ? i + " AM" : (i === 12 ? "12 PM" : (i - 12) + " PM");
                 %>
                 <div class="horario" data-hora="<%= hour %>">
-                    <h4 class="hour-item">
-                        <%= displayHour %>
-                    </h4>
-                    <% if (diasSemana[nombre_dia] != "Sab" && diasSemana[nombre_dia] != "Dom") { %>
+                    <h4 class="hour-item"><%= displayHour %></h4>
+                    <% if (diasSemana[nombre_dia] !== "Sab" && diasSemana[nombre_dia] !== "Dom") { %>
                         <% 
-                        // Recorremos los resultados de la base de datos
-                        results_fijo.forEach((horario) => {
+                        combinedResults.forEach((horario) => {
                             const getHourFromTime = (time) => time.split(":")[0];
-                            const horaInicio = getHourFromTime(horario.HoraInicio || "00:00:00");
-                            
-                            if (parseInt(horaInicio, 10) == i) { 
-                                
+                            const horaInicio = getHourFromTime(horario.HoraInicio || horario.Horario || "00:00:00");    
+                            if (parseInt(horaInicio, 10) === i) {
                         %>
-                        
-                        <% if (horario.duracion==1) { %>
-                            <div class="cont_horario_timbre s1" >
-                                <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
-                                <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
-                                <div class="cont_icons" data-nombre="<%= horario.NombreHorario %>"  data-horario="<%= horario.HoraInicio %>"  data-duracion="<%= horario.duracion %>" data-FechaCreacion="<%= horario.FechaCreacion %>">
-                                    <i class="fa-solid fa-pen edit"></i>
-                                    <form action="">
-                                        <button type="submit">
-                                            <i class="fa-regular fa-trash-can"></i>
-                                        </button>
-                                        
-                                    </form>
-                                   
-                                </div>
+                        <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'desac' %>">
+                           
+                            <h5 class="nombre_actividad"><%= horario.NombreHorario || horario.NombreEvento %></h5>
+                            <h5><%= horario.HoraInicio || horario.Horario %> - <%= horario.duracion || horario.Duracion %>s</h5>
+                            <div class="cont_icons" data-nombre="<%= horario.NombreHorario || horario.NombreEvento %>" 
+                                data-horario="<%= horario.HoraInicio || horario.Horario %>" 
+                                data-duracion="<%= horario.duracion || horario.Duracion %>" 
+                                data-FechaCreacion="<%= horario.FechaCreacion || horario.Fecha %>">
+                                <i class="fa-solid fa-pen edit"></i>
+                                <form action="/eliminar_horario_dia" method="post">
+                                    <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
+                                    <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
+                                    <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
+                                    <input type="text" name="año_enviar" class="desac" value="<%-año%>">
+                                    <% if (horario.type === 'event') { %>
+                                        <input type="text" name="type" value="<%= horario.type %>" class="desac">
+                                        <input type="text" name="id_horario" value="<%= horario.EventoID %> " class="desac">
+                                    <% } else { %>
+                                        <input type="text" name="type" value="<%= horario.type %> " class="desac">
+                                        <input type="text" name="id_horario" value="<%= horario.HorarioID %> " class="desac">
+                                    <% } %>
+
+                                    <button type="submit">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
+                                </form>
                             </div>
-                            <% } %>  
-                            
-                            <% if (horario.duracion==2) { %>
-                                <div class="cont_horario_timbre s2" >
-                                    <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
-                                    <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
-                                    <div class="cont_icons" data-nombre="<%= horario.NombreHorario %>"  data-horario="<%= horario.HoraInicio %>"  data-duracion="<%= horario.duracion %>" data-FechaCreacion="<%= horario.FechaCreacion %>">
-                                        <i class="fa-solid fa-pen edit"></i>
-                                        <form action="">
-                                            <button type="submit">
-                                                <i class="fa-regular fa-trash-can"></i>
-                                            </button>
-                                            
-                                        </form>
-                                       
-                                    </div>
-                                </div>
-                                <% } %>  
-                                <% if (horario.duracion==3) { %>
-                                    <div class="cont_horario_timbre s3" >
-                                        <h5 class="nombre_actividad"><%= horario.NombreHorario %></h5>
-                                        <h5><%= horario.HoraInicio %> - <%= horario.duracion %>s</h5>
-                                        <div class="cont_icons" data-nombre="<%= horario.NombreHorario %>"  data-horario="<%= horario.HoraInicio %>"  data-duracion="<%= horario.duracion %>" data-FechaCreacion="<%= horario.FechaCreacion %>">
-                                            <i class="fa-solid fa-pen edit"></i>
-                                            <form action="">
-                                                <button type="submit">
-                                                    <i class="fa-regular fa-trash-can"></i>
-                                                </button>
-                                                
-                                            </form>
-                                           
-                                        </div>
-                                    </div>
-                                    <% } %>  
+                        </div>
                         <% 
                             }
                         });

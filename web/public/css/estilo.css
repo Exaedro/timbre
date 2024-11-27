@@ -292,8 +292,20 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes a:hover {
   color: white;
 }
-body main #cont_main #calendar_dia {
+body main #cont_main #cont_dia_apagado {
   padding-top: 7%;
+  padding-left: 20px;
+  width: 100%;
+}
+body main #cont_main #cont_dia_apagado #enviar_dia_apagado {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  flex-direction: column;
+}
+body main #cont_main #calendar_dia {
+  padding-top: 2%;
   padding-left: 2%;
   display: flex;
   justify-content: center;
@@ -342,6 +354,9 @@ body main #cont_main #calendar_dia .horario .cont_horario_timbre {
   height: 40px;
   width: 60%;
   color: white;
+}
+body main #cont_main #calendar_dia .horario .cont_horario_timbre.desac {
+  display: none !important;
 }
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .cont_icons {
   display: flex;

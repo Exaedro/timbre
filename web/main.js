@@ -13,7 +13,7 @@ app.set('view engine', 'ejs')
 // Middleware para procesar JSON y datos de formularios
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/resources', express.static(path.join(__dirname, '../public/resources')));
 
 // Conexión a la base de datos
 const connection = mysql.createConnection({
@@ -93,32 +93,61 @@ app.get('/index', (req, res) => {
     res.render('index')
 })
 app.get('/calendar_dia', (req, res) => {
-
     const dia = req.query.dia;
     const mes = req.query.mes;
     let mes_enviar = parseInt(mes) + 1;
     const nombre_dia = req.query.nombre_dia;
     const año = req.query.año;
-    const fecha_comp = `/${año}-${mes_enviar}-${dia}`;
+    const fecha_comp = `${año}-${mes_enviar}-${dia}`; // Ajustar formato de fecha
 
-    const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
-    connection.query(query_act_dia, [], (err, results_fijo) => {
+    const quyery_dia_apagago = "SELECT `Id_dia`, `Fecha` FROM `dias_apagado` WHERE Fecha=?"
+    connection.query(quyery_dia_apagago, [fecha_comp], (err, results_dia_apagado) => {
         if (err) {
             console.error('Error al buscar los datos:', err);
             return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
+        } else {
+            const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;';
+            connection.query(query_act_dia, [], (err, results_fijo) => {
+                if (err) {
+                    console.error('Error al buscar los datos:', err);
+                    return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
+                }
 
+                const query_evento = 'SELECT * FROM eventos WHERE Fecha=? ORDER BY Horario ASC;';
+                connection.query(query_evento, [fecha_comp], (err, results_evento) => {
+                    if (err) {
+                        console.error('Error al buscar los datos:', err);
+                        return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
+                    }
+
+
+                    const eventoHoras = new Set(results_evento.map(evento => evento.Horario.split(':')[0]));
+
+                    // Filtrar horarios fijos que no coincidan con los eventos
+                    const horariosFiltrados = results_fijo.filter(horario =>
+                        !eventoHoras.has(horario.HoraInicio.split(':')[0])
+                    );
+
+                    const combinedResults = [
+                        ...horariosFiltrados.map(item => ({ ...item, type: 'fixed' })),
+                        ...results_evento.map(item => ({ ...item, type: 'event' }))
+                    ];
+
+                    // Ordenar por hora
+                    combinedResults.sort((a, b) => {
+                        const horaA = a.HoraInicio || a.Horario;
+                        const horaB = b.HoraInicio || b.Horario;
+                        return horaA.localeCompare(horaB);
+                    });
+
+
+                    res.render('calendar_dia', {
+                        combinedResults,results_dia_apagado,
+                        dia, mes, nombre_dia, año, mes_enviar
+                    });
+                });
+            });
         }
-        const query_evento = 'SELECT * FROM eventos WHERE Fecha="?" ORDER BY Horario ASC;'
-        connection.query(query_evento, [fecha_comp], (err, results) => {
-            if (err) {
-                console.error('Error al buscar los datos:', err);
-                return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
-
-            }
-            let horario_comp=results+results_fijo
-            
-            res.render('calendar_dia', { results, results_fijo, dia, mes, nombre_dia, año, mes_enviar });
-        })
     })
 
 });
@@ -191,7 +220,7 @@ app.post('/form_enviar_horario', (req, res) => {
     //dia, mes, nombre_dia, año
     let datatime = Datatime();
     console.log(fecha_enviar)
-    const sql = `INSERT INTO eventos(NombreEvento, Fecha, Horario,Duracion, TimbreActivo, Descripcion, FechaCreacion)  VALUES (?,?,?,?,?,?,?)`;
+    const sql = `INSERT INTO eventos(NombreEvento, Fecha, Horario,duracion, Activo, Descripcion, FechaCreacion)  VALUES (?,?,?,?,?,?,?)`;
     connection.query(sql, [input_name_horario_enviar, fecha_enviar, activity_time_enviar, input_duracion_enviar, 1, Descripcion, datatime], (err, result) => {
         if (err) {
             console.error('Error agregar un timbre ', err);
@@ -202,6 +231,86 @@ app.post('/form_enviar_horario', (req, res) => {
         }
     });
 });
+app.post('/eliminar_horario_dia', (req, res) => {
+    const { type, id_horario, dia_enviar, mes_enviar, semana_enviar, año_enviar } = req.body;
+    let datatime = Datatime();
+
+    if (type === "event") {
+
+        const update_evento = "UPDATE `eventos` SET `Activo`='0' WHERE EventoID=?"
+        connection.query(update_evento, [id_horario], (err, result) => {
+            if (err) {
+                console.error('Error agregar un timbre ', err);
+                res.status(500).send('Error actualizando los datos');
+            }
+            else {
+                const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
+                res.redirect(redirectUrl);
+            }
+        });
+
+    } else {
+        const query_horario = "SELECT * FROM `horarios` WHERE HorarioID=?";
+        connection.query(query_horario, [id_horario], (err, result) => {
+            if (err) {
+                console.error('Error agregar un timbre ', err);
+                res.status(500).send('Error actualizando los datos');
+            } else {
+                let nombre_horario = result[0].NombreHorario
+                let HoraInicio = result[0].HoraInicio
+                let duracion = result[0].duracion
+                const insert_horario = `INSERT INTO eventos(NombreEvento, Fecha, Horario ,duracion, Activo, Descripcion, FechaCreacion)  VALUES (?,?,?,?,?,?,?)`;
+                connection.query(insert_horario, [nombre_horario, datatime, HoraInicio, duracion, 0, "..", datatime], (err, result) => {
+                    if (err) {
+                        console.error('Error agregar un timbre ', err);
+                        res.status(500).send('Error agregando evento');
+                    } else {
+                        const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
+                        res.redirect(redirectUrl);
+                    }
+                });
+            }
+
+        });
+    }
+
+
+});
+
+
+app.post('/enviar_dia_apagado', (req, res) => {
+    const {valor,dia_enviar, mes_enviar, semana_enviar, año_enviar} = req.body;
+    
+    let datatime = Datatime();
+    
+    if(valor==1){
+        const sql = "INSERT INTO `dias_apagado`(`Id_dia`, `Fecha`) VALUES ('[value-1]','[value-2]')";
+        connection.query(sql, [datatime], (err, result) => {
+            if (err) {
+                console.error('Error agregar un timbre ', err);
+                res.status(500).send('Error actualizando los datos');
+            } else {
+                const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
+                res.redirect(redirectUrl);
+            }
+        });
+    }else if(valor==0){
+        const sql = "DELETE FROM `dias_apagado` WHERE Fecha=?";
+        connection.query(sql, [datatime], (err, result) => {
+            if (err) {
+                console.error('Error agregar un timbre ', err);
+                res.status(500).send('Error actualizando los datos');
+            } else {
+                const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
+                res.redirect(redirectUrl);
+            }
+        });
+    }
+    
+});
+
+
+
 app.post('/cerrar_sesion', (req, res) => {
 
     res.redirect("/iniciar_sesion");

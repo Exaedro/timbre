@@ -3,7 +3,7 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-} 
+}
 
 // Variables globales
 $primary-color: #4180ab;
@@ -138,7 +138,7 @@ body {
             .cont_header {
                 width: 85vw;
                 height: 12vh;
-               
+
                 #cont_fixed_mes {
                     display: flex;
                     align-items: center;
@@ -363,8 +363,22 @@ body {
                 }
             }
 
-            #calendar_dia {
+            #cont_dia_apagado {
                 padding-top: 7%;
+                padding-left: 20px;
+                width: 100%;
+              
+                #enviar_dia_apagado{
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-start;
+                    gap: 10px;
+                    flex-direction: column;
+                }
+            }
+
+            #calendar_dia {
+                padding-top: 2%;
                 padding-left: 2%;
                 display: flex;
                 justify-content: center;
@@ -414,6 +428,11 @@ body {
                         margin-left: 3%;
                         padding: 30px;
                         height: 40px;
+
+                        &.desac {
+                            display: none !important;
+                        }
+
                         width: 60%;
                         color: white;
 
@@ -489,9 +508,9 @@ body {
                     justify-content: space-between;
                     padding: 0% 3%;
                     align-items: center;
-                    height:80px;
+                    height: 80px;
                     width: 50%;
-                 
+
                     border: 1px solid $complemento2-color;
                     border-radius: 10px;
 
@@ -655,7 +674,7 @@ body {
     display: none;
 
     &.active {
-     
+
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -715,13 +734,14 @@ body {
                 text-align: center;
                 font-size: 1.5em;
                 font-weight: bolder;
-              
+
             }
         }
 
     }
 }
-#cont_horario_nuevo{
+
+#cont_horario_nuevo {
     position: fixed;
     left: 94%;
     top: 90%;
@@ -735,14 +755,17 @@ body {
     align-items: center;
     cursor: pointer;
     transition: all .2s ease-in-out;
-    i{
+
+    i {
         color: rgb(44, 44, 44);
         font-size: 1.5em;
     }
-    &:hover{
+
+    &:hover {
         background-color: rgb(230, 230, 230);
     }
 }
+
 .desac {
     display: none;
 }
@@ -757,9 +780,9 @@ body {
 
 @media (max-width: 1000px) {
 
-#cont_horario_nuevo{
-    left: 90%;
-}
+    #cont_horario_nuevo {
+        left: 90%;
+    }
 
     .calendario-body {
 
@@ -841,11 +864,12 @@ body {
 
 @media (max-width: 613px) {
 
-    #cont_horario_nuevo{
+    #cont_horario_nuevo {
         left: 89%;
         width: 50px;
         height: 50px;
     }
+
     #menu_lateral {
         width: 100px !important;
 
@@ -899,12 +923,13 @@ body {
         .cont_horario_timbre {
             width: 90% !important;
             gap: 20px !important;
+
             h5 {
                 font-size: .7em !important;
             }
 
             .cont_icons {
-                
+
                 font-size: .8em !important;
             }
         }
