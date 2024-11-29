@@ -28,20 +28,28 @@
                 </div>
             </div>
             <section id="cont_dia_apagado">
-                <form action="/enviar_dia_apagado" method="post" id="enviar_dia_apagado">
-                    <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
-                    <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
-                    <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
-                    <input type="text" name="año_enviar" class="desac" value="<%-año%>">
-                    <span><%= results_dia_apagado.Fecha %></span>
-                    <% if (!results_dia_apagado) { %>
+
+                <% if (results_dia_apagado && results_dia_apagado.length > 0) { %>
+                 
+                    <form action="/eliminar_dia_apagado" method="post" id="enviar_dia_apagado">
+                        <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
+                        <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
+                        <input type="text" name="semana_enviar" class="desac" value="<%- nombre_dia %>">
+                        <input type="text" name="año_enviar" class="desac" value="<%- año %>">
                         <span class="checkmark">Activar timbre</span>
-                        <input type="checkbox" id="checkbox" value="1" name="valor" checked>
-                    <% } else { %>
+                        <input type="checkbox" id="checkbox" checked>
+                    </form>
+                <% } else { %>
+                   
+                    <form action="/enviar_dia_apagado" method="post" id="enviar_dia_apagado">
+                        <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
+                        <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
+                        <input type="text" name="semana_enviar" class="desac" value="<%- nombre_dia %>">
+                        <input type="text" name="año_enviar" class="desac" value="<%- año %>">
                         <span class="checkmark">Desactivar timbre</span>
-                        <input type="checkbox" id="checkbox" value="0" name="valor">
-                    <% } %>
-                </form>
+                        <input type="checkbox" id="checkbox">
+                    </form>
+                <% } %>
             </section>
             <section id="calendar_dia">
                 <% for (let i = 0; i < 24; i++) {
