@@ -45,7 +45,7 @@ async function obtenerDatos() {
 
 // Función que se ejecutará en cada minuto exacto
 async function timbre() {
-    let hora = dayjs().format('HH:mm:ss')
+    const hora = dayjs().format('HH:mm:ss')
     const fecha = dayjs().format('YYYY-MM-DD')
 
     const [horarios, config, diasApagado] = await obtenerDatos()
@@ -59,7 +59,6 @@ async function timbre() {
     if(!horarioEncontrado) return
     // Si hay un horario establecido para que el timbre no suene no hace nada
     if(horarioApagado) {
-        hora = dayjs(hora, 'HH:mm:ss')
         const hora_inicio = dayjs(horarioApagado.hora_inicio, 'HH:mm:ss')
         const hora_fin = dayjs(horarioApagado.hora_fin, 'HH:mm:ss')
 
