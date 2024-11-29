@@ -1,15 +1,7 @@
 import { query } from "../models/database.mjs";
 import dayjs from "dayjs";
-
-const dias = {
-    "0": "domingo",
-    "1": "lunes",
-    "2": "martes",
-    "3": "miercoles",
-    "4": "jueves",
-    "5": "viernes",
-    "6": "sabado"
-}
+import customParseFormat from 'dayjs/plugin/customParseFormat.js'
+dayjs.extend(customParseFormat)
 
 const configPorDefecto = [
     {
@@ -33,28 +25,46 @@ function sincronizar(callback) {
 async function obtenerDatos() {
     const horarios = await query('SELECT * FROM horarios')
     let config = await query('SELECT Activo FROM configuraciontimbre ORDER BY FechaCreacion DESC LIMIT 1')
-    const eventos = await query('SELECT * FROM eventos')
+    let diasApagado = await query('SELECT * FROM dias_apagado')
 
     if(!config) {
         config = configPorDefecto
     }
 
-    return [horarios, config, eventos]
+    diasApagado = diasApagado.map(dia => {
+        return {
+            id_dia: dia.Id_dia,
+            fecha: dayjs(dia.Fecha, 'YYYY-MM-DD'),
+            hora_inicio: dia.hora_inicio,
+            hora_fin: dia.hora_fin
+        }
+    })
+
+    return [horarios, config, diasApagado]
 }
 
 // Función que se ejecutará en cada minuto exacto
 async function timbre() {
-    const hora = dayjs().format('HH:mm:ss')
-    const fecha = new Date(dayjs().format('YYYY-MM-DD'))
+    let hora = dayjs().format('HH:mm:ss')
+    const fecha = dayjs().format('YYYY-MM-DD')
 
-    const [horarios, config, eventos] = await obtenerDatos()
+    const [horarios, config, diasApagado] = await obtenerDatos()
+
     const horarioEncontrado = horarios.find(horario => horario.HoraInicio === hora)
-    // const eventoEncontrado = eventos.find(evento => evento.Fecha === fecha)
+    const horarioApagado = diasApagado.find(horario => horario.fecha === fecha)
 
     // Si el timbre esta desactivado no hace nada
     if(config[0].Activo === 0) return
+    // Si no hay un horario establecido a tal hora para que el timbre suene no hace nada
     if(!horarioEncontrado) return
-    // if(eventoEncontrado && eventoEncontrado.TimbreActivo === 0) return
+    // Si hay un horario establecido para que el timbre no suene no hace nada
+    if(horarioApagado) {
+        hora = dayjs(hora, 'HH:mm:ss')
+        const hora_inicio = dayjs(horarioApagado.hora_inicio, 'HH:mm:ss')
+        const hora_fin = dayjs(horarioApagado.hora_fin, 'HH:mm:ss')
+
+        if(hora.isAfter(hora_inicio) && hora.isBefore(hora_fin)) return 
+    }
 
     const duracion = horarioEncontrado.duracion
     const estado = horarioEncontrado.Activo
