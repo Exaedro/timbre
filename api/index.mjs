@@ -1,6 +1,9 @@
 import express from 'express'
 import cors from 'cors'
 
+// Timbre
+import './timbre/timbre.mjs'
+
 const app = express()
 
 // Config
