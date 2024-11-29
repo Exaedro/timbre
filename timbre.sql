@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2024 a las 19:07:07
+-- Tiempo de generación: 29-11-2024 a las 04:24:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -37,17 +37,18 @@ CREATE TABLE `configuraciontimbre` (
 
 CREATE TABLE `dias_apagado` (
   `Id_dia` int(11) NOT NULL,
-  `Fecha` date NOT NULL
+  `Fecha` date NOT NULL,
+  `hora_inicio` time NOT NULL,
+  `hora_fin` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `dias_apagado`
 --
 
-INSERT INTO `dias_apagado` (`Id_dia`, `Fecha`) VALUES
-(1, '2024-11-27'),
-(3, '2024-11-28'),
-(4, '2024-11-28');
+INSERT INTO `dias_apagado` (`Id_dia`, `Fecha`, `hora_inicio`, `hora_fin`) VALUES
+(13, '2024-10-28', '00:00:00', '24:00:00'),
+(14, '2024-10-28', '00:00:00', '24:00:00');
 
 -- --------------------------------------------------------
 
@@ -214,7 +215,7 @@ ALTER TABLE `configuraciontimbre`
 -- AUTO_INCREMENT de la tabla `dias_apagado`
 --
 ALTER TABLE `dias_apagado`
-  MODIFY `Id_dia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id_dia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `eventos`
