@@ -98,7 +98,7 @@ app.get('/calendar_dia', (req, res) => {
     let mes_enviar = parseInt(mes) + 1;
     const nombre_dia = req.query.nombre_dia;
     const año = req.query.año;
-    const fecha_comp = `${año}-${mes_enviar}-${dia}`; // Ajustar formato de fecha
+    const fecha_comp = `${año}-${mes_enviar}-${dia}`;
 
     const quyery_dia_apagago = "SELECT * FROM `dias_apagado` WHERE Fecha=?"
     connection.query(quyery_dia_apagago, [fecha_comp], (err, results_dia_apagado) => {
@@ -279,8 +279,9 @@ app.post('/eliminar_horario_dia', (req, res) => {
 
 
 app.post('/enviar_dia_apagado', (req, res) => {
-    const {  dia_enviar, mes_enviar, semana_enviar, año_enviar } = req.body;
-    let fecha_comp = `${año_enviar}-${mes_enviar}-${dia_enviar}`; // Ajustar formato de fecha
+    let { dia_enviar, mes_enviar, semana_enviar, año_enviar } = req.body;
+    let mes = parseInt(mes_enviar) + 1;
+    let fecha_comp = `${año_enviar}-${mes}-${dia_enviar}`; // Ajustar formato de fecha
     const sql = "INSERT INTO `dias_apagado`(`Fecha`,`hora_inicio`, `hora_fin`) VALUES (?,?,?)";
     connection.query(sql, [fecha_comp, "00:00", "24:00"], (err, result) => {
         if (err) {
@@ -295,9 +296,9 @@ app.post('/enviar_dia_apagado', (req, res) => {
 
 
 app.post('/eliminar_dia_apagado', (req, res) => {
-    const {  dia_enviar, mes_enviar, semana_enviar, año_enviar } = req.body;
-    let fecha_comp = `${año_enviar}-${mes_enviar}-${dia_enviar}`; // Ajustar formato de fecha
-    let datatime = Datatime();
+    const { dia_enviar, mes_enviar, semana_enviar, año_enviar } = req.body;
+    let mes = parseInt(mes_enviar) + 1;
+    let fecha_comp = `${año_enviar}-${mes}-${dia_enviar}`; // Ajustar formato de fecha
 
     const sql = "DELETE FROM `dias_apagado` WHERE Fecha=?";
     connection.query(sql, [fecha_comp], (err, result) => {
@@ -312,6 +313,24 @@ app.post('/eliminar_dia_apagado', (req, res) => {
 
 
 });
+
+app.post('/form_enviar_horario_dia_apagado', (req, res) => {
+    const { dia_enviar, mes_enviar, semana_enviar, año_enviar, fecha_enviar, hora_inicio, hora_fin } = req.body;
+
+    const envair_horario_apagar = "INSERT INTO `dias_apagado`( `Fecha`, `hora_inicio`, `hora_fin`) VALUES (?,?,?)";
+    connection.query(envair_horario_apagar, [fecha_enviar, hora_inicio, hora_fin], (err, result) => {
+        if (err) {
+            console.error('Error agregar un timbre ', err);
+            res.status(500).send('Error actualizando los datos');
+        } else {
+            const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
+            res.redirect(redirectUrl);
+        }
+    });
+
+
+});
+
 
 app.post('/cerrar_sesion', (req, res) => {
 

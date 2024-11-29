@@ -1,6 +1,5 @@
 document.getElementById("checkbox").addEventListener("change", function () {
     document.getElementById("enviar_dia_apagado").submit();
-    alert("ss")
 });
 
 
@@ -15,6 +14,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const conts_form = document.getElementById("conts_form")
     const form_enviar_horario = document.getElementById("form_enviar_horario")
     const form_editar_horario_dia = document.getElementById("form_editar_horario_dia")
+    const btn_agregar_opc = document.querySelectorAll(".btn_agregar_opc");
+    const btn_desac_opc = document.querySelectorAll(".btn_desac_opc")
+    const form_enviar_horario_apagado = document.getElementById("form_enviar_horario_apagado")
+    btn_agregar_opc.forEach(element => {
+        element.addEventListener("click", (event) => {
+            form_enviar_horario.classList.add('active');
+            form_enviar_horario_apagado.classList.remove('active');
+        })
+    });
+    btn_desac_opc.forEach(element => {
+        element.addEventListener("click", (event) => {
+            form_enviar_horario.classList.remove('active');
+            form_enviar_horario_apagado.classList.add('active');
+        })
+    });
+
     // Mostrar formulario al hacer clic en una franja horaria
     cont_horario_nuevo.addEventListener("click", (event) => {
 

@@ -162,15 +162,16 @@ body {
                             color: #25379b;
                         }
                     }
-                    #cont_dias_flechas{
-                       
-                       display: flex;
-                       justify-content: center;
-                       align-items: center;
-                       height: 100%;
-                       gap: 10px    ;
-                      
-                        a{
+
+                    #cont_dias_flechas {
+
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100%;
+                        gap: 10px;
+
+                        a {
                             font-size: 1.2em;
                             color: rgb(37, 37, 37);
                             font-weight: bolder;
@@ -183,16 +184,18 @@ body {
                             justify-content: center;
                             align-items: center;
                             text-decoration: none;
-                            &:hover{
+
+                            &:hover {
                                 background-color: rgba(128, 128, 128, 0.137);
 
                             }
                         }
                     }
+
                     .cont_dia {
                         padding-left: 20px;
                         height: 100%;
-                       
+
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -392,19 +395,48 @@ body {
 
             #cont_dia_apagado {
                 padding-top: 7%;
-                padding-left: 20px;
+                padding-left: 3%;
                 width: 100%;
-              
-                #enviar_dia_apagado{
+
+                form {
+                    gap: 20px;
                     display: flex;
-                    justify-content: center;
-                    align-items: flex-start;
-                    gap: 10px;
-                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+
+                    input {
+                        height: 20px;
+                        width: 20px;
+                    }
+
+                    span {
+                        font-weight: 400;
+                        font-size: 1.3em;
+                    }
+                }
+            }
+
+            .desactivado_cont {
+                min-height: 100%;
+                width: 100vw;
+                height: 82vh;
+                display: flex;
+                overflow-y: hidden;
+                border-left: 1px solid rgba(134, 134, 134, 0.048);
+                padding: 20px;
+                justify-content: flex-start;
+                align-items: flex-start;
+
+                h2 {
+                    width: 70%;
                 }
             }
 
             #calendar_dia {
+                &.desactivado {
+                    display: none;
+                }
+
                 padding-top: 2%;
                 padding-left: 2%;
                 display: flex;
@@ -639,6 +671,30 @@ body {
 }
 
 .forms_class {
+    h4{
+        width: 80%;
+    }
+    .cont_opciones {
+      
+        width: 60%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        span {
+            padding: 8px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: .9em;
+            cursor: pointer;
+            
+            &.active {
+                background-color: #3b7399;
+                color: white;
+            }
+        }
+    }
+
     .cont_input {
         width: 100%;
         display: flex;
