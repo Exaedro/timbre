@@ -128,7 +128,32 @@ body main #cont_main .cont_header #cont_fixed_mes span.nombre_dia {
   font-size: 1em;
   color: #25379b;
 }
+body main #cont_main .cont_header #cont_fixed_mes #cont_dias_flechas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 10px;
+}
+body main #cont_main .cont_header #cont_fixed_mes #cont_dias_flechas a {
+  font-size: 1.2em;
+  color: rgb(37, 37, 37);
+  font-weight: bolder;
+  padding: 10px;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+body main #cont_main .cont_header #cont_fixed_mes #cont_dias_flechas a:hover {
+  background-color: rgba(128, 128, 128, 0.137);
+}
 body main #cont_main .cont_header #cont_fixed_mes .cont_dia {
+  padding-left: 20px;
   height: 100%;
   display: flex;
   justify-content: center;

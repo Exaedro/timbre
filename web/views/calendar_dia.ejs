@@ -19,6 +19,71 @@
                     <% const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", 
                         "Septiembre", "Octubre", "Noviembre", "Diciembre"]; %>
                     <% const diasSemana = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"]; %>
+
+                <%
+                    function Bisiesto(año) {
+                        return (año % 4 === 0 && año % 100 !== 0) || (año % 400 === 0);
+                    }
+                    const diasPorMes = [31,Bisiesto("año") ? 29 : 28,31,30,31,30,31,31,30,31,30,31];
+                    let dia_mandar, mes_mandar, año_mandar, nombre_dia_mandar,mensaje;
+
+                    if (diasPorMes[mes] == dia) { 
+                       
+                        if (mes === 11) { 
+                            mes_mandar = parseInt(0); 
+                            año_mandar = parseInt(año) + 1;
+                            dia_mandar = parseInt(1);
+                        } else {
+                            mensaje="ss2"
+                            mes_mandar = parseInt(mes) + 1; 
+                            año_mandar = parseInt(año);
+                            dia_mandar = parseInt(1);
+                            }
+                    } else { // Día siguiente dentro del mismo mes
+                        mensaje="ff"
+                        mes_mandar = parseInt(mes);
+                        año_mandar = parseInt(año);
+                        dia_mandar = parseInt(dia) + 1;
+                    }
+
+                    // Obtener el nombre del día
+                    const currentDate = new Date(año_mandar, mes_mandar, dia_mandar);
+                    nombre_dia_mandar = currentDate.getDay();
+                %>
+                <%
+                let dia_enviar_menos, mes_enviar_menos, año_enviar_menos, nombre_dia_enviar_menos;
+              
+                if (dia == 1) {
+                  if (mes == 0) { // Caso de enero (mes 0)
+                    mes_enviar_menos = 11; 
+                    año_enviar_menos = parseInt(año) - 1;
+                    dia_enviar_menos = parseInt(diasPorMes[mes_enviar_menos]); 
+                  } else {
+                    mes_enviar_menos = parseInt(mes) - 1; 
+                    año_enviar_menos = parseInt(año);
+                    dia_enviar_menos = parseInt(diasPorMes[mes_enviar_menos]); 
+                  }
+                } else { // Día normal dentro del mes
+                  mes_enviar_menos = parseInt(mes);
+                  año_enviar_menos = parseInt(año);
+                  dia_enviar_menos = parseInt(dia) - 1;
+                }
+              
+                // Obtener el nombre del día
+                const currentDate_menos = new Date(año_enviar_menos, mes_enviar_menos, dia_enviar_menos);
+                nombre_dia_enviar_menos = currentDate_menos.getDay();
+              %>
+              
+                    <div id="cont_dias_flechas">
+                      
+                        <a href="/calendar_dia?dia=<%= dia_enviar_menos %>&mes=<%= mes_enviar_menos %>&nombre_dia=<%= nombre_dia_enviar_menos %>&año=<%= año_enviar_menos%>">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </a>
+                        <a href="/calendar_dia?dia=<%= dia_mandar %>&mes=<%= mes_mandar %>&nombre_dia=<%= nombre_dia_mandar %>&año=<%= año_mandar%>">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    </div>
+                  
                     <div class="cont_dia">
                         <span class="nombre_dia"><%- diasSemana[nombre_dia] %></span>
                         <span class="dia"><%- dia %></span>

@@ -162,10 +162,37 @@ body {
                             color: #25379b;
                         }
                     }
+                    #cont_dias_flechas{
+                       
+                       display: flex;
+                       justify-content: center;
+                       align-items: center;
+                       height: 100%;
+                       gap: 10px    ;
+                      
+                        a{
+                            font-size: 1.2em;
+                            color: rgb(37, 37, 37);
+                            font-weight: bolder;
+                            padding: 10px;
+                            border-radius: 50%;
+                            transition: all .2s ease-in-out;
+                            height: 40px;
+                            width: 40px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            text-decoration: none;
+                            &:hover{
+                                background-color: rgba(128, 128, 128, 0.137);
 
+                            }
+                        }
+                    }
                     .cont_dia {
+                        padding-left: 20px;
                         height: 100%;
-
+                       
                         display: flex;
                         justify-content: center;
                         align-items: center;
