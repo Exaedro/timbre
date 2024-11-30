@@ -93,19 +93,24 @@
                 </div>
             </div>
             <section id="cont_dia_apagado">
-
-                <% if (results_dia_apagado && results_dia_apagado.hora_inicio == "00:00:00" && results_dia_apagado.hora_fin == "24:00:00") { %>
-                 
-                    <form action="/eliminar_dia_apagado" method="post" id="enviar_dia_apagado">
-                        <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
-                        <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
-                        <input type="text" name="semana_enviar" class="desac" value="<%- nombre_dia %>">
-                        <input type="text" name="año_enviar" class="desac" value="<%- año %>">
-                        <input type="checkbox" id="checkbox" checked>
-                        <span class="checkmark">Activar timbre</span>
-                    </form>
-                <% } else { %>
+           
                    
+                <% if (results_dia_apagado_desac && results_dia_apagado_desac.length > 0) { %>
+                    <% if (
+                        results_dia_apagado_desac[0].hora_inicio === "00:00:00" &&
+                        results_dia_apagado_desac[0].hora_fin === "24:00:00" &&
+                        results_dia_apagado_desac[0].desac_total == 1
+                    ) { %>
+                        <form action="/eliminar_dia_apagado" method="post" id="enviar_dia_apagado">
+                            <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
+                            <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
+                            <input type="text" name="semana_enviar" class="desac" value="<%- nombre_dia %>">
+                            <input type="text" name="año_enviar" class="desac" value="<%- año %>">
+                            <input type="checkbox" id="checkbox" checked>
+                            <span class="checkmark">Activar timbre</span>
+                        </form>
+                    <% } %>
+                <%  }else { %>
                     <form action="/enviar_dia_apagado" method="post" id="enviar_dia_apagado">
                         <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
                         <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
@@ -116,11 +121,14 @@
                     </form>
                 <% } %>
             </section>
-            <% if (results_dia_apagado && results_dia_apagado.hora_inicio == "00:00:00" && results_dia_apagado.hora_fin == "24:00:00") { %>
+            <% if (results_dia_apagado_desac && results_dia_apagado_desac.length > 0) { %>
+            <% if ( results_dia_apagado_desac[0].hora_inicio === "00:00:00" &&
+                        results_dia_apagado_desac[0].hora_fin === "24:00:00" &&
+                        results_dia_apagado_desac[0].desac_total == 1) { %>
                <div class="desactivado_cont">
                 <h2>EL TIMBRE ESTA DESACTIVADO, POR LO TANTO NO SONARA EN EL DÍA DE HOY, A MENOS QUE LO VUELVA A ACTIVAR    </h2>
                 <section id="calendar_dia" class="desactivado">
-                 
+                    <% } %> 
                 <% } else { %>
                     <div class="activado_cont">
                     <section id="calendar_dia" class="activo">
@@ -130,8 +138,11 @@
                     const hour = i === 0 ? 12 : (i <= 12 ? i : i - 12);
                     const displayHour = i === 0 ? "12 AM" : i < 12 ? i + " AM" : (i === 12 ? "12 PM" : (i - 12) + " PM");
                 %>
+
                 <div class="horario" data-hora="<%= hour %>">
                     <h4 class="hour-item"><%= displayHour %></h4>
+                      
+
                     <% if (diasSemana[nombre_dia] !== "Sab" && diasSemana[nombre_dia] !== "Dom") { %>
                         <% 
                         combinedResults.forEach((horario) => {
