@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2024 a las 04:24:50
+-- Tiempo de generación: 01-12-2024 a las 20:09:21
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,16 +39,19 @@ CREATE TABLE `dias_apagado` (
   `Id_dia` int(11) NOT NULL,
   `Fecha` date NOT NULL,
   `hora_inicio` time NOT NULL,
-  `hora_fin` time NOT NULL
+  `hora_fin` time NOT NULL,
+  `desac_total` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `dias_apagado`
 --
 
-INSERT INTO `dias_apagado` (`Id_dia`, `Fecha`, `hora_inicio`, `hora_fin`) VALUES
-(13, '2024-10-28', '00:00:00', '24:00:00'),
-(14, '2024-10-28', '00:00:00', '24:00:00');
+INSERT INTO `dias_apagado` (`Id_dia`, `Fecha`, `hora_inicio`, `hora_fin`, `desac_total`) VALUES
+(13, '2024-10-28', '00:00:00', '24:00:00', 0),
+(14, '2024-10-28', '00:00:00', '24:00:00', 0),
+(53, '2024-11-30', '10:10:00', '11:11:00', 0),
+(61, '2024-11-29', '08:15:00', '10:20:00', 0);
 
 -- --------------------------------------------------------
 
@@ -82,7 +85,8 @@ INSERT INTO `eventos` (`EventoID`, `NombreEvento`, `Fecha`, `Horario`, `duracion
 (8, 'salida anticipada de todo el colegio', '2024-11-26', '20:12:00', 2, 1, 'asd', '2024-11-26 15:30:27'),
 (9, 'adasadasas12121', '2024-11-26', '12:12:00', 2, 0, 'asd', '2024-11-26 15:30:55'),
 (10, 'salida anticipada de CS', '2024-11-27', '21:20:00', 2, 0, 'salida anticipada de ciclo Superior por motivos escolares', '2024-11-27 10:52:55'),
-(11, 'timbre15', '2024-11-27', '20:35:00', 3, 0, '..', '2024-11-27 11:25:04');
+(11, 'timbre15', '2024-11-27', '20:35:00', 3, 0, '..', '2024-11-27 11:25:04'),
+(12, 'asdad', '2024-02-14', '12:02:00', 2, 1, 'as', '2024-11-29 13:03:40');
 
 -- --------------------------------------------------------
 
@@ -215,13 +219,13 @@ ALTER TABLE `configuraciontimbre`
 -- AUTO_INCREMENT de la tabla `dias_apagado`
 --
 ALTER TABLE `dias_apagado`
-  MODIFY `Id_dia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Id_dia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `EventoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `EventoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `historialtimbre`
