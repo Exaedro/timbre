@@ -1,0 +1,26 @@
+           
+                <% if (results_dia_apagado_desac && results_dia_apagado_desac.length > 0) { %>
+                    <% if (
+                        results_dia_apagado_desac[0].hora_inicio === "00:00:00" &&
+                        results_dia_apagado_desac[0].hora_fin === "24:00:00" &&
+                        results_dia_apagado_desac[0].desac_total == 1
+                    ) { %>
+                        <form action="/eliminar_dia_apagado" method="post" id="enviar_dia_apagado">
+                            <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
+                            <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
+                            <input type="text" name="semana_enviar" class="desac" value="<%- nombre_dia %>">
+                            <input type="text" name="año_enviar" class="desac" value="<%- año %>">
+                            <input type="checkbox" id="checkbox" checked>
+                            <span class="checkmark">Activar timbre</span>
+                        </form>
+                    <% } %>
+                <%  }else { %>
+                    <form action="/enviar_dia_apagado" method="post" id="enviar_dia_apagado">
+                        <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
+                        <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
+                        <input type="text" name="semana_enviar" class="desac" value="<%- nombre_dia %>">
+                        <input type="text" name="año_enviar" class="desac" value="<%- año %>">
+                        <input type="checkbox" id="checkbox">
+                        <span class="checkmark">Desactivar timbre</span>
+                    </form>
+                <% } %>

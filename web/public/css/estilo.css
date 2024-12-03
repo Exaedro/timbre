@@ -431,14 +431,11 @@ body main #cont_main #calendar_dia .horario .cont_horario_timbre .cont_icons but
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .desac {
   display: none;
 }
-body main #cont_main #calendar_dia .horario .cont_horario_timbre.s1 {
+body main #cont_main #calendar_dia .horario .cont_horario_timbre.fijo {
   background-color: #25379b;
 }
-body main #cont_main #calendar_dia .horario .cont_horario_timbre.s2 {
+body main #cont_main #calendar_dia .horario .cont_horario_timbre.evento {
   background-color: #3e9e8e;
-}
-body main #cont_main #calendar_dia .horario .cont_horario_timbre.s3 {
-  background-color: #8d71c4;
 }
 body main #cont_main #calendar_dia .horario .cont_horario_timbre h5 {
   font-size: 0.9em;

@@ -86,6 +86,7 @@
                   
                     <div class="cont_dia">
                         <span class="nombre_dia"><%- diasSemana[nombre_dia] %></span>
+                        
                         <span class="dia"><%- dia %></span>
                     </div>
                     <span id="mes"><%- meses[mes] %></span>
@@ -93,34 +94,10 @@
                 </div>
             </div>
             <section id="cont_dia_apagado">
-           
-                   
-                <% if (results_dia_apagado_desac && results_dia_apagado_desac.length > 0) { %>
-                    <% if (
-                        results_dia_apagado_desac[0].hora_inicio === "00:00:00" &&
-                        results_dia_apagado_desac[0].hora_fin === "24:00:00" &&
-                        results_dia_apagado_desac[0].desac_total == 1
-                    ) { %>
-                        <form action="/eliminar_dia_apagado" method="post" id="enviar_dia_apagado">
-                            <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
-                            <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
-                            <input type="text" name="semana_enviar" class="desac" value="<%- nombre_dia %>">
-                            <input type="text" name="año_enviar" class="desac" value="<%- año %>">
-                            <input type="checkbox" id="checkbox" checked>
-                            <span class="checkmark">Activar timbre</span>
-                        </form>
-                    <% } %>
-                <%  }else { %>
-                    <form action="/enviar_dia_apagado" method="post" id="enviar_dia_apagado">
-                        <input type="text" name="dia_enviar" class="desac" value="<%- dia %>">
-                        <input type="text" name="mes_enviar" class="desac" value="<%- mes %>">
-                        <input type="text" name="semana_enviar" class="desac" value="<%- nombre_dia %>">
-                        <input type="text" name="año_enviar" class="desac" value="<%- año %>">
-                        <input type="checkbox" id="checkbox">
-                        <span class="checkmark">Desactivar timbre</span>
-                    </form>
-                <% } %>
+                <%- include("form_apagado.ejs") %>
             </section>
+
+            
             <% if (results_dia_apagado_desac && results_dia_apagado_desac.length > 0) { %>
             <% if ( results_dia_apagado_desac[0].hora_inicio === "00:00:00" &&
                         results_dia_apagado_desac[0].hora_fin === "24:00:00" &&
@@ -133,96 +110,60 @@
                     <div class="activado_cont">
                     <section id="calendar_dia" class="activo">
                     <% } %>
-                    <% for (let i = 0; i < 24; i++) {
-                        const hour = i === 0 ? 12 : (i <= 12 ? i : i - 12);
-                        const displayHour = i === 0 ? "12 AM" : i < 12 ? i + " AM" : (i === 12 ? "12 PM" : (i - 12) + " PM");
-                    %>
-                        <div class="horario" data-hora="<%= hour %>">
-                            <h4 class="hour-item"><%= displayHour %></h4>
-                            
-                            <% if (diasSemana[nombre_dia] !== "Sab" && diasSemana[nombre_dia] !== "Dom") { %>
-                                <% combinedResults.forEach((horario) => {
-                                    const getMinutesFromTime = (time) => time.split(":")[1];
-                                    const getHourFromTime = (time) => time.split(":")[0];
-                                    const horaInicio = getHourFromTime(horario.HoraInicio || horario.Horario || "00:00:00");    
-                                    if (parseInt(horaInicio, 10) === i) {
-                                %>
-                                    <!-- Esta parte es HTML que se debe separar de las etiquetas EJS -->
-                                    <% if (results_dia_apagado && results_dia_apagado.length > 0) { 
-                                        const getHourFromTime = (time) => time.split(":")[0];
-                                        const r_dia_apagado_query = getHourFromTime(results_dia_apagado.hora_inicio);    
-                                        if (parseInt(r_dia_apagado_query, 10) === i) { 
-                                            r_dia_apagado_min =  getMinutesFromTime(results_dia_apagado.hora_inicio);    
-                                            minutos_inicio = getMinutesFromTime(horario.HoraInicio);
-                                            if (r_dia_apagado_min <= minutos_inicio) { 
-                                                %>
-                                                    <h5 class="nombre_actividad">Horario apagado</h5>
-                                                <% 
-                                            } else {
-                                                <% 
-                                                <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'desac' %>">
-                                                    <h5 class="nombre_actividad"><%= horario.NombreHorario || horario.NombreEvento %></h5>
-                                                    <h5><%= horario.HoraInicio || horario.Horario %> - <%= horario.duracion || horario.Duracion %>s</h5>
-                                                    <div class="cont_icons" data-nombre="<%= horario.NombreHorario || horario.NombreEvento %>" 
-                                                        data-horario="<%= horario.HoraInicio || horario.Horario %>" 
-                                                        data-duracion="<%= horario.duracion || horario.Duracion %>" 
-                                                        data-FechaCreacion="<%= horario.FechaCreacion || horario.Fecha %>">
-                                                        <form action="/eliminar_horario_dia" method="post">
-                                                            <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
-                                                            <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
-                                                            <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
-                                                            <input type="text" name="año_enviar" class="desac" value="<%-año%>">
-                                                            <% if (horario.type === 'event') { %>
-                                                                <input type="text" name="type" value="<%= horario.type %>" class="desac">
-                                                                <input type="text" name="id_horario" value="<%= horario.EventoID %> " class="desac">
-                                                            <% } else { %>
-                                                                <input type="text" name="type" value="<%= horario.type %> " class="desac">
-                                                                <input type="text" name="id_horario" value="<%= horario.HorarioID %> " class="desac">
-                                                            <% } %>
-                                                            <button type="submit">
-                                                                <i class="fa-regular fa-trash-can"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                %>
-                                            }
-                                        }    
-                                    } else { 
-                                    %>
-                                        <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'desac' %>">
-                                            <h5 class="nombre_actividad"><%= horario.NombreHorario || horario.NombreEvento %></h5>
-                                            <h5><%= horario.HoraInicio || horario.Horario %> - <%= horario.duracion || horario.Duracion %>s</h5>
-                                            <div class="cont_icons" data-nombre="<%= horario.NombreHorario || horario.NombreEvento %>" 
-                                                data-horario="<%= horario.HoraInicio || horario.Horario %>" 
-                                                data-duracion="<%= horario.duracion || horario.Duracion %>" 
-                                                data-FechaCreacion="<%= horario.FechaCreacion || horario.Fecha %>">
-                                                <form action="/eliminar_horario_dia" method="post">
-                                                    <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
-                                                    <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
-                                                    <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
-                                                    <input type="text" name="año_enviar" class="desac" value="<%-año%>">
-                                                    <% if (horario.type === 'event') { %>
-                                                        <input type="text" name="type" value="<%= horario.type %>" class="desac">
-                                                        <input type="text" name="id_horario" value="<%= horario.EventoID %> " class="desac">
-                                                    <% } else { %>
-                                                        <input type="text" name="type" value="<%= horario.type %> " class="desac">
-                                                        <input type="text" name="id_horario" value="<%= horario.HorarioID %> " class="desac">
-                                                    <% } %>
-                                                    <button type="submit">
-                                                        <i class="fa-regular fa-trash-can"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    <% } %>
-                                <% } %>
-                            <% } %>
-                        </div>
-                    <% } %>
-                    
-                    
+         
+                <% for (let i = 0; i < 24; i++) {
+                    const hour = i === 0 ? 12 : (i <= 12 ? i : i - 12);
+                    const displayHour = i === 0 ? "12 AM" : i < 12 ? i + " AM" : (i === 12 ? "12 PM" : (i - 12) + " PM");
+                %>
 
+                <div class="horario" data-hora="<%= hour %>">
+                    <h4 class="hour-item"><%= displayHour %></h4>
+                      
+                  
+          
+                    <% if (diasSemana[nombre_dia] !== "Sab" && diasSemana[nombre_dia] !== "Dom") { %>
+                        <% 
+                        combinedResults.forEach((horario) => {
+                            const getMinutesFromTime = (time) => time.split(":")[1];
+                            const getHourFromTime = (time) => time.split(":")[0];
+                            const horaInicio = getHourFromTime(horario.HoraInicio || horario.Horario || "00:00:00");    
+                            if (parseInt(horaInicio, 10) === i) {
+                        %>
+                        <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'desac' %>">
+                           
+                            <h5 class="nombre_actividad"><%= horario.NombreHorario || horario.NombreEvento %></h5>
+                            <h5><%= horario.HoraInicio || horario.Horario %> - <%= horario.duracion || horario.Duracion %>s</h5>
+                            <div class="cont_icons" data-nombre="<%= horario.NombreHorario || horario.NombreEvento %>" 
+                                data-horario="<%= horario.HoraInicio || horario.Horario %>" 
+                                data-duracion="<%= horario.duracion || horario.Duracion %>" 
+                                data-FechaCreacion="<%= horario.FechaCreacion || horario.Fecha %>">
+                              
+                                <form action="/eliminar_horario_dia" method="post">
+                                    <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
+                                    <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
+                                    <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
+                                    <input type="text" name="año_enviar" class="desac" value="<%-año%>">
+                                    <% if (horario.type === 'event') { %>
+                                        <input type="text" name="type" value="<%= horario.type %>" class="desac">
+                                        <input type="text" name="id_horario" value="<%= horario.EventoID %> " class="desac">
+                                    <% } else { %>
+                                        <input type="text" name="type" value="<%= horario.type %> " class="desac">
+                                        <input type="text" name="id_horario" value="<%= horario.HorarioID %> " class="desac">
+                                    <% } %>
+
+                                    <button type="submit">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <% 
+                            }
+                        });
+                        %>
+                    <% } %>
+                </div>
+                <% } %>
             </section>
             </div>
         </div>
@@ -235,10 +176,10 @@
     <div id="conts_form">
         <form action="/form_enviar_horario" method="post"  id="form_enviar_horario" class="forms_class">
             <h4>Agregar horario para el dia <%-dia%> de <%-meses[mes]%></h4>
-            <div class="cont_opciones">
+            <!-- <div class="cont_opciones">
                 <span class="btn_agregar_opc active">Agregar horario</span>
                 <span class="btn_desac_opc">Desactivar timbre</span>
-            </div>
+            </div> -->
             <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
             <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
             <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
@@ -265,7 +206,7 @@
                 <button type="button" class="close_form">Cancelar</button>
             </div>
         </form>
-        <form action="/form_enviar_horario_dia_apagado" method="post"  id="form_enviar_horario_apagado" class="forms_class">
+        <!-- <form action="/form_enviar_horario_dia_apagado" method="post"  id="form_enviar_horario_apagado" class="forms_class">
             <h4>Desactivar timbre por horario para el dia <%-dia%> de <%-meses[mes]%></h4>
             <div class="cont_opciones">
                 <span class="btn_agregar_opc">Agregar horario</span>
@@ -290,7 +231,7 @@
                 <button type="submit" id="enviar">Guardar</button>
                 <button type="button" class="close_form">Cancelar</button>
             </div>
-        </form>
+        </form> -->
     </div>
     
 
