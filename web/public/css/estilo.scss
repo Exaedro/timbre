@@ -23,6 +23,10 @@ $font-stack: 'Arial, sans-serif';
 
 
 
+$dia_evento: #3e9e8e96;
+$dia_apagado: #b61515af;
+$dia_hoy: #4180ab;
+
 body {
     height: auto;
     width: 100vw;
@@ -123,7 +127,19 @@ body {
             display: flex;
             flex-direction: column;
             border-left: 1px solid rgba(134, 134, 134, 0.233);
-
+            #cont_text_info{
+                margin-top: 10px;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px   ;
+                flex-direction: column;
+                background-color: red;
+                h3,p{
+                    width: 30%;
+                }
+            }
             #text_main_horarios_fijos {
                 margin-top: 3%;
                 font-size: 2.5em;
@@ -280,6 +296,94 @@ body {
                     }
                 }
 
+                #cont_query {
+
+                    padding-top: 2%;
+                    padding-left: 6%;
+                    gap: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-start;
+                  
+                    flex-direction: column;
+                    width: 100%;
+                   
+
+                    #cont_main_query {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        gap: 5px;
+                        cursor: pointer;
+                        border: 0px solid black;
+                        width: 100%;
+                       h3{
+                        width: auto;
+                      
+                        transition: all .2 ease-in-out;
+                       }
+                        &:hover{
+                            h3{
+                                
+                                color: #6171c7;
+                            }
+                        }   
+                      
+                    }
+
+                    #cont_items_query {
+                        transition: all .1s ease-in-out;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        height: auto;
+                        flex-direction: column;
+                        opacity: 1;
+                        gap: 10px;
+
+                        &.desac {
+                            height: 0;
+                            opacity: 0;
+
+                        }
+
+
+                        .items {
+                            cursor: none;
+                            display: flex;
+                            align-items: flex-start;
+                            justify-content: flex-start;
+                            gap: 10px;
+                            p{
+                                width: 60%;
+                            }
+                            span {
+                                height: 20px !important;
+                                width: 20px !important;
+                                border-radius: 50%;
+                                border: 1px solid rgba(128, 128, 128, 0.226);
+
+                                &#dia_apagado {
+                                    background-color: $dia_apagado;
+                                }
+
+                                &#dia_evento {
+                                    background-color: $dia_evento;
+                                }
+
+                                &#dia_normal {
+                                    background-color: transparent;
+                                }
+                                &#dia_hoy{
+                                    background-color: $dia_hoy;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
                 .calendario-body {
                     overflow-x: hidden;
                     padding-top: 2%;
@@ -332,7 +436,7 @@ body {
                             &.mes_hoy {
                                 color: $primary-color;
                             }
-                            
+
                         }
 
                         .cont_dias {
@@ -342,7 +446,7 @@ body {
                             grid-template-columns: repeat(7, 1fr);
                             grid-template-rows: repeat(6, 1fr);
                             grid-column-gap: 0px;
-                            grid-row-gap: 0px;
+                            grid-row-gap: 2px;
                             color: black;
                             text-decoration: none;
 
@@ -355,10 +459,17 @@ body {
                                 color: black;
                                 text-decoration: none;
                             }
-                            .evento{
-                                background-color: #3e9e8e !important;
+
+                            .evento {
+                                background-color: $dia_evento !important;
                                 color: white !important;
                             }
+
+                            .apagado {
+                                background-color: $dia_apagado !important;
+                                color: white !important;
+                            }
+
                             .hoy {
                                 color: white !important;
                                 background-color: $primary-color;
@@ -568,7 +679,7 @@ body {
                     padding: 0% 3%;
                     align-items: center;
                     height: 80px;
-                    width: 50%;
+                    width: 600px;
 
                     border: 1px solid $complemento2-color;
                     border-radius: 10px;
@@ -611,6 +722,7 @@ body {
 
                         button {
                             height: 3.2vh;
+                            width: 60px;
                             border-radius: 6px;
                             border: none;
                             cursor: pointer;
@@ -621,7 +733,7 @@ body {
                             font-size: 1em;
                             font-weight: 600;
                             transition: all .2s ease-in-out;
-                            width: 5vw;
+                            
                             color: white;
 
                             &.editar {
@@ -648,7 +760,7 @@ body {
 
                 #boton_agregar {
                     margin-top: 3%;
-                    width: 15%;
+                    width: 230px;
                     height: 5vh;
                     border-radius: 6px;
                     border: none;
@@ -671,11 +783,12 @@ body {
 }
 
 .forms_class {
-    h4{
+    h4 {
         width: 80%;
     }
+
     .cont_opciones {
-      
+
         width: 60%;
         display: flex;
         justify-content: space-around;
@@ -687,7 +800,7 @@ body {
             font-weight: 500;
             font-size: .9em;
             cursor: pointer;
-            
+
             &.active {
                 background-color: #3b7399;
                 color: white;
@@ -885,7 +998,7 @@ body {
 
 @media (max-width: 800px) {
     .calendario-body {
-
+        
         grid-template-columns: repeat(1, 1fr) !important;
 
         .div_mes {
@@ -894,22 +1007,25 @@ body {
             font-size: .8em;
 
             .header_dias {
-                width: 70% !important;
+                width: 80% !important;
 
                 .dia_semana {
                     display: flex;
                     justify-content: center !important;
                     align-items: center !important;
-                    width: 30px !important;
+                    width: 40px !important;
+                    height: 40px !important;
+                    padding: 10px;
                 }
             }
 
             .cont_dias {
-                width: 70% !important;
+                width: 80% !important;
 
                 .dia_mes,
                 .dia_vacio {
-                    width: 30px !important;
+                    height: 40px !important;
+                    width: 40px !important;
                 }
             }
         }
@@ -1018,4 +1134,67 @@ body {
         }
     }
 
+}
+
+@media (max-width: 870px) {
+    .cont_horario{
+        
+        width: 400px !important;
+        .cont_text{
+            .cont_sub_text{
+               
+             
+                justify-content: space-between !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+                width: 200px !important;
+                .nombre_horario{
+                    font-size: .9em !important; 
+                  
+                    height: auto;
+                }
+                .hora{
+                    font-size: .9em !important; 
+                    height: auto;
+                }
+            }
+        }
+    }
+
+}
+@media (max-width: 520px) {
+    #text_main_horarios_fijos{
+        text-align: center;
+        display: flex;
+        width: 70vw !important;
+      
+    }
+    .cont_horario{
+        padding: 10px 0px !important;
+        height: auto !important;
+        min-height: 15vh;
+        flex-direction: column;
+       
+        width: 60vw !important;
+        .cont_text{
+            padding-left: 15px;
+            .cont_sub_text{
+           
+                flex-direction: column;
+                width: 50vw !important;
+                
+            }
+        }
+        .cont_butones{
+           margin-top: 10px;
+            display: flex;
+            width: 50vw;
+            justify-content: flex-start !important; 
+            align-items: center;
+          
+        }
+    }
+#boton_agregar{
+    width: 200px !important;
+}
 }

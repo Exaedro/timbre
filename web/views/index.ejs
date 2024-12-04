@@ -21,7 +21,36 @@
                 <div class="cont_year">
                     <h3 id="year_text"><%= new Date().getFullYear() %></h3>
                 </div>
+                <section id="cont_query">
+                    <div id="cont_main_query">
+                        <h3>Que significan los colores en cada dia?</h3>
+                      
+                    </div>
+                    <div id="cont_items_query" class="desac">
+                        <div class="items">
+                            <span id="dia_apagado"></span>
+                            <p>Los días que el timbre está completamente desactivado se mostrarán en color rojo.</p>
+                        </div>
+                        <div class="items">
+                            <span id="dia_evento"></span>
+                            <p>Los días en los cuales hay un evento, como la desactivación de un horario fijo o la adición de un nuevo horario temporal, se mostrarán en color verde.</p>
+                          
+                        </div>
+                        <div class="items">
+                            <span id="dia_hoy"></span>
+                            <p>El día actual se mostrará en color azul.</p>
+                          
+                        </div>
+                        <div class="items">
+                            <span id="dia_normal"></span>
+                            <p>Los días en los cuales no haya color indican que solo sonarán los timbres fijos.</p>
+                         
+                        </div>
+                    </div>
+                    
+                </section>
                 <div class="calendario-body">
+
                     <% 
                     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
                         "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -56,10 +85,18 @@
                                     const isToday = date === today.getDate() && index === today.getMonth() && currentYear === today.getFullYear();
                                     const dayOfWeek = new Date(currentYear, index, date).getDay();
                                     const eventoFecha = new Date(currentYear, index, date).toDateString();
+                                    const nombreDia = diasSemana[dayOfWeek]; // Nombre del día
                                     const tieneEvento = results_eventos.some(evento => new Date(evento.Fecha).toDateString() === eventoFecha);
+                                    const dia_apagado = results_dia_apagado.some(evento => new Date(evento.Fecha).toDateString() === eventoFecha);
+
+                                    // Determinar si el día debe estar apagado según los criterios
+                                    let dia_apagado_2 = false;
+                                    if (nombreDia === 'D' || nombreDia === 'S') { 
+                                        dia_apagado_2 = !tieneEvento;
+                                    }
                                 %>
                                     <a href="/calendar_dia?dia=<%= date %>&mes=<%= index %>&nombre_dia=<%= dayOfWeek %>&año=<%= currentYear %>" 
-                                       class="dia_mes <%= isToday ? 'hoy' : '' %> <%= tieneEvento ? 'evento' : 'solo' %>">
+                                       class="dia_mes <%= isToday ? 'hoy' : '' %> <%= tieneEvento ? 'evento' : '' %>  <%= dia_apagado ? 'apagado' : '' %> <%= dia_apagado_2 ? 'apagado' : '' %>">
                                         <%= date %>
                                     </a>
                                 <% } %>
@@ -70,6 +107,7 @@
             </div>
         </div>
     </main>
+    <script src="js/calendario.js"></script>
 </body>
 
 </html>

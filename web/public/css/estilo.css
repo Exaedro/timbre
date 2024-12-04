@@ -92,6 +92,19 @@ body main #cont_main {
   flex-direction: column;
   border-left: 1px solid rgba(134, 134, 134, 0.233);
 }
+body main #cont_main #cont_text_info {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  background-color: red;
+}
+body main #cont_main #cont_text_info h3, body main #cont_main #cont_text_info p {
+  width: 30%;
+}
 body main #cont_main #text_main_horarios_fijos {
   margin-top: 3%;
   font-size: 2.5em;
@@ -224,6 +237,74 @@ body main #cont_main #cont_calendario .cont_year #year_text {
   font-size: 3em;
   color: #4180ab;
 }
+body main #cont_main #cont_calendario #cont_query {
+  padding-top: 2%;
+  padding-left: 6%;
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+}
+body main #cont_main #cont_calendario #cont_query #cont_main_query {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  cursor: pointer;
+  border: 0px solid black;
+  width: 100%;
+}
+body main #cont_main #cont_calendario #cont_query #cont_main_query h3 {
+  width: auto;
+  transition: all 0.2 ease-in-out;
+}
+body main #cont_main #cont_calendario #cont_query #cont_main_query:hover h3 {
+  color: #6171c7;
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query {
+  transition: all 0.1s ease-in-out;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: auto;
+  flex-direction: column;
+  opacity: 1;
+  gap: 10px;
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query.desac {
+  height: 0;
+  opacity: 0;
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items {
+  cursor: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items p {
+  width: 60%;
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items span {
+  height: 20px !important;
+  width: 20px !important;
+  border-radius: 50%;
+  border: 1px solid rgba(128, 128, 128, 0.226);
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_apagado {
+  background-color: rgba(182, 21, 21, 0.6862745098);
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_evento {
+  background-color: rgba(62, 158, 142, 0.5882352941);
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_normal {
+  background-color: transparent;
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_hoy {
+  background-color: #4180ab;
+}
 body main #cont_main #cont_calendario .calendario-body {
   overflow-x: hidden;
   padding-top: 2%;
@@ -277,7 +358,7 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias {
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(6, 1fr);
   grid-column-gap: 0px;
-  grid-row-gap: 0px;
+  grid-row-gap: 2px;
   color: black;
   text-decoration: none;
 }
@@ -290,7 +371,11 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_
   text-decoration: none;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .evento {
-  background-color: #3e9e8e !important;
+  background-color: rgba(62, 158, 142, 0.5882352941) !important;
+  color: white !important;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .apagado {
+  background-color: rgba(182, 21, 21, 0.6862745098) !important;
   color: white !important;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy {
@@ -465,7 +550,7 @@ body main #cont_main #cont_horarios_fijos .cont_horario {
   padding: 0% 3%;
   align-items: center;
   height: 80px;
-  width: 50%;
+  width: 600px;
   border: 1px solid #bdd1de;
   border-radius: 10px;
 }
@@ -500,6 +585,7 @@ body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones {
 }
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button {
   height: 3.2vh;
+  width: 60px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
@@ -510,7 +596,6 @@ body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button {
   font-size: 1em;
   font-weight: 600;
   transition: all 0.2s ease-in-out;
-  width: 5vw;
   color: white;
 }
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.editar {
@@ -528,7 +613,7 @@ body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.eli
 }
 body main #cont_main #cont_horarios_fijos #boton_agregar {
   margin-top: 3%;
-  width: 15%;
+  width: 230px;
   height: 5vh;
   border-radius: 6px;
   border: none;
@@ -725,20 +810,23 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     font-size: 0.8em;
   }
   .calendario-body .div_mes .header_dias {
-    width: 70% !important;
+    width: 80% !important;
   }
   .calendario-body .div_mes .header_dias .dia_semana {
     display: flex;
     justify-content: center !important;
     align-items: center !important;
-    width: 30px !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 10px;
   }
   .calendario-body .div_mes .cont_dias {
-    width: 70% !important;
+    width: 80% !important;
   }
   .calendario-body .div_mes .cont_dias .dia_mes,
   .calendario-body .div_mes .cont_dias .dia_vacio {
-    width: 30px !important;
+    height: 40px !important;
+    width: 40px !important;
   }
 }
 @media (max-width: 1360px) {
@@ -809,5 +897,55 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   .horario .cont_horario_timbre .cont_icons {
     font-size: 0.8em !important;
+  }
+}
+@media (max-width: 870px) {
+  .cont_horario {
+    width: 400px !important;
+  }
+  .cont_horario .cont_text .cont_sub_text {
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    width: 200px !important;
+  }
+  .cont_horario .cont_text .cont_sub_text .nombre_horario {
+    font-size: 0.9em !important;
+    height: auto;
+  }
+  .cont_horario .cont_text .cont_sub_text .hora {
+    font-size: 0.9em !important;
+    height: auto;
+  }
+}
+@media (max-width: 520px) {
+  #text_main_horarios_fijos {
+    text-align: center;
+    display: flex;
+    width: 70vw !important;
+  }
+  .cont_horario {
+    padding: 10px 0px !important;
+    height: auto !important;
+    min-height: 15vh;
+    flex-direction: column;
+    width: 60vw !important;
+  }
+  .cont_horario .cont_text {
+    padding-left: 15px;
+  }
+  .cont_horario .cont_text .cont_sub_text {
+    flex-direction: column;
+    width: 50vw !important;
+  }
+  .cont_horario .cont_butones {
+    margin-top: 10px;
+    display: flex;
+    width: 50vw;
+    justify-content: flex-start !important;
+    align-items: center;
+  }
+  #boton_agregar {
+    width: 200px !important;
   }
 }/*# sourceMappingURL=estilo.css.map */
