@@ -332,6 +332,7 @@ body {
                             &.mes_hoy {
                                 color: $primary-color;
                             }
+                            
                         }
 
                         .cont_dias {
@@ -354,7 +355,10 @@ body {
                                 color: black;
                                 text-decoration: none;
                             }
-
+                            .evento{
+                                background-color: #3e9e8e !important;
+                                color: white !important;
+                            }
                             .hoy {
                                 color: white !important;
                                 background-color: $primary-color;

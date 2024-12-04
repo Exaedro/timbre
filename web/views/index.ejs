@@ -12,24 +12,64 @@
 
 <body>
     <main>
-            <aside id="menu_lateral"> <%- include('menu.ejs') %></aside>
-            <div id="cont_main">
-                <div id="panel_options">
-                    <h1>Bienvenido al sistema de automatización del timbre</h1>
+        <aside id="menu_lateral"> <%- include('menu.ejs') %></aside>
+        <div id="cont_main">
+            <div id="panel_options">
+                <h1>Bienvenido al sistema de automatización del timbre</h1>
+            </div>
+            <div id="cont_calendario">
+                <div class="cont_year">
+                    <h3 id="year_text"><%= new Date().getFullYear() %></h3>
                 </div>
-                <div id="cont_calendario">
-                    <div class="cont_year">
-                        <h3 id="year_text"></h3>
-                    </div>
-                    <div class="calendario-body">
-
-
-                    </div>
-
+                <div class="calendario-body">
+                    <% 
+                    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+                        "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                    const diasSemana = ["D", "L", "M", "X", "J", "V", "S"];
+                    const currentYear = new Date().getFullYear();
+                    const today = new Date();
+                
+                    for (let index = 0; index < 12; index++) {
+                        const firstDay = new Date(currentYear, index, 1).getDay();
+                        const lastDate = new Date(currentYear, index + 1, 0).getDate();
+                    %>
+                        <div class="div_mes">
+                            <h3 class="text_mes <%= index === today.getMonth() && currentYear === today.getFullYear() ? 'mes_hoy' : '' %>">
+                                <%= meses[index] %>
+                            </h3>
+                            <div class="header_dias">
+                                <% diasSemana.forEach((dia) => { %>
+                                    <span class="dia_semana"><%= dia %></span>
+                                <% }) %>
+                            </div>
+                            <div class="cont_dias">
+                                <% 
+                                // Agregar días vacíos al inicio del mes
+                                for (let empty = 0; empty < firstDay; empty++) { 
+                                %>
+                                    <span class="dia_vacio"></span>
+                                <% } %>
+                                
+                                <% 
+                                // Agregar los días del mes con eventos
+                                for (let date = 1; date <= lastDate; date++) {
+                                    const isToday = date === today.getDate() && index === today.getMonth() && currentYear === today.getFullYear();
+                                    const dayOfWeek = new Date(currentYear, index, date).getDay();
+                                    const eventoFecha = new Date(currentYear, index, date).toDateString();
+                                    const tieneEvento = results_eventos.some(evento => new Date(evento.Fecha).toDateString() === eventoFecha);
+                                %>
+                                    <a href="/calendar_dia?dia=<%= date %>&mes=<%= index %>&nombre_dia=<%= dayOfWeek %>&año=<%= currentYear %>" 
+                                       class="dia_mes <%= isToday ? 'hoy' : '' %> <%= tieneEvento ? 'evento' : 'solo' %>">
+                                        <%= date %>
+                                    </a>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } %>
                 </div>
             </div>
+        </div>
     </main>
-    <script src="js/calendario.js"></script>
 </body>
 
 </html>

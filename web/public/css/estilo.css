@@ -289,6 +289,10 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_
   color: black;
   text-decoration: none;
 }
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .evento {
+  background-color: #3e9e8e !important;
+  color: white !important;
+}
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy {
   color: white !important;
   background-color: #4180ab;

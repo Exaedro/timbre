@@ -87,11 +87,25 @@ app.get('/iniciar_sesion', async (req, res) => {
     return res.redirect('/index'); // Redirige al inicio si coincide
 });
 
-
 app.get('/index', (req, res) => {
-
-    res.render('index')
-})
+    const query_eventos = "SELECT `Fecha` FROM `eventos` WHERE 1";
+    connection.query(query_eventos, [], (err, results_eventos) => {
+        if (err) {
+            console.error('Error al buscar los datos de eventos:', err);
+            return res.render('horarios_fijos', { error: 'Error al buscar los datos de eventos' });
+        } else {
+            const query_dias_apagados = "SELECT `Fecha` FROM `dias_apagado` WHERE hora_inicio = ? AND hora_fin = ?";
+            connection.query(query_dias_apagados, ["00:00", "24:00"], (err, results_dia_apagado) => {
+                if (err) {
+                    console.error('Error al buscar los datos de días apagados:', err);
+                    return res.render('horarios_fijos', { error: 'Error al buscar los datos de días apagados' });
+                } else {
+                    res.render('index', { results_eventos, results_dia_apagado });
+                }
+            });
+        }
+    });
+});
 app.get('/calendar_dia', (req, res) => {
     const dia = req.query.dia;
     const mes = req.query.mes;
