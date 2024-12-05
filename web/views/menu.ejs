@@ -1,5 +1,5 @@
 <div id="cont_fixed">
-    <img src="/resources/mental-strong.png" alt="">
+    <i class="fa-solid fa-bars" id="menu"></i>
     <ul id="cont_item">
         <a href="/index">
             <li class="item" id="item_inicio">
@@ -23,3 +23,16 @@
         </a>
     </ul>
 </div>
+<script>
+   
+    const menu = document.getElementById("menu")
+    const cont_item =document.getElementById("cont_item")
+    const cont_fixed =document.getElementById("cont_fixed")
+    const menu_lateral =document.getElementById("menu_lateral")
+    menu.addEventListener("click",()=>{
+        cont_item.classList.toggle("desactive")
+        cont_fixed.classList.toggle("desactive")
+        menu_lateral.classList.toggle("desactive")
+    })
+
+</script>
