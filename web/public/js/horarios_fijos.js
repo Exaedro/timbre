@@ -33,8 +33,8 @@ editar.forEach((button) => {
         window.addEventListener("load", adjustHeight());
         window.addEventListener("resize", adjustHeight());
         form_editar.scrollIntoView({
-            behavior: "smooth", 
-            block: "center", 
+            behavior: "smooth",
+            block: "center",
         });
     });
 });
@@ -46,16 +46,16 @@ boton_agregar.addEventListener("click", () => {
     window.addEventListener("load", adjustHeight());
     window.addEventListener("resize", adjustHeight());
     agregar_horario_fijo.scrollIntoView({
-        behavior: "smooth", 
-        block: "center", 
+        behavior: "smooth",
+        block: "center",
     });
 })
 
-close_form_agregar.addEventListener("click",()=>{
+close_form_agregar.addEventListener("click", () => {
     conts_form.classList.remove("active")
     agregar_horario_fijo.classList.remove("active")
 })
-close_form_editar.addEventListener("click",()=>{
+close_form_editar.addEventListener("click", () => {
     conts_form.classList.remove("active")
     form_editar.classList.remove("active")
 })
@@ -65,3 +65,10 @@ function adjustHeight() {
     conts_form.style.height = `${Math.max(document.documentElement.scrollHeight, window.innerHeight)}px`;
 }
 
+
+const text_query = document.getElementById("text_query");
+const cont_text_query = document.querySelector(".cont_text_query")
+text_query.addEventListener("click",()=>{
+
+    cont_text_query.classList.toggle("desactive")
+})

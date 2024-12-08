@@ -12,7 +12,7 @@
 
 <body>
     <main>
-        <aside id="menu_lateral"> <%- include('menu.ejs') %></aside>
+        <aside id="menu_lateral" class="desactive"> <%- include('menu.ejs') %></aside>
         <div id="cont_main">
             <div class="cont_header">
                 <div id="cont_fixed_mes">
@@ -89,8 +89,11 @@
                         
                         <span class="dia"><%- dia %></span>
                     </div>
-                    <span id="mes"><%- meses[mes] %></span>
-                    <span id="año"><%- año %></span>
+                    <div id="cont_dias">
+                        <span id="mes"><%- meses[mes] %></span>
+                        <span id="año"><%- año %></span>
+                    </div>
+                   
                 </div>
             </div>
             <section id="cont_dia_apagado">
@@ -140,15 +143,17 @@
                               
                                 <form action="/eliminar_horario_dia" method="post">
                                     <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
-                                    <input type="text" name="mes_enviar" class="desac" value="<%-mes%>">
+                                    <% const mes_enviar_act = parseInt(mes)+1%>
+                                    <input type="text" name="mes_enviar_act" class="desac" value="<%-mes%>">
+                                    <input type="text" name="mes_enviar" class="desac" value="<%-mes_enviar_act%>">
                                     <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
                                     <input type="text" name="año_enviar" class="desac" value="<%-año%>">
                                     <% if (horario.type === 'event') { %>
                                         <input type="text" name="type" value="<%= horario.type %>" class="desac">
                                         <input type="text" name="id_horario" value="<%= horario.EventoID %> " class="desac">
                                     <% } else { %>
-                                        <input type="text" name="type" value="<%= horario.type %> " class="desac">
-                                        <input type="text" name="id_horario" value="<%= horario.HorarioID %> " class="desac">
+                                        <input type="text" name="type" value="<%= horario.type %>" class="desac">
+                                        <input type="text" name="id_horario" value="<%= horario.HorarioID %>" class="desac">
                                     <% } %>
 
                                     <button type="submit">

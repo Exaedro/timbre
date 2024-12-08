@@ -139,12 +139,31 @@ body main #cont_main #cont_text_info {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   flex-direction: column;
-  background-color: red;
+  gap: 10px;
 }
-body main #cont_main #cont_text_info h3, body main #cont_main #cont_text_info p {
-  width: 30%;
+body main #cont_main #cont_text_info h3 {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+body main #cont_main #cont_text_info h3:hover {
+  color: #25379b;
+}
+body main #cont_main #cont_text_info h1, body main #cont_main #cont_text_info h3,
+body main #cont_main #cont_text_info p {
+  width: 500px;
+  text-align: center;
+}
+body main #cont_main #cont_text_info .cont_text_query {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+body main #cont_main #cont_text_info .cont_text_query.desactive {
+  opacity: 0;
 }
 body main #cont_main #text_main_horarios_fijos {
   margin-top: 3%;
@@ -335,7 +354,7 @@ body main #cont_main #cont_calendario #cont_query #cont_items_query .items span 
   border: 1px solid rgba(128, 128, 128, 0.226);
 }
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_apagado {
-  background-color: rgba(182, 21, 21, 0.6862745098);
+  background-color: rgba(224, 20, 20, 0.4745098039);
 }
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_evento {
   background-color: rgba(62, 158, 142, 0.5882352941);
@@ -344,7 +363,7 @@ body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#
   background-color: transparent;
 }
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_hoy {
-  background-color: #4180ab;
+  background-color: #4180ab !important;
 }
 body main #cont_main #cont_calendario .calendario-body {
   overflow-x: hidden;
@@ -416,7 +435,7 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .even
   color: white !important;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .apagado {
-  background-color: rgba(182, 21, 21, 0.6862745098) !important;
+  background-color: rgba(224, 20, 20, 0.4745098039) !important;
   color: white !important;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy {
@@ -572,7 +591,10 @@ body main #cont_main #calendar_dia .horario .cont_horario_timbre h5 {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  min-height: 20px;
+  height: auto;
+  min-width: 100px;
+  width: auto;
   text-align: center;
 }
 body main #cont_main #cont_horarios_fijos {
@@ -898,29 +920,27 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     height: 50px;
   }
   #menu_lateral {
-    width: 100px !important;
+    width: 60px !important;
   }
   #menu_lateral #cont_fixed {
-    width: 100px !important;
+    width: 60px !important;
   }
-  #menu_lateral #cont_fixed img {
-    display: none;
+  #menu_lateral #cont_fixed a {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  #menu_lateral #cont_fixed a .item {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding-left: 0px;
   }
   #menu_lateral #cont_fixed a .item span {
     display: none;
   }
-  #cont_item {
-    width: 80px !important;
-  }
-  #cont_item .item {
-    padding-left: 0px !important;
-    display: flex;
-    width: auto !important;
-    gap: 3px !important;
-    justify-content: center !important;
-    align-items: center !important;
-    flex-direction: column;
-    text-align: center;
+  #menu_lateral #cont_fixed a .item i {
+    font-size: 1em;
   }
 }
 @media (max-width: 850px) {
@@ -941,6 +961,9 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
 }
 @media (max-width: 870px) {
+  form {
+    width: 350px !important;
+  }
   .cont_horario {
     width: 400px !important;
   }
@@ -988,5 +1011,31 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   #boton_agregar {
     width: 200px !important;
+  }
+}
+@media (max-width: 400px) {
+  .calendario-body {
+    margin-top: 8%;
+  }
+  .calendario-body .div_mes {
+    width: 100% !important;
+  }
+}
+@media (max-width: 450px) {
+  .cont_header #cont_fixed_mes #cont_dias_flechas {
+    gap: 0px !important;
+  }
+  .cont_header #cont_fixed_mes .cont_dia {
+    padding-left: 0px !important;
+    margin-left: 0px !important;
+  }
+  .cont_header #cont_fixed_mes #cont_dias {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column-reverse;
+  }
+  form {
+    width: 300px !important;
   }
 }/*# sourceMappingURL=estilo.css.map */

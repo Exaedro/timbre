@@ -12,12 +12,15 @@
 
 <body>
     <main>
-        <aside id="menu_lateral"> <%- include('menu.ejs') %></aside>
+        <aside id="menu_lateral" class="desactive"> <%- include('menu.ejs') %></aside>
         <div id="cont_main">
-            <h1 id="text_main_horarios_fijos">Horarios fijos</h1>
+            
             <div id="cont_text_info">
-                <h3>Que son los horario fijos?</h3>
-                <p>Los  horario fijos son los horarios en los que el timbre va a sonar todos los dias del año, de lunes a viernes.</p>
+                <h1 id="text_main_horarios_fijos">Horarios fijos</h1>
+                <h3 id="text_query">Que son los horario fijos?</h3>
+                <div class="cont_text_query desactive">
+                    <p>Los  horario fijos son los horarios en los que el timbre va a sonar todos los dias del año, de lunes a viernes.</p>
+                </div>
             </div>
             <section id="cont_horarios_fijos">
 

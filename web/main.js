@@ -5,8 +5,29 @@ const mysql = require('mysql2');
 const { View } = require('electron');
 const app = express()
 const bcrypt = require('bcrypt');
-const session = require('express-session');
 const { console } = require('node:inspector');
+const session = require('express-session')
+const { PORT } = require('./config.js');
+const { clave_sesion } = require('./config.js');
+// Middlewares globales
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Configuración de express-session
+app.use(
+    session({
+        secret: clave_sesion,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            secure: false,
+            maxAge: 30 * 60 * 1000, // 30 minutos en milisegundos 
+        },
+    })
+);
+
+
+
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -20,28 +41,39 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'timbre', // Cambien el nombre de la base de datos si quieren
+    database: 'timbre',
     port: 3306
 });
 
 // Encender servidor
-app.listen(4000, () => {
-    console.log('PAGINA: localhost:4000')
+app.listen(PORT, () => {
+    console.log(`PAGINA: localhost: ${PORT}`)
 })
 
-module.exports = app
+
+
+const isLogged = (req, res, next) => {
+    if (req.session.user_sesion == '' || typeof req.session.user_sesion == 'undefined') {
+        res.redirect('/')
+    } else {
+        next()
+    }
+}
+
+
+
 
 app.get('/', (req, res) => {
     res.render('login')
 })
 
-app.get('/login', (req, res) => {
-    if (req.session.user_dni != undefined) {
-        res.redirect('/login')
+// app.get('/login', (req, res) => {
+//     if (req.session.user_dni != undefined) {
+//         res.redirect('/login')
 
-        //req.destroy() para borrar las cookies.
-    }
-})
+//         //req.destroy() para borrar las cookies.
+//     }
+// })
 
 
 // Función para comparar una contraseña con su hash
@@ -56,38 +88,43 @@ async function verifyPassword(plainPassword, hashedPassword) {
 }
 
 app.get('/iniciar_sesion', async (req, res) => {
-    // try {
-    //     const { user_name, password } = req.query; // Asegúrate de que `password` está correctamente definido
-    //     // console.log("Usuario:", user_name);
-    //     // console.log("Contraseña:", password);
-
-
-    //     const query_ini = 'SELECT `UsuarioID`, `NombreUsuario`, `Contrasena`, `FechaCreacion` FROM `usuario` WHERE NombreUsuario=?';
-    //     const [userResults] = await connection.promise().query(query_ini, [user_name]);
-
-    //     if (userResults.length === 0) {
-    //         return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
-    //     }
-
-    //     const hashedPassword = userResults[0].Contrasena;
-
-    //     // Verifica si la contraseña coincide
-    //     const isMatch = await verifyPassword(password, hashedPassword);
-
-    //     if (isMatch) {
-    //         return res.redirect('/index'); // Redirige al inicio si coincide
-    //     } else {
-
-    //         return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
-    //     }
-    // } catch (err) {
-    //     console.error('Error al iniciar sesión:', err);
-    //     return res.render('login.ejs', { error: 'Error al verificar los datos' });
+    // if (req.session.user_sesion != '' || typeof req.session.user_sesion != 'undefined') {
+    //     return res.redirect('/index'); // Redirige al inicio si coincide  
     // }
-    return res.redirect('/index'); // Redirige al inicio si coincide
+    // else {
+        try {
+            const { user_name, password } = req.query;
+
+            const query_ini = 'SELECT `UsuarioID`, `NombreUsuario`, `Contrasena`, `FechaCreacion` FROM `usuario` WHERE NombreUsuario=?';
+            const [userResults] = await connection.promise().query(query_ini, [user_name]);
+
+            if (userResults.length === 0) {
+                return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
+            }
+
+            const hashedPassword = userResults[0].Contrasena;
+
+            // Verifica si la contraseña coincide
+            const isMatch = await verifyPassword(password, hashedPassword);
+
+            if (isMatch) {
+                req.session.user_sesion = true
+                return res.redirect('/index'); // Redirige al inicio si coincide
+            } else {
+                return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
+            }
+        } catch (err) {
+            return res.render('login.ejs', { error: 'Error al verificar los datos' });
+        }
+    // }
+
+    // req.session.user_sesion = true;
+    // return res.redirect('/index'); // Redirige al inicio si coincide
+
+
 });
 
-app.get('/index', (req, res) => {
+app.get('/index', isLogged, (req, res) => {
     const query_eventos = "SELECT `Fecha` FROM `eventos` WHERE 1";
     connection.query(query_eventos, [], (err, results_eventos) => {
         if (err) {
@@ -105,8 +142,7 @@ app.get('/index', (req, res) => {
             });
         }
     });
-});
-app.get('/calendar_dia', (req, res) => {
+});app.get('/calendar_dia', isLogged, (req, res) => {
     const dia = req.query.dia;
     const mes = req.query.mes;
     let mes_enviar = parseInt(mes) + 1;
@@ -114,22 +150,18 @@ app.get('/calendar_dia', (req, res) => {
     const año = req.query.año;
     const fecha_comp = `${año}-${mes_enviar}-${dia}`;
 
-    //SELECT `Id_dia`, `Fecha`, `hora_inicio`, `hora_fin`, `desac_total` FROM `dias_apagado` WHERE Fecha=? AND desac_total=?
-
-    const quyery_dia_apagago = "SELECT * FROM `dias_apagado` WHERE Fecha=? AND desac_total=?"
-    connection.query(quyery_dia_apagago, [fecha_comp,0], (err, results_dia_apagado) => {
+    const quyery_dia_apagago = "SELECT * FROM `dias_apagado` WHERE Fecha=? AND desac_total=?";
+    connection.query(quyery_dia_apagago, [fecha_comp, 0], (err, results_dia_apagado) => {
         if (err) {
             console.error('Error al buscar los datos:', err);
             return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
         } else {
-            const quyery_dia_apagago_desac = "SELECT * FROM `dias_apagado` WHERE Fecha=? AND desac_total=?"
-            connection.query(quyery_dia_apagago_desac, [fecha_comp,1], (err, results_dia_apagado_desac) => {
+            const quyery_dia_apagago_desac = "SELECT * FROM `dias_apagado` WHERE Fecha=? AND desac_total=?";
+            connection.query(quyery_dia_apagago_desac, [fecha_comp, 1], (err, results_dia_apagado_desac) => {
                 if (err) {
                     console.error('Error al buscar los datos:', err);
                     return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
                 } else {
-
-
                     const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;';
                     connection.query(query_act_dia, [], (err, results_fijo) => {
                         if (err) {
@@ -144,14 +176,15 @@ app.get('/calendar_dia', (req, res) => {
                                 return res.render('horarios_fijos', { error: 'Error al buscar los datos' });
                             }
 
+                            // Crear un conjunto de horas de eventos, manteniendo la parte completa de la hora (HH:MM)
+                            const eventoHoras = new Set(results_evento.map(evento => evento.Horario));
 
-                            const eventoHoras = new Set(results_evento.map(evento => evento.Horario.split(':')[0]));
-
-                            // Filtrar horarios fijos que no coincidan con los eventos
-                            const horariosFiltrados = results_fijo.filter(horario =>
-                                !eventoHoras.has(horario.HoraInicio.split(':')[0])
+                            // Filtrar horarios fijos eliminando aquellos que tengan la misma hora que un evento
+                            const horariosFiltrados = results_fijo.filter(horario => 
+                                !eventoHoras.has(horario.HoraInicio)
                             );
 
+                            // Combinar los resultados: horarios filtrados y eventos, asegurando que los eventos se mantengan si hay coincidencias
                             const combinedResults = [
                                 ...horariosFiltrados.map(item => ({ ...item, type: 'fixed' })),
                                 ...results_evento.map(item => ({ ...item, type: 'event' }))
@@ -164,20 +197,18 @@ app.get('/calendar_dia', (req, res) => {
                                 return horaA.localeCompare(horaB);
                             });
 
-
                             res.render('calendar_dia', {
-                                combinedResults, results_dia_apagado,results_dia_apagado_desac,
+                                combinedResults, results_dia_apagado, results_dia_apagado_desac,
                                 dia, mes, nombre_dia, año, mes_enviar
                             });
                         });
                     });
                 }
-            })
+            });
         }
-    })
-
+    });
 });
-app.get('/horarios_fijos', (req, res) => {
+app.get('/horarios_fijos',isLogged, (req, res) => {
     const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
     connection.query(query_act_dia, [], (err, results) => {
         if (err) {
@@ -258,7 +289,7 @@ app.post('/form_enviar_horario', (req, res) => {
     });
 });
 app.post('/eliminar_horario_dia', (req, res) => {
-    const { type, id_horario, dia_enviar, mes_enviar, semana_enviar, año_enviar } = req.body;
+    const { type, id_horario, dia_enviar, mes_enviar, semana_enviar, año_enviar ,mes_enviar_act} = req.body;
     let datatime = Datatime();
 
     if (type === "event") {
@@ -285,13 +316,15 @@ app.post('/eliminar_horario_dia', (req, res) => {
                 let nombre_horario = result[0].NombreHorario
                 let HoraInicio = result[0].HoraInicio
                 let duracion = result[0].duracion
+               const fecha= `${año_enviar}-${mes_enviar}-${dia_enviar}`
+
                 const insert_horario = `INSERT INTO eventos(NombreEvento, Fecha, Horario ,duracion, Activo, Descripcion, FechaCreacion)  VALUES (?,?,?,?,?,?,?)`;
-                connection.query(insert_horario, [nombre_horario, datatime, HoraInicio, duracion, 0, "..", datatime], (err, result) => {
+                connection.query(insert_horario, [nombre_horario, fecha, HoraInicio, duracion, 0, "..", datatime], (err, result) => {
                     if (err) {
                         console.error('Error agregar un timbre ', err);
                         res.status(500).send('Error agregando evento');
                     } else {
-                        const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
+                        const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar_act}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
                         res.redirect(redirectUrl);
                     }
                 });
@@ -299,7 +332,6 @@ app.post('/eliminar_horario_dia', (req, res) => {
 
         });
     }
-
 
 });
 
@@ -344,7 +376,7 @@ app.post('/form_enviar_horario_dia_apagado', (req, res) => {
     const { dia_enviar, mes_enviar, semana_enviar, año_enviar, fecha_enviar, hora_inicio, hora_fin } = req.body;
 
     const envair_horario_apagar = "INSERT INTO `dias_apagado`( `Fecha`, `hora_inicio`, `hora_fin`,`desac_total`) VALUES (?,?,?,?)";
-    connection.query(envair_horario_apagar, [fecha_enviar, hora_inicio, hora_fin,0], (err, result) => {
+    connection.query(envair_horario_apagar, [fecha_enviar, hora_inicio, hora_fin, 0], (err, result) => {
         if (err) {
             console.error('Error agregar un timbre ', err);
             res.status(500).send('Error actualizando los datos');

@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", () => {
             conts_form.classList.remove("active");
             form_enviar_horario.classList.remove('active');
-            form_editar_horario_dia.classList.remove('active');
+            // form_editar_horario_dia.classList.remove('active');
         });
     })
 

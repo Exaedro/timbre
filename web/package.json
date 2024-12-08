@@ -2,10 +2,14 @@
   "name": "web",
   "version": "1.0.0",
   "main": "main.js",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Francisco Suchomela, Julian Gripaldi, Franco Fernandez, Thiago Leites, Cristobal Maier, Axel Derfler",
   "license": "ISC",
-  "description": "Proyecto institucional de automatizacion del timbre del colegio."
+  "description": "Proyecto institucional de automatizacion del timbre del colegio.",
+  "dependencies": {
+    "express-session": "^1.18.1"
+  }
 }
