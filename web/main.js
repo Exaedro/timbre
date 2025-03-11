@@ -13,6 +13,8 @@ const { clave_sesion } = require('./config.js');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+// !!!! Contraseña para ingresar "tecnica1"
 // Configuración de express-session
 app.use(
     session({
@@ -391,9 +393,17 @@ app.post('/form_enviar_horario_dia_apagado', (req, res) => {
 
 
 app.post('/cerrar_sesion', (req, res) => {
+    if (!req.session) {
+        return res.redirect('/');
+    }
 
-    res.redirect("/iniciar_sesion");
-
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error al cerrar sesión:', err);
+            return res.status(500).send('Error al cerrar sesión');
+        }
+        res.redirect('/');
+    });
 });
 
 

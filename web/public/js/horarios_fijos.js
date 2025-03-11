@@ -13,7 +13,7 @@ editar.forEach((button) => {
 
         const nombreHorario = contenedorHorario.querySelector(".nombre_horario").innerText;
         const hora = contenedorHorario.querySelector(".hora").innerText;
-        const HorarioID = contenedorHorario.querySelector("#HorarioID").value;
+        const HorarioID = contenedorHorario.querySelector(".HorarioID").value;
         const duracion = contenedorHorario.querySelector(".duracion").innerText.replace("Duracion: ", "").replace("s", "").trim();
 
         const inputNameHorario = form_editar.querySelector("#input_name_horario");
