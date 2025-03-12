@@ -93,6 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${String(hours).padStart(2, "0")}:00`;
     }
     adjustHeight()
+
+   
 });
 
 function adjustHeight() {

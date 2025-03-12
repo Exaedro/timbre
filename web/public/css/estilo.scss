@@ -292,30 +292,6 @@ body {
                         }
                     }
 
-                    .cont_dia {
-                        padding-left: 20px;
-                        height: 100%;
-
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        flex-direction: column;
-                        padding-bottom: 18px;
-
-                        .dia {
-                            background-color: $primary-color;
-                            padding: 15px;
-                            height: 40px;
-                            width: 40px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            border-radius: 50%;
-                            color: white;
-
-                        }
-                    }
-
                     span {
                         font-size: 1.5em;
                         font-weight: 100;
@@ -334,9 +310,9 @@ body {
                         align-items: center;
                         flex-direction: column;
                         padding-bottom: 18px;
-
+                        padding-left: 20px;
                         .dia {
-                            background-color: $primary-color;
+                            background-color: transparent;
                             padding: 15px;
                             height: 40px;
                             width: 40px;
@@ -344,8 +320,11 @@ body {
                             justify-content: center;
                             align-items: center;
                             border-radius: 50%;
-                            color: white;
-
+                            color: rgb(0, 0, 0);
+                            &.actual{
+                                color: rgb(255, 255, 255) !important;
+                                background-color: $primary-color;
+                            }
                         }
                     }
                 }
@@ -424,18 +403,18 @@ body {
                         align-items: flex-start;
                         height: auto;
                         flex-direction: column;
-                        opacity: 1;
+                        
                         gap: 10px;
 
                         &.desac {
                             height: 0;
-                            opacity: 0;
+                           display: none;
 
                         }
 
 
                         .items {
-                            cursor: none;
+                            
                             display: flex;
                             align-items: flex-start;
                             justify-content: flex-start;

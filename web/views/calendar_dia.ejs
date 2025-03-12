@@ -21,6 +21,23 @@
                     <% const diasSemana = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"]; %>
 
                 <%
+                    function Datatime() {
+                        const now = new Date();
+                
+                        const year = now.getFullYear();
+                        const month = String(now.getMonth() + 1).padStart(2, '0'); // Mes empieza en 0
+                        const day = String(now.getDate()).padStart(2, '0');
+                        const hours = String(now.getHours()).padStart(2, '0');
+                        const minutes = String(now.getMinutes()).padStart(2, '0');
+                        const seconds = String(now.getSeconds()).padStart(2, '0');
+                
+                        return `${year}-${month}-${day}`;
+                    }
+
+                    const dia_actual = Datatime()
+                    let mes_para_fs = parseInt(mes,10)+1;
+                    mes_para_fs= "0"+mes_para_fs;
+                    const fecha_us = `${año}-${mes_para_fs}-${dia}`;
                     function Bisiesto(año) {
                         return (año % 4 === 0 && año % 100 !== 0) || (año % 400 === 0);
                     }
@@ -75,7 +92,7 @@
               %>
               
                     <div id="cont_dias_flechas">
-                      
+                       
                         <a href="/calendar_dia?dia=<%= dia_enviar_menos %>&mes=<%= mes_enviar_menos %>&nombre_dia=<%= nombre_dia_enviar_menos %>&año=<%= año_enviar_menos%>">
                             <i class="fa-solid fa-chevron-left"></i>
                         </a>
@@ -86,8 +103,14 @@
                   
                     <div class="cont_dia">
                         <span class="nombre_dia"><%- diasSemana[nombre_dia] %></span>
+                        <% if(dia_actual == fecha_us){ %>
+                            <span class="dia actual"><%- dia %></span>
+                        <%} else{ %>
+                           
+                            <span class="dia"><%- dia %></span>
+                        <%}%>
+                       
                         
-                        <span class="dia"><%- dia %></span>
                     </div>
                     <div id="cont_dias">
                         <span id="mes"><%- meses[mes] %></span>

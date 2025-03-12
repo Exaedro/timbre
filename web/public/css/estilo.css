@@ -229,26 +229,6 @@ body main #cont_main .cont_header #cont_fixed_mes #cont_dias_flechas a {
 body main #cont_main .cont_header #cont_fixed_mes #cont_dias_flechas a:hover {
   background-color: rgba(128, 128, 128, 0.137);
 }
-body main #cont_main .cont_header #cont_fixed_mes .cont_dia {
-  padding-left: 20px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-bottom: 18px;
-}
-body main #cont_main .cont_header #cont_fixed_mes .cont_dia .dia {
-  background-color: #4180ab;
-  padding: 15px;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  color: white;
-}
 body main #cont_main .cont_header #cont_fixed_mes span {
   font-size: 1.5em;
   font-weight: 100;
@@ -264,9 +244,10 @@ body main #cont_main .cont_header #cont_fixed_mes .cont_dia {
   align-items: center;
   flex-direction: column;
   padding-bottom: 18px;
+  padding-left: 20px;
 }
 body main #cont_main .cont_header #cont_fixed_mes .cont_dia .dia {
-  background-color: #4180ab;
+  background-color: transparent;
   padding: 15px;
   height: 40px;
   width: 40px;
@@ -274,7 +255,11 @@ body main #cont_main .cont_header #cont_fixed_mes .cont_dia .dia {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  color: white;
+  color: rgb(0, 0, 0);
+}
+body main #cont_main .cont_header #cont_fixed_mes .cont_dia .dia.actual {
+  color: rgb(255, 255, 255) !important;
+  background-color: #4180ab;
 }
 body main #cont_main #panel_options {
   width: 100%;
@@ -334,15 +319,13 @@ body main #cont_main #cont_calendario #cont_query #cont_items_query {
   align-items: flex-start;
   height: auto;
   flex-direction: column;
-  opacity: 1;
   gap: 10px;
 }
 body main #cont_main #cont_calendario #cont_query #cont_items_query.desac {
   height: 0;
-  opacity: 0;
+  display: none;
 }
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items {
-  cursor: none;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
