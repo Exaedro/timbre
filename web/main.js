@@ -89,11 +89,20 @@ async function verifyPassword(plainPassword, hashedPassword) {
     }
 }
 
+app.post('/cambiar_tema', (req, res) => {
+    if (req.session.user_tema === "oscuro") {
+        req.session.user_tema = "claro";
+    } else {
+        req.session.user_tema = "oscuro";
+    }
+
+    // Redirigir a la página anterior
+    res.redirect(req.get("Referer") || "/");
+});
+
+
 app.get('/iniciar_sesion', async (req, res) => {
-    // if (req.session.user_sesion != '' || typeof req.session.user_sesion != 'undefined') {
-    //     return res.redirect('/index'); // Redirige al inicio si coincide  
-    // }
-    // else {
+
         try {
             const { user_name, password } = req.query;
 
@@ -118,10 +127,6 @@ app.get('/iniciar_sesion', async (req, res) => {
         } catch (err) {
             return res.render('login.ejs', { error: 'Error al verificar los datos' });
         }
-    // }
-
-    // req.session.user_sesion = true;
-    // return res.redirect('/index'); // Redirige al inicio si coincide
 
 
 });
@@ -139,7 +144,7 @@ app.get('/index', isLogged, (req, res) => {
                     console.error('Error al buscar los datos de días apagados:', err);
                     return res.render('horarios_fijos', { error: 'Error al buscar los datos de días apagados' });
                 } else {
-                    res.render('index', { results_eventos, results_dia_apagado });
+                    res.render('index', { results_eventos, results_dia_apagado,session: req.session});
                 }
             });
         }
@@ -201,7 +206,7 @@ app.get('/index', isLogged, (req, res) => {
 
                             res.render('calendar_dia', {
                                 combinedResults, results_dia_apagado, results_dia_apagado_desac,
-                                dia, mes, nombre_dia, año, mes_enviar
+                                dia, mes, nombre_dia, año, mes_enviar,session: req.session
                             });
                         });
                     });
@@ -219,7 +224,7 @@ app.get('/horarios_fijos',isLogged, (req, res) => {
 
         }
 
-        res.render('horarios_fijos', { results })
+        res.render('horarios_fijos', { results ,session: req.session})
     })
 });
 

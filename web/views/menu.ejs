@@ -15,6 +15,19 @@
 
             </li>
         </a>
+        
+        <form action="/cambiar_tema" method="POST" style="display: inline;">
+            <button type="submit" class="item" id="item_cambiar_tema">
+                <% if (session.user_tema == "oscuro") { %>
+                 
+                    <i class="fa-solid fa-sun"></i>
+                <% } else { %>
+                    <i class="fa-solid fa-moon"></i>
+                <% } %>
+              
+                <span>Cambiar tema</span>
+            </button>
+        </form>
         <form action="/cerrar_sesion" method="POST" style="display: inline;">
             <button type="submit" class="item" id="item_cerrar-sesion">
                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -29,6 +42,7 @@
     const cont_item =document.getElementById("cont_item")
     const cont_fixed =document.getElementById("cont_fixed")
     const menu_lateral =document.getElementById("menu_lateral")
+    
     menu.addEventListener("click",()=>{
         cont_item.classList.toggle("desactive")
         cont_fixed.classList.toggle("desactive")

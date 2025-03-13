@@ -6,6 +6,8 @@ document.getElementById("checkbox").addEventListener("change", function () {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+
+
     const cont_horario_nuevo = document.getElementById("cont_horario_nuevo");
     const formPopup = document.getElementById("form_enviar_horario");
     const closeFormBtn = document.querySelectorAll(".close_form");
@@ -17,6 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn_agregar_opc = document.querySelectorAll(".btn_agregar_opc");
     const btn_desac_opc = document.querySelectorAll(".btn_desac_opc")
     const form_enviar_horario_apagado = document.getElementById("form_enviar_horario_apagado")
+    const cont_main_calendar_dia = document.getElementById("cont_main_calendar_dia");
+
+    setTimeout(() => {
+        cont_main_calendar_dia.classList.add ("active");
+        
+    }, 100); // 200 milisegundos = 0.2 segundos
+
     btn_agregar_opc.forEach(element => {
         element.addEventListener("click", (event) => {
             form_enviar_horario.classList.add('active');
@@ -94,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     adjustHeight()
 
-   
+
 });
 
 function adjustHeight() {

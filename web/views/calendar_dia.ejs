@@ -10,8 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
-<body>
-    <main>
+<% if (session.user_tema == "oscuro") { %>
+    <body class="oscuro">
+<% } else { %>
+    <body class="claro">
+<% } %>
+    <main id="cont_main_calendar_dia">
         <aside id="menu_lateral" class="desactive"> <%- include('menu.ejs') %></aside>
         <div id="cont_main">
             <div class="cont_header">
