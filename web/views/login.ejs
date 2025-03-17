@@ -27,9 +27,15 @@
                         <i class="fa-solid fa-lock" id="contra"></i>
                     </div>
                     <button>Ingresar</button>
-                </div>
 
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="error-message">
+                          <%= error %>
+                        </div>
+                      <% } %>
+                </div>
             </form>
+
         </div>
     </main>
     <script>

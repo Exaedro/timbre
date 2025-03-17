@@ -100,35 +100,35 @@ app.post('/cambiar_tema', (req, res) => {
     res.redirect(req.get("Referer") || "/");
 });
 
-
 app.get('/iniciar_sesion', async (req, res) => {
+    try {
+        const { user_name, password } = req.query;
 
-        try {
-            const { user_name, password } = req.query;
-
-            const query_ini = 'SELECT `UsuarioID`, `NombreUsuario`, `Contrasena`, `FechaCreacion` FROM `usuario` WHERE NombreUsuario=?';
-            const [userResults] = await connection.promise().query(query_ini, [user_name]);
-
-            if (userResults.length === 0) {
-                return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
-            }
-
-            const hashedPassword = userResults[0].Contrasena;
-
-            // Verifica si la contraseña coincide
-            const isMatch = await verifyPassword(password, hashedPassword);
-
-            if (isMatch) {
-                req.session.user_sesion = true
-                return res.redirect('/index'); // Redirige al inicio si coincide
-            } else {
-                return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
-            }
-        } catch (err) {
-            return res.render('login.ejs', { error: 'Error al verificar los datos' });
+        // Si no se envían credenciales, simplemente renderiza la vista sin error
+        if (!user_name || !password) {
+            return res.render('login.ejs', { error: null });
         }
 
+        const query_ini = 'SELECT `UsuarioID`, `NombreUsuario`, `Contrasena`, `FechaCreacion` FROM `usuario` WHERE NombreUsuario=?';
+        const [userResults] = await connection.promise().query(query_ini, [user_name]);
 
+        if (userResults.length === 0) {
+            return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
+        }
+
+        const hashedPassword = userResults[0].Contrasena;
+        const isMatch = await verifyPassword(password, hashedPassword);
+
+        if (isMatch) {
+            req.session.user_sesion = true;
+            return res.redirect('/index');
+        } else {
+            return res.render('login.ejs', { error: 'Usuario o contraseña incorrectos' });
+        }
+    } catch (err) {
+        console.error('Error en inicio de sesión:', err);
+        return res.render('login.ejs', { error: 'Error al verificar los datos' });
+    }
 });
 
 app.get('/index', isLogged, (req, res) => {
