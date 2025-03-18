@@ -4,9 +4,9 @@
 #include <Ethernet.h>
 #include <SPI.h>
 
-// byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };//Ponemos la dirección MAC de la Ethernet Shield
-// IPAddress ip(192,168,1,177); //Asignamos  la IP al Arduino
-// EthernetServer server(80);
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };//Ponemos la dirección MAC de la Ethernet Shield
+IPAddress ip(192,168,1,177); //Asignamos  la IP al Arduino
+EthernetServer server(80);
 
 int segundos;
 int LED_VERDE = 5;
@@ -16,15 +16,16 @@ void encenderTimbre(int secs);
 
 void setup() {
   Serial.begin(9600);
-  // Ethernet.begin(mac, ip);
-  // server.begin();
+  Ethernet.begin(mac, ip);
+  server.begin();
 
   pinMode(LED_VERDE, OUTPUT);
   pinMode(LED_ROJO, OUTPUT);
 }
 
 void loop() { 
-  // EthernetClient client = server.available();
+  EthernetClient client = server.available();
+
   digitalWrite(LED_ROJO, HIGH);
 
   while(Serial.available() > 0) {        
