@@ -24,7 +24,7 @@ $horario4-color-efect: #8d71c4;
 $font-stack: 'Arial, sans-serif';
 
 
-
+$dia_feriado: #8e3e9e96;
 $dia_evento: #3e9e8e96;
 $dia_apagado: #e0141479;
 $dia_hoy: #4180ab;
@@ -523,6 +523,9 @@ body {
                                 &#dia_hoy {
                                     background-color: $dia_hoy !important;
                                 }
+                                &#dia_feriado {
+                                    background-color: $dia_feriado !important;
+                                }
                             }
                         }
 
@@ -615,7 +618,10 @@ body {
                                 background-color: $dia_apagado !important;
                                 color: white !important;
                             }
-
+                            .feriado{
+                                background-color: $dia_feriado !important;
+                                color: white !important;
+                            }
                             .hoy {
                                 color: white !important;
                                 background-color: $primary-color;

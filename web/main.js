@@ -131,25 +131,38 @@ app.get('/iniciar_sesion', async (req, res) => {
     }
 });
 
-app.get('/index', isLogged, (req, res) => {
-    const query_eventos = "SELECT `Fecha` FROM `eventos` WHERE 1";
-    connection.query(query_eventos, [], (err, results_eventos) => {
-        if (err) {
-            console.error('Error al buscar los datos de eventos:', err);
-            return res.render('horarios_fijos', { error: 'Error al buscar los datos de eventos' });
-        } else {
-            const query_dias_apagados = "SELECT `Fecha` FROM `dias_apagado` WHERE hora_inicio = ? AND hora_fin = ?";
-            connection.query(query_dias_apagados, ["00:00", "24:00"], (err, results_dia_apagado) => {
-                if (err) {
-                    console.error('Error al buscar los datos de días apagados:', err);
-                    return res.render('horarios_fijos', { error: 'Error al buscar los datos de días apagados' });
-                } else {
-                    res.render('index', { results_eventos, results_dia_apagado,session: req.session});
-                }
-            });
+
+app.get('/index', isLogged, async (req, res) => {
+    try {
+        const query_eventos = "SELECT `Fecha` FROM `eventos` WHERE 1";
+        const [results_eventos] = await connection.promise().query(query_eventos);
+
+        const query_dias_apagados = "SELECT `Fecha` FROM `dias_apagado` WHERE hora_inicio = ? AND hora_fin = ?";
+        const [results_dia_apagado] = await connection.promise().query(query_dias_apagados, ["00:00", "24:00"]);
+
+        let año_actual = new Date().getFullYear();
+        let feriados = [];
+
+        try {
+            const response = await fetch(`https://api.argentinadatos.com/v1/feriados/${año_actual}/`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            feriados = await response.json();
+        } catch (error) {
+            console.error('Error al obtener los feriados:', error);
         }
-    });
-});app.get('/calendar_dia', isLogged, (req, res) => {
+
+        res.render('index', { results_eventos, results_dia_apagado, data: feriados, session: req.session });
+
+    } catch (err) {
+        console.error('Error en la consulta:', err);
+        res.render('horarios_fijos', { error: 'Error al buscar los datos' });
+    }
+});
+
+
+app.get('/calendar_dia', isLogged, (req, res) => {
     const dia = req.query.dia;
     const mes = req.query.mes;
     let mes_enviar = parseInt(mes) + 1;
@@ -187,7 +200,7 @@ app.get('/index', isLogged, (req, res) => {
                             const eventoHoras = new Set(results_evento.map(evento => evento.Horario));
 
                             // Filtrar horarios fijos eliminando aquellos que tengan la misma hora que un evento
-                            const horariosFiltrados = results_fijo.filter(horario => 
+                            const horariosFiltrados = results_fijo.filter(horario =>
                                 !eventoHoras.has(horario.HoraInicio)
                             );
 
@@ -206,7 +219,7 @@ app.get('/index', isLogged, (req, res) => {
 
                             res.render('calendar_dia', {
                                 combinedResults, results_dia_apagado, results_dia_apagado_desac,
-                                dia, mes, nombre_dia, año, mes_enviar,session: req.session
+                                dia, mes, nombre_dia, año, mes_enviar, session: req.session
                             });
                         });
                     });
@@ -215,7 +228,7 @@ app.get('/index', isLogged, (req, res) => {
         }
     });
 });
-app.get('/horarios_fijos',isLogged, (req, res) => {
+app.get('/horarios_fijos', isLogged, (req, res) => {
     const query_act_dia = 'SELECT * FROM horarios ORDER BY HoraInicio ASC;'
     connection.query(query_act_dia, [], (err, results) => {
         if (err) {
@@ -224,7 +237,7 @@ app.get('/horarios_fijos',isLogged, (req, res) => {
 
         }
 
-        res.render('horarios_fijos', { results ,session: req.session})
+        res.render('horarios_fijos', { results, session: req.session })
     })
 });
 
@@ -296,7 +309,7 @@ app.post('/form_enviar_horario', (req, res) => {
     });
 });
 app.post('/eliminar_horario_dia', (req, res) => {
-    const { type, id_horario, dia_enviar, mes_enviar, semana_enviar, año_enviar ,mes_enviar_act} = req.body;
+    const { type, id_horario, dia_enviar, mes_enviar, semana_enviar, año_enviar, mes_enviar_act } = req.body;
     let datatime = Datatime();
 
     if (type === "event") {
@@ -323,7 +336,7 @@ app.post('/eliminar_horario_dia', (req, res) => {
                 let nombre_horario = result[0].NombreHorario
                 let HoraInicio = result[0].HoraInicio
                 let duracion = result[0].duracion
-               const fecha= `${año_enviar}-${mes_enviar}-${dia_enviar}`
+                const fecha = `${año_enviar}-${mes_enviar}-${dia_enviar}`
 
                 const insert_horario = `INSERT INTO eventos(NombreEvento, Fecha, Horario ,duracion, Activo, Descripcion, FechaCreacion)  VALUES (?,?,?,?,?,?,?)`;
                 connection.query(insert_horario, [nombre_horario, fecha, HoraInicio, duracion, 0, "..", datatime], (err, result) => {

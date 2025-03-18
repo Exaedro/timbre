@@ -412,6 +412,9 @@ body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_hoy {
   background-color: #4180ab !important;
 }
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_feriado {
+  background-color: rgba(142, 62, 158, 0.5882352941) !important;
+}
 body main #cont_main #cont_calendario .calendario-body {
   overflow-x: hidden;
   padding-top: 2%;
@@ -483,6 +486,10 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .even
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .apagado {
   background-color: rgba(224, 20, 20, 0.4745098039) !important;
+  color: white !important;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado {
+  background-color: rgba(142, 62, 158, 0.5882352941) !important;
   color: white !important;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy {

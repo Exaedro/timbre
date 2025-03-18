@@ -29,7 +29,6 @@
                 <section id="cont_query">
                     <div id="cont_main_query">
                         <h3>Que significan los colores en cada dia?</h3>
-                      
                     </div>
                     <div id="cont_items_query" class="desac">
                         <div class="items">
@@ -86,25 +85,37 @@
                                 
                                 <% 
                                 // Agregar los días del mes con eventos
-                                for (let date = 1; date <= lastDate; date++) {
-                                    const isToday = date === today.getDate() && index === today.getMonth() && currentYear === today.getFullYear();
-                                    const dayOfWeek = new Date(currentYear, index, date).getDay();
-                                    const eventoFecha = new Date(currentYear, index, date).toDateString();
-                                    const nombreDia = diasSemana[dayOfWeek]; // Nombre del día
-                                    const tieneEvento = results_eventos.some(evento => new Date(evento.Fecha).toDateString() === eventoFecha);
-                                    const dia_apagado = results_dia_apagado.some(evento => new Date(evento.Fecha).toDateString() === eventoFecha);
+for (let date = 1; date <= lastDate; date++) {
+    const isToday = date === today.getDate() && index === today.getMonth() && currentYear === today.getFullYear();
+    const dayOfWeek = new Date(currentYear, index, date).getDay();
+    const eventoFecha = new Date(currentYear, index, date).toISOString().split('T')[0]; // Formato YYYY-MM-DD
+    const nombreDia = diasSemana[dayOfWeek]; // Nombre del día
 
-                                    // Determinar si el día debe estar apagado según los criterios
-                                    let dia_apagado_2 = false;
-                                    if (nombreDia === 'D' || nombreDia === 'S') { 
-                                        dia_apagado_2 = !tieneEvento;
-                                    }
-                                %>
-                                    <a href="/calendar_dia?dia=<%= date %>&mes=<%= index %>&nombre_dia=<%= dayOfWeek %>&año=<%= currentYear %>" 
-                                       class="dia_mes <%= isToday ? 'hoy' : '' %> <%= tieneEvento ? 'evento' : '' %>  <%= dia_apagado ? 'apagado' : '' %> <%= dia_apagado_2 ? 'apagado' : '' %>">
-                                        <%= date %>
-                                    </a>
-                                <% } %>
+    // Verificar si hay evento, día apagado o feriado
+    const tieneEvento = results_eventos.some(evento => new Date(evento.Fecha).toISOString().split('T')[0] === eventoFecha);
+    const dia_apagado = results_dia_apagado.some(evento => new Date(evento.Fecha).toISOString().split('T')[0] === eventoFecha);
+    const dia_feriado = data.some(feriado => feriado.fecha === eventoFecha); 
+
+    // Determinar si el día debe estar apagado 
+    let dia_apagado_2 = false;
+    if (nombreDia === 'D' || nombreDia === 'S') { 
+        dia_apagado_2 = !tieneEvento;
+    }
+
+    // Construcción de clases evitando espacios extra
+    let clases = ['dia_mes'];
+    if (isToday) clases.push('hoy');
+    if (tieneEvento) clases.push('evento');
+    if (dia_apagado) clases.push('apagado');
+    if (dia_apagado_2) clases.push('apagado');
+    if (dia_feriado) clases.push('feriado');
+%>
+    <a href="/calendar_dia?dia=<%= date %>&mes=<%= index %>&nombre_dia=<%= dayOfWeek %>&año=<%= currentYear %>" 
+       class="<%= clases.join(' ') %>">
+        <%= date %>
+    </a>
+<% } %>
+
                             </div>
                         </div>
                     <% } %>

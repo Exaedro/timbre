@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "Proyecto institucional de automatizacion del timbre del colegio.",
   "dependencies": {
-    "express-session": "^1.18.1"
+    "express-session": "^1.18.1",
+    "node-fetch": "^3.3.2"
   }
 }
