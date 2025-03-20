@@ -309,19 +309,19 @@ app.post('/form_enviar_horario', (req, res) => {
     });
 });
 app.post('/eliminar_horario_dia', (req, res) => {
-    const { type, id_horario, dia_enviar, mes_enviar, semana_enviar, año_enviar, mes_enviar_act } = req.body;
+    const { type, id_horario, dia_enviar,mes, mes_enviar, semana_enviar, año_enviar, mes_enviar_act } = req.body;
     let datatime = Datatime();
 
     if (type === "event") {
 
-        const update_evento = "UPDATE `eventos` SET `Activo`='0' WHERE EventoID=?"
-        connection.query(update_evento, [id_horario], (err, result) => {
+        const DELETE_evento = "DELETE FROM `eventos` WHERE EventoID=?"
+        connection.query(DELETE_evento, [id_horario], (err, result) => {
             if (err) {
                 console.error('Error agregar un timbre ', err);
                 res.status(500).send('Error actualizando los datos');
             }
             else {
-                const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
+                const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
                 res.redirect(redirectUrl);
             }
         });

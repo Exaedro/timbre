@@ -171,7 +171,7 @@
                                 <form action="/eliminar_horario_dia" method="post">
                                     <input type="text" name="dia_enviar" class="desac" value="<%-dia%>">
                                     <% const mes_enviar_act = parseInt(mes)+1%>
-                                    <input type="text" name="aw" class="desac" value="<%-mes%>">
+                                    <input type="text" name="mes" class="desac" value="<%-mes%>">
                                     <input type="text" name="mes_enviar" class="desac" value="<%-mes_enviar_act%>">
                                     <input type="text" name="semana_enviar" class="desac" value="<%-nombre_dia%>">
                                     <input type="text" name="año_enviar" class="desac" value="<%-año%>">
@@ -182,7 +182,7 @@
                                         <input type="text" name="type" value="<%= horario.type %>" class="desac">
                                         <input type="text" name="id_horario" value="<%= horario.HorarioID %>" class="desac">
                                     <% } %>
-
+ 
                                     <button type="submit">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
