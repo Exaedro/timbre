@@ -36,9 +36,10 @@ async function obtenerDatos() {
     diasApagado = diasApagado.map(dia => {
         return {
             id_dia: dia.Id_dia,
-            fecha: dayjs(dia.Fecha, 'YYYY-MM-DD'),
+            fecha: dayjs(dia.Fecha).format('YYYY-MM-DD'),
             hora_inicio: dia.hora_inicio,
-            hora_fin: dia.hora_fin
+            hora_fin: dia.hora_fin,
+            desactivado_total: dia.desac_total
         }
     })
 
@@ -59,14 +60,17 @@ async function timbre() {
     // Si el timbre esta desactivado no hace nada
     if(config[0].Activo === 0) return
 
+    console.log(horarioApagado)
     // Si hay un horario establecido para que el timbre no suene no hace nada
     if(horarioApagado) {
-        const hora_inicio = dayjs(horarioApagado.hora_inicio, 'HH:mm:ss')
-        const hora_fin = dayjs(horarioApagado.hora_fin, 'HH:mm:ss')
+        const desactivadoTodoElDia = horarioApagado.desactivado_total
+        if(desactivadoTodoElDia) return
+    }    
+        // const hora_inicio = dayjs(horarioApagado.hora_inicio, 'HH:mm:ss')
+        // const hora_fin = dayjs(horarioApagado.hora_fin, 'HH:mm:ss')
 
-        if(hora.isAfter(hora_inicio) && hora.isBefore(hora_fin)) return 
-    }
-
+        // if(hora.isAfter(hora_inicio) && hora.isBefore(hora_fin)) return 
+    
     if(eventoEncontrado) {
         const eventoFecha = dayjs(eventoEncontrado.Fecha).format('YYYY-MM-DD')
 
