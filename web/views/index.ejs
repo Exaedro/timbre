@@ -46,10 +46,18 @@
                           
                         </div>
                         <div class="items">
+                            <span id="feriado_ina"></span>
+                            <p>Los días en los cuales haya un feriado inamovible, se mostrara con un color violeta.</p>
+                        </div>
+                        <div class="items">
+                            <span id="feriado_mov"></span>
+                            <p>Los días en los cuales haya un feriado trasladable, se mostrara con un color amarillo/p>
+                        </div>
+                        <div class="items">
                             <span id="dia_normal"></span>
                             <p>Los días en los cuales no haya color indican que solo sonarán los timbres fijos.</p>
-                         
                         </div>
+                        
                     </div>
                     
                 </section>
@@ -94,7 +102,8 @@ for (let date = 1; date <= lastDate; date++) {
     // Verificar si hay evento, día apagado o feriado
     const tieneEvento = results_eventos.some(evento => new Date(evento.Fecha).toISOString().split('T')[0] === eventoFecha);
     const dia_apagado = results_dia_apagado.some(evento => new Date(evento.Fecha).toISOString().split('T')[0] === eventoFecha);
-    const dia_feriado = data.some(feriado => feriado.fecha === eventoFecha); 
+    const dia_feriado_in = data.some(feriado => feriado.fecha === eventoFecha &&  feriado.tipo === "inamovible");
+    const dia_feriado_mov = data.some(feriado => feriado.fecha === eventoFecha &&  feriado.tipo === "trasladable");  
 
     // Determinar si el día debe estar apagado 
     let dia_apagado_2 = false;
@@ -108,7 +117,8 @@ for (let date = 1; date <= lastDate; date++) {
     if (tieneEvento) clases.push('evento');
     if (dia_apagado) clases.push('apagado');
     if (dia_apagado_2) clases.push('apagado');
-    if (dia_feriado) clases.push('feriado');
+    if (dia_feriado_in) clases.push('feriado_in'); 
+    if (dia_feriado_mov) clases.push('feriado_mov');
 %>
     <a href="/calendar_dia?dia=<%= date %>&mes=<%= index %>&nombre_dia=<%= dayOfWeek %>&año=<%= currentYear %>" 
        class="<%= clases.join(' ') %>">

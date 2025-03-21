@@ -13,11 +13,16 @@
   background-color: #131313 !important;
 }
 .oscuro #menu_lateral,
-.oscuro #cont_fixed, .oscuro .cont_header, .oscuro #cont_fixed_mes, .oscuro #cont_main_calendar_dia, .oscuro #conts_form,
+.oscuro #cont_fixed,
+.oscuro .cont_header,
+.oscuro #cont_fixed_mes,
+.oscuro #cont_main_calendar_dia,
+.oscuro #conts_form,
 .oscuro main {
   background-color: #131313 !important;
 }
-.oscuro h4, .oscuro h2 {
+.oscuro h4,
+.oscuro h2 {
   color: #ffffff !important;
 }
 .oscuro p,
@@ -27,6 +32,9 @@
 .oscuro a,
 .oscuro span {
   color: rgb(223, 223, 223) !important;
+}
+.oscuro .mes_hoy {
+  color: #25379b !important;
 }
 .oscuro h3 {
   transition: all 0.2s ease-in-out;
@@ -412,12 +420,16 @@ body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_hoy {
   background-color: #4180ab !important;
 }
-body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_feriado {
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#feriado_ina {
   background-color: rgba(142, 62, 158, 0.5882352941) !important;
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#feriado_mov {
+  background-color: rgba(191, 201, 56, 0.5882352941) !important;
 }
 body main #cont_main #cont_calendario .calendario-body {
   overflow-x: hidden;
   padding-top: 2%;
+  margin-bottom: 4%;
   padding-left: 5%;
   padding-right: 5%;
   width: 85vw;
@@ -484,13 +496,29 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .even
   background-color: rgba(62, 158, 142, 0.5882352941) !important;
   color: white !important;
 }
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .evento:hover {
+  background-color: rgba(57, 145, 130, 0.5882352941) !important;
+}
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .apagado {
   background-color: rgba(224, 20, 20, 0.4745098039) !important;
   color: white !important;
 }
-body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado {
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .apagado:hover {
+  background-color: rgba(196, 23, 23, 0.4745098039) !important;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado_in {
   background-color: rgba(142, 62, 158, 0.5882352941) !important;
   color: white !important;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado_in:hover {
+  background-color: rgba(127, 57, 141, 0.5882352941) !important;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado_mov {
+  background-color: rgba(191, 201, 56, 0.5882352941) !important;
+  color: white !important;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado_mov:hover {
+  background-color: rgba(165, 173, 49, 0.5882352941) !important;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy {
   color: white !important;

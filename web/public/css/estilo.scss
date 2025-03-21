@@ -24,10 +24,21 @@ $horario4-color-efect: #8d71c4;
 $font-stack: 'Arial, sans-serif';
 
 
-$dia_feriado: #8e3e9e96;
+$dia_feriado_inamovibles: #8e3e9e96;
+$dia_feriado_inamovibles_hov: #7f398d96;
+//---------------------------------------------------------------------------------------
+$dia_feriado_trasladables: #bfc93896;
+$dia_feriado_trasladables_hov: #a5ad3196;
+//---------------------------------------------------------------------------------------
 $dia_evento: #3e9e8e96;
+$dia_evento_hov: #39918296;
+//---------------------------------------------------------------------------------------
 $dia_apagado: #e0141479;
+$dia_apagado_hov: #c4171779;
+//---------------------------------------------------------------------------------------
 $dia_hoy: #4180ab;
+$dia_hoy_hov: #376e92;
+
 
 //---------------------------------------------------------------------------
 // Colores para el modo oscuro.
@@ -37,20 +48,26 @@ $backgroung-color-dark: #131313;
 $complemento-color-dark: #242424;
 
 
-*{
+* {
     transition: backgroung_color 1s ease-in-out;
 }
+
 .oscuro {
     background-color: $backgroung-color-dark !important;
-    
+
     #menu_lateral,
-    #cont_fixed,.cont_header,#cont_fixed_mes,#cont_main_calendar_dia,#conts_form,
+    #cont_fixed,
+    .cont_header,
+    #cont_fixed_mes,
+    #cont_main_calendar_dia,
+    #conts_form,
     main {
         background-color: $backgroung-color-dark !important;
 
     }
 
-    h4,h2{
+    h4,
+    h2 {
         color: $color-text_dark_pri !important;
     }
 
@@ -61,6 +78,10 @@ $complemento-color-dark: #242424;
     a,
     span {
         color: rgb(223, 223, 223) !important;
+    }
+
+    .mes_hoy {
+        color: #25379b !important;
     }
 
     h3 {
@@ -79,15 +100,17 @@ $complemento-color-dark: #242424;
     #menu {
         color: $color-text_dark !important;
     }
-    #agregar_horario_fijo{
+
+    #agregar_horario_fijo {
         background-color: $complemento-color-dark !important;
-        input{
-            color: $color-text_dark !important; 
+
+        input {
+            color: $color-text_dark !important;
         }
-        
-       
+
+
     }
-   
+
 }
 
 //----------------------------------------------------------------------------
@@ -96,6 +119,7 @@ body {
     height: auto;
     width: 100vw;
     overflow-x: hidden;
+
     main {
         display: flex;
         height: auto;
@@ -523,9 +547,15 @@ body {
                                 &#dia_hoy {
                                     background-color: $dia_hoy !important;
                                 }
-                                &#dia_feriado {
-                                    background-color: $dia_feriado !important;
+
+                                &#feriado_ina {
+                                    background-color: $dia_feriado_inamovibles !important;
                                 }
+
+                                &#feriado_mov {
+                                    background-color: $dia_feriado_trasladables !important;
+                                }
+
                             }
                         }
 
@@ -536,6 +566,7 @@ body {
                 .calendario-body {
                     overflow-x: hidden;
                     padding-top: 2%;
+                    margin-bottom: 4%;
                     padding-left: 5%;
                     padding-right: 5%;
                     width: 85vw;
@@ -612,16 +643,35 @@ body {
                             .evento {
                                 background-color: $dia_evento !important;
                                 color: white !important;
+                                &:hover{
+                                    background-color: $dia_evento_hov !important;
+                                }
                             }
 
                             .apagado {
                                 background-color: $dia_apagado !important;
                                 color: white !important;
+                                &:hover{
+                                    background-color: $dia_apagado_hov !important;
+                                }
                             }
-                            .feriado{
-                                background-color: $dia_feriado !important;
+
+                            .feriado_in {
+                                background-color: $dia_feriado_inamovibles !important;
                                 color: white !important;
+                                &:hover{
+                                    background-color: $dia_feriado_inamovibles_hov !important;
+                                }
                             }
+
+                            .feriado_mov {
+                                background-color: $dia_feriado_trasladables !important;
+                                color: white !important;
+                                &:hover{
+                                    background-color: $dia_feriado_trasladables_hov !important;
+                                }
+                            }
+
                             .hoy {
                                 color: white !important;
                                 background-color: $primary-color;
