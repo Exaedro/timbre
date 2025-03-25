@@ -344,7 +344,7 @@ app.post('/eliminar_horario_dia', (req, res) => {
                         console.error('Error agregar un timbre ', err);
                         res.status(500).send('Error agregando evento');
                     } else {
-                        const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes_enviar_act}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
+                        const redirectUrl = `/calendar_dia?dia=${dia_enviar}&mes=${mes}&nombre_dia=${semana_enviar}&año=${año_enviar}`;
                         res.redirect(redirectUrl);
                     }
                 });
