@@ -161,7 +161,7 @@ app.get('/index', isLogged, async (req, res) => {
     }
 });
 
-
+// <------------------------------------------------------------------------------------------>
 app.get('/calendar_dia', isLogged, (req, res) => {
     const dia = req.query.dia;
     const mes = req.query.mes;
@@ -309,7 +309,7 @@ app.post('/form_enviar_horario', (req, res) => {
     });
 });
 app.post('/eliminar_horario_dia', (req, res) => {
-    const { type, id_horario, dia_enviar,mes, mes_enviar, semana_enviar, año_enviar, mes_enviar_act } = req.body;
+    const { type, id_horario, dia_enviar, mes, mes_enviar, semana_enviar, año_enviar, mes_enviar_act } = req.body;
     let datatime = Datatime();
 
     if (type === "event") {

@@ -20,7 +20,7 @@
         <aside id="menu_lateral" class="desactive"> <%- include('menu.ejs') %></aside>
         <div id="cont_main">
             <div id="panel_options">
-                <h1>Bienvenido al sistema de automatización del timbre</h1>
+                <h1>¡Bienvenido al sistema de automatización del timbre!</h1>
             </div>
             <div id="cont_calendario">
                 <div class="cont_year">
@@ -28,34 +28,34 @@
                 </div>
                 <section id="cont_query">
                     <div id="cont_main_query">
-                        <h3>Que significan los colores en cada dia?</h3>
+                        <h3>¿Qué significan los colores en cada día?</h3>
                     </div>
                     <div id="cont_items_query" class="desac">
                         <div class="items">
                             <span id="dia_apagado"></span>
-                            <p>Los días que el timbre está completamente desactivado se mostrarán en color rojo.</p>
+                            <p>Rojo: Indica que el timbre está completamente desactivado.</p>
                         </div>
                         <div class="items">
                             <span id="dia_evento"></span>
-                            <p>Los días en los cuales hay un evento, como la desactivación de un horario fijo o la adición de un nuevo horario temporal, se mostrarán en color verde.</p>
+                            <p>Verde: Representa un evento especial, como la desactivación de un horario fijo o la adición de un horario temporal.</p>
                           
                         </div>
                         <div class="items">
                             <span id="dia_hoy"></span>
-                            <p>El día actual se mostrará en color azul.</p>
+                            <p>Azul: Señala el día actual.</p>
                           
                         </div>
                         <div class="items">
                             <span id="feriado_ina"></span>
-                            <p>Los días en los cuales haya un feriado inamovible, se mostrara con un color violeta.</p>
+                            <p>Violeta: Indica un feriado inamovible.</p>
                         </div>
                         <div class="items">
                             <span id="feriado_mov"></span>
-                            <p>Los días en los cuales haya un feriado trasladable, se mostrara con un color amarillo</p>
+                            <p>Amarillo: Indica un feriado trasladable.</p>
                         </div>
                         <div class="items">
                             <span id="dia_normal"></span>
-                            <p>Los días en los cuales no haya color indican que solo sonarán los timbres fijos.</p>
+                            <p>Sin color: Significa que solo sonarán los horarios fijos.</p>
                         </div>
                         
                     </div>

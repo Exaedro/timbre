@@ -437,7 +437,7 @@ body {
                 width: 100%;
                 height: auto;
                 padding-top: 50px;
-                padding-left: 50px;
+                padding-left: 5%;
             }
 
             #cont_calendario {
@@ -450,12 +450,12 @@ body {
                 align-items: flex-start;
 
                 .cont_year {
-                    padding-left: 5%;
+                    padding-left: 7%;
                     width: 100%;
                     border-bottom: 1px solid rgba(161, 161, 161, 0.171);
 
                     #year_text {
-                        padding-left: 10px;
+                       
                         font-size: 3em;
                         color: $primary-color;
                     }
@@ -505,8 +505,8 @@ body {
                         align-items: flex-start;
                         height: auto;
                         flex-direction: column;
-
-                        gap: 10px;
+                        gap: 15px ;
+                        margin-bottom: 5%;
 
                         &.desac {
                             height: 0;
@@ -518,12 +518,14 @@ body {
                         .items {
 
                             display: flex;
-                            align-items: flex-start;
-                            justify-content: flex-start;
-                            gap: 10px;
+                            align-items: center;
+                            justify-content: center;
+                            flex-direction: row;
+                            gap: 7px;
 
                             p {
-                                width: 60%;
+                               width: 30vw;
+                                min-width: 300px;
                             }
 
                             span {
@@ -804,13 +806,20 @@ body {
                         margin-left: 3%;
                         padding: 30px;
                         height: 40px;
-
+                        width: 60%;
+                        color: white;
                         &.desac {
                             display: none !important;
                         }
+                        &.horario_desac{
+                            color: #1313134d;
 
-                        width: 60%;
-                        color: white;
+                            background-color: rgba(65, 64, 64, 0.048) !important;
+                            .trash{
+                                color: #1313134d;
+                            }
+                        }
+                       
 
                         .cont_icons {
                             display: flex;

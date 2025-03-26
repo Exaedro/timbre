@@ -170,7 +170,7 @@
                             const horaInicio = getHourFromTime(horario.HoraInicio || horario.Horario || "00:00:00");    
                             if (parseInt(horaInicio, 10) === i) {
                         %>
-                        <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'desac' %>">
+                        <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'horario_desac' %>">
                            
                             <h5 class="nombre_actividad"><%= horario.NombreHorario || horario.NombreEvento %></h5>
                             <h5><%= horario.HoraInicio || horario.Horario %> - <%= horario.duracion || horario.Duracion %>s</h5>
@@ -193,9 +193,13 @@
                                         <input type="text" name="type" value="<%= horario.type %>" class="desac">
                                         <input type="text" name="id_horario" value="<%= horario.HorarioID %>" class="desac">
                                     <% } %>
- 
+                                  
                                     <button type="submit">
-                                        <i class="fa-regular fa-trash-can"></i>
+                                        <% if (horario.Activo !=1) { %>
+                                            <i class="fa-solid fa-trash-can-arrow-up trash"></i>
+                                        <% } else { %>
+                                            <i class="fa-regular fa-trash-can "></i>
+                                        <%}%>
                                     </button>
                                 </form>
                             </div>
