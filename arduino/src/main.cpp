@@ -26,6 +26,65 @@ void setup() {
 void loop() { 
   EthernetClient client = server.available();
 
+  if(client) {
+    boolean currentLineIsBlank = true;
+
+    while(client.connected()) {
+      if(client.available()) {
+        char c = client.read();
+        Serial.write(c);
+
+        if (c == 'n' && currentLineIsBlank) {
+  
+            // Enviamos al cliente una respuesta HTTP
+            client.println("HTTP/1.1 200 OK");
+            client.println("Content-Type: text/html");
+            client.println();
+
+            //Página web en formato HTML
+            client.println("<html>");                 
+            client.println("<head><title>Naylamp Mechatronics</title>");
+            client.println("</head>");
+            client.println("<body>");
+            client.println("<div style='text-align:center;'>");
+            client.println("<h1>NAYLAMP MECHATRONICS</h1>");
+            client.println("<h2>Entradas Analogicas</h2>");
+            client.print("AN0="); client.println(analogRead(0));
+            client.print("<br />AN1=");client.println(analogRead(1)); 
+            client.println("<h2>Entradas Digitales</h2>");
+            client.print("D4=");client.println(digitalRead(4));
+            client.println("<br />D5=");client.print(digitalRead(5));
+            client.println("<br /><br />");
+            client.println("<a href='http://192.168.1.177'>Actualizar entradas</a>");
+            client.println("<h2>Salidas Digitales </h2>");        
+            client.println("Estado del LED 1 = ");/*client.print(estado1);*/            
+            client.println("<br />");            
+            client.print("<button onClick=location.href='./?Data=1'>ON</button>");           
+            client.print("<button onClick=location.href='./?Data=2'>OFF</button>");
+            client.println("<br /><br />");
+            client.println("Estado del LED 2 = ");/*client.print(estado2);   */         
+            client.println("<br />");            
+            client.print("<button onClick=location.href='./?Data=3'>ON</button>");           
+            client.print("<button onClick=location.href='./?Data=4'>OFF</button>");
+            client.println("<br /><br />");
+            client.println("<a href='https://naylampmechatronics.com/'>naylampmechatronics.com</a>");
+            client.println("<br /><br />");             
+            client.println("</b></body>");
+            client.println("</html>");
+            break;
+        }
+        if (c == 'n') {
+          currentLineIsBlank = true;
+        }
+        else if (c != 'r') {
+          currentLineIsBlank = false;
+        }
+      }
+       delay(1);
+    client.stop();
+    }
+  }
+
   digitalWrite(LED_ROJO, HIGH);
 
   while(Serial.available() > 0) {        

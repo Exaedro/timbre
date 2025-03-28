@@ -18,7 +18,6 @@ function sincronizar(callback) {
     setTimeout(() => {
         callback()
 
-        console.log('hola')
         setInterval(callback, 60 * 1000)
     }, msHastaProximoMinuto)
 }
@@ -60,7 +59,6 @@ async function timbre() {
     // Si el timbre esta desactivado no hace nada
     if(config[0].Activo === 0) return
 
-    console.log(horarioApagado)
     // Si hay un horario establecido para que el timbre no suene no hace nada
     if(horarioApagado) {
         const desactivadoTodoElDia = horarioApagado.desactivado_total
