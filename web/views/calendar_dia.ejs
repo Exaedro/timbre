@@ -123,20 +123,31 @@
                    
                 </div>
             </div>
-            <section id="cont_dia_apagado">
-                <%- include("form_apagado.ejs") %>
-            </section>
-
             
+            <% if (diasSemana[nombre_dia] == "Sab" || diasSemana[nombre_dia] == "Dom") {  %>
+                <section id="cont_dia_apagado" class="desac">
+                    <%- include("form_apagado.ejs") %>
+                </section>
+                <div class="desactivado_cont">
+                    <h2>EL TIMBRE ESTÁ DESACTIVADO, POR LO TANTO, NO SONARÁ EN EL DÍA DE HOY.</h2>
+                </div>
+                <section id="calendar_dia" class="desactivado">
+            <% } %>
             <% if (results_dia_apagado_desac && results_dia_apagado_desac.length > 0) { %>
             <% if ( results_dia_apagado_desac[0].hora_inicio === "00:00:00" &&
                         results_dia_apagado_desac[0].hora_fin === "24:00:00" &&
                         results_dia_apagado_desac[0].desac_total == 1) { %>
+            <section id="cont_dia_apagado">
+                <%- include("form_apagado.ejs") %>
+            </section>
                <div class="desactivado_cont">
                 <h2>EL TIMBRE ESTA DESACTIVADO, POR LO TANTO NO SONARA EN EL DÍA DE HOY, A MENOS QUE LO VUELVA A ACTIVAR    </h2>
                 <section id="calendar_dia" class="desactivado">
                     <% } %> 
                 <% } else { %>
+                    <section id="cont_dia_apagado">
+                        <%- include("form_apagado.ejs") %>
+                    </section>
                     <div class="activado_cont">
                     <section id="calendar_dia" class="activo">
                     <% } %>
@@ -159,7 +170,7 @@
                             const horaInicio = getHourFromTime(horario.HoraInicio || horario.Horario || "00:00:00");    
                             if (parseInt(horaInicio, 10) === i) {
                         %>
-                        <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'desac' %>">
+                        <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'horario_desac' %>">
                            
                             <h5 class="nombre_actividad"><%= horario.NombreHorario || horario.NombreEvento %></h5>
                             <h5><%= horario.HoraInicio || horario.Horario %> - <%= horario.duracion || horario.Duracion %>s</h5>
@@ -182,9 +193,13 @@
                                         <input type="text" name="type" value="<%= horario.type %>" class="desac">
                                         <input type="text" name="id_horario" value="<%= horario.HorarioID %>" class="desac">
                                     <% } %>
- 
+                                  
                                     <button type="submit">
-                                        <i class="fa-regular fa-trash-can"></i>
+                                        <% if (horario.Activo !=1) { %>
+                                            <i class="fa-solid fa-trash-can-arrow-up trash"></i>
+                                        <% } else { %>
+                                            <i class="fa-regular fa-trash-can "></i>
+                                        <%}%>
                                     </button>
                                 </form>
                             </div>
@@ -199,9 +214,11 @@
             </section>
             </div>
         </div>
+        <% if (diasSemana[nombre_dia] != "Sab" || diasSemana[nombre_dia] != "Dom") {  %>
         <div id="cont_horario_nuevo">
             <i class="fa-solid fa-plus"></i>
         </div>
+        <% } %>
     </main>
    
 
