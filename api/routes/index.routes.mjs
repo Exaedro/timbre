@@ -19,14 +19,34 @@ router.get('/timbre/encender', auth, (req, res) => {
     }
 })
 
-router.get('/timbre/exportar/csv', async (req, res) => {
-    const results = await query({ sql: 'SELECT HorarioID as horario_id, NombreHorario as nombre_horario, HoraInicio as hora_inicio, Activo as horario_activo, FechaCreacion as fecha_creacion_horario, duracion as horario_duracion FROM horarios' })
+router.get('/timbre/exportar/horarios', async (req, res) => {
+    const results = await query({ sql: 'SELECT HoraInicio, duracion FROM horarios' })
 
-    const csvStream = format({ headers: true });
+    const csvStream = format({ headers: false });
     csvStream.pipe(res);
 
     results.forEach(row => csvStream.write(row));
     csvStream.end();
+})
+
+router.get('/timbre/exportar/eventos', async (req, res) => {
+    const results = await query({ sql: 'SELECT Fecha, Horario, Duracion FROM eventos' })
+
+    const csvStream = format({ headers: false })
+    csvStream.pipe(res)
+
+    results.forEach(row => csvStream.write(row))
+    csvStream.end()
+})
+
+router.get('/timbre/exportar/apagado', async (req, res) => {
+    const results = await query({ sql: 'SELECT Fecha, hora_inicio FROM dias_apagado' })
+
+    const csvStream = format({ headers: false })
+    csvStream.pipe(res)
+
+    results.forEach(row => csvStream.write(row))
+    csvStream.end()
 })
 
 export default router

@@ -1,103 +1,328 @@
+
+
+
+
+
+
+/* /////////////////////////////////// LIBRERIAS ////////////////////////////////////////////// */
+
 #include <Arduino.h>
 #include <stdlib.h>
 #include <string.h>
 #include <Ethernet.h>
+#include <EthernetUdp.h>
+#include <NTPClient.h>
+#include <RTClib.h>
+#include <Wire.h>
 #include <SPI.h>
+#include <SD.h>
 
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };//Ponemos la dirección MAC de la Ethernet Shield
-IPAddress ip(192,168,1,177); //Asignamos  la IP al Arduino
-EthernetServer server(80);
+/* /////////////////////////////////// VARIABLES ////////////////////////////////////////////// */
 
-int segundos;
-int LED_VERDE = 5;
-int LED_ROJO = 7;
+int estado = 0;
+int led_verde = 7;
+int led_rojo = 5;
+int pin_sd = 4;
+int pin_ethernet = 10;
 
-void encenderTimbre(int secs);
+int contador_backup = 0;
+int contador_backup_limite = 60; // 900 segundos (15 minutos)
+int contador_timer = 0;
+int contador_timer_limite = 60; // 60 segundos (1 minuto)
+
+// unsigned long millisPrevios = 0;  
+// const unsigned long intervalo = 1UL * 60UL * 1000UL;
+
+// RTC_DS1307 rtc;
+
+// API
+int puerto_api = 3000; 
+char api_ip[] = "192.168.100.6"; 
+String endpoints[] = {
+  "/timbre/exportar/horarios", 
+  "/timbre/exportar/eventos",
+  "/timbre/exportar/apagado"
+};
+int api_intentos_limite = 20; // Limite de peticiones para conectarse a la API.
+int api_intentos = 0;
+bool api_led = false;
+
+// Arduino
+IPAddress ip(192,168,100,177); // IP del Arduino
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+IPAddress dns(192, 168, 0, 1);
+
+EthernetClient client;
+
+/* /////////////////////////////////// FUNCIONES ////////////////////////////////////////////// */
+
+void inicializarEthernet();
+void inicializarSD();
+void inicializarRTC();
+
+void activarSD();
+void activarEthernet();
+
+void backup();
+void reconectar_api();
+bool es_hora(String linea);
+String extraer_nombre(String string);
 
 void setup() {
   Serial.begin(9600);
-  Ethernet.begin(mac, ip);
-  server.begin();
 
-  pinMode(LED_VERDE, OUTPUT);
-  pinMode(LED_ROJO, OUTPUT);
+  // LEDS
+  pinMode(led_verde, OUTPUT);
+  digitalWrite(led_verde, LOW);
+  pinMode(led_rojo, OUTPUT);
+  digitalWrite(led_rojo, LOW);
+  
+  // MEMORIA SD
+  pinMode(pin_sd, OUTPUT); // Deshabilitar la memoria SD para poder utilizar Ethernet
+  inicializarSD();
+  digitalWrite(pin_sd, HIGH);
+  
+  // CONEXION ETHERNET
+  pinMode(pin_ethernet, OUTPUT);
+  digitalWrite(pin_ethernet, LOW);
+  inicializarEthernet();
+
+  // RTC
+  // inicializarRTC();
+  
+  // TIMER
+  TCCR1A = 0;   
+  TCCR1B = 0;
+  OCR1A = 62499;
+  TCCR1B |= (1 << WGM12);
+  TCCR1B |= (1 << CS12);
+  TIMSK1 |= (1 << OCIE1A);
+  sei(); 
+}
+
+ISR(TIMER1_COMPA_vect) {
+  estado = !estado;
+  digitalWrite(led_verde, estado);  
+
+  contador_backup++;
 }
 
 void loop() { 
-  EthernetClient client = server.available();
+  // unsigned long currentMillis = millis();
+  // if (currentMillis - millisPrevios >= intervalo) {
+  //   millisPrevios = currentMillis;  // Reinicia el contador
 
-  if(client) {
-    boolean currentLineIsBlank = true;
-
-    while(client.connected()) {
-      if(client.available()) {
-        char c = client.read();
-        Serial.write(c);
-
-        if (c == 'n' && currentLineIsBlank) {
-  
-            // Enviamos al cliente una respuesta HTTP
-            client.println("HTTP/1.1 200 OK");
-            client.println("Content-Type: text/html");
-            client.println();
-
-            //Página web en formato HTML
-            client.println("<html>");                 
-            client.println("<head><title>Naylamp Mechatronics</title>");
-            client.println("</head>");
-            client.println("<body>");
-            client.println("<div style='text-align:center;'>");
-            client.println("<h1>NAYLAMP MECHATRONICS</h1>");
-            client.println("<h2>Entradas Analogicas</h2>");
-            client.print("AN0="); client.println(analogRead(0));
-            client.print("<br />AN1=");client.println(analogRead(1)); 
-            client.println("<h2>Entradas Digitales</h2>");
-            client.print("D4=");client.println(digitalRead(4));
-            client.println("<br />D5=");client.print(digitalRead(5));
-            client.println("<br /><br />");
-            client.println("<a href='http://192.168.1.177'>Actualizar entradas</a>");
-            client.println("<h2>Salidas Digitales </h2>");        
-            client.println("Estado del LED 1 = ");/*client.print(estado1);*/            
-            client.println("<br />");            
-            client.print("<button onClick=location.href='./?Data=1'>ON</button>");           
-            client.print("<button onClick=location.href='./?Data=2'>OFF</button>");
-            client.println("<br /><br />");
-            client.println("Estado del LED 2 = ");/*client.print(estado2);   */         
-            client.println("<br />");            
-            client.print("<button onClick=location.href='./?Data=3'>ON</button>");           
-            client.print("<button onClick=location.href='./?Data=4'>OFF</button>");
-            client.println("<br /><br />");
-            client.println("<a href='https://naylampmechatronics.com/'>naylampmechatronics.com</a>");
-            client.println("<br /><br />");             
-            client.println("</b></body>");
-            client.println("</html>");
-            break;
-        }
-        if (c == 'n') {
-          currentLineIsBlank = true;
-        }
-        else if (c != 'r') {
-          currentLineIsBlank = false;
-        }
-      }
-       delay(1);
-    client.stop();
-    }
+  if(contador_backup >= contador_backup_limite) {
+    api_led = false;
+    contador_backup = 0;
+    backup();
   }
 
-  digitalWrite(LED_ROJO, HIGH);
+  if(api_led) {
+    digitalWrite(led_rojo, HIGH);
+    delay(100);
+    digitalWrite(led_rojo, LOW);
+    delay(100);
+    digitalWrite(led_rojo, HIGH);
+    delay(100);
+    digitalWrite(led_rojo, LOW);
+    delay(500);
+  }
 
-  while(Serial.available() > 0) {        
-    digitalWrite(LED_ROJO, LOW);
+  // }
+}
 
-    segundos = Serial.readString().toInt();
+void inicializarEthernet() {
+  Ethernet.begin(mac, ip, dns);
 
-    encenderTimbre(segundos);
+  if (Ethernet.hardwareStatus() == EthernetNoHardware) {
+    Serial.println("No se encontro el hardware para la conexion por Ethernet. Conecte el hardware y reinicie el Arduino.");
+    while (true) {
+      delay(1); 
+    }
+  }
+  if (Ethernet.linkStatus() == LinkOFF) {
+    Serial.println("El cable Ethernet no esta conectado.");
+  }
+
+  Serial.print("Servidor en la IP: ");
+  Serial.println(Ethernet.localIP());
+}
+
+void inicializarSD() {
+  if(!SD.begin(pin_sd)) {
+    Serial.println("Error al inicializar la memoria SD.");
+    return;
+  } else {
+    Serial.println("Memoria SD Inicializada.");
   }
 }
 
-void encenderTimbre(int secs) {
-  digitalWrite(LED_VERDE, HIGH);
-  delay(secs * 1000);
-  digitalWrite(LED_VERDE, LOW);
-} 
+void inicializarRTC() {
+  // if(!rtc.begin()) {
+  //   Serial.println("Error al intentar inicializar el RTC.");
+  //   return;
+  // } 
+
+  // Serial.println("RTC Inicializado.");
+}
+
+void backup() {
+  Serial.println("Iniciando backup...");
+  Serial.println("-------------------");
+
+  int endpointsLength = (sizeof(endpoints) / sizeof(endpoints[0]));
+  for(int i = 0;i < endpointsLength; i++) {
+    bool reconectar = true;
+    activarEthernet();
+
+    while(reconectar != false) {
+      
+      if(!client.connect(api_ip, puerto_api)) {
+        reconectar_api();
+      }
+
+      reconectar = false;
+
+      client.println("GET " + endpoints[i] + " HTTP/1.1");
+      client.println("Host: " + String(api_ip) + ":" + puerto_api);
+      client.println("Connection: close");
+      client.println();
+
+      String nombreArchivo = extraer_nombre(endpoints[i]);
+
+      while (client.available()) {
+        String headerLine = client.readStringUntil('\n');
+        if (headerLine == "\r") {
+          break;
+        }
+      }
+
+      activarSD();
+
+      if(SD.exists(nombreArchivo)) {
+        SD.remove(nombreArchivo);
+      }
+            
+      // Base de datos
+      File archivo = SD.open(nombreArchivo, FILE_WRITE);
+
+      if(archivo) {
+        Serial.println("Archivo " + nombreArchivo + " creado.");
+      } else {
+        Serial.println("Error al crear archivo " + nombreArchivo + ".");
+      }
+
+      while (client.connected() || client.available()) {
+        if (client.available()) {
+          String linea = client.readStringUntil('\n');
+          linea.trim();
+
+          if (linea.length() == 0 || linea.equalsIgnoreCase("b") || (linea.length() <= 2 && linea.toInt() > 0)) {
+            continue;
+          }
+
+          bool campo_valido = false;
+          int startIndex = 0;
+          int indexComma = linea.indexOf(',', startIndex);
+          while (indexComma != -1) {
+            String campo = linea.substring(startIndex, indexComma);
+            campo.trim();
+            if (es_hora(campo)) {
+              campo_valido = true;
+              break;
+            }
+            startIndex = indexComma + 1;
+            indexComma = linea.indexOf(',', startIndex);
+          }
+          if (!campo_valido && startIndex < linea.length()) {
+            String campo = linea.substring(startIndex);
+            campo.trim();
+            if (es_hora(campo)) {
+              campo_valido = true;
+            }
+          }
+          
+          if (campo_valido) {
+            archivo.println(linea);
+          }
+        }
+      }
+
+      archivo.close();
+    }
+  }
+
+  client.stop();
+
+  Serial.println("-----------------");
+  Serial.println("Backup terminado.");
+}
+
+void reconectar_api() {
+  Serial.println("Error intentando conectarse a la API.");
+  api_intentos++;
+  
+  if(api_intentos >= api_intentos_limite) {
+    Serial.println("Se ha alcanzado el limite de intentos para conectar a la API.");
+    Serial.println("Volviendo a intentar dentro de 15 minutos.");
+    Serial.println("------------------------------------------");
+    api_intentos = 0;
+    api_led = true;
+    return;
+  }
+
+  Serial.println("Reconectando...");
+  delay(1000);
+}
+
+void activarSD() {
+  digitalWrite(pin_sd, LOW);
+  digitalWrite(pin_ethernet, HIGH);
+}
+
+void activarEthernet() {
+  digitalWrite(pin_sd, HIGH);
+  digitalWrite(pin_ethernet, LOW);
+}
+
+String extraer_nombre(String string) {
+  int lastSlash = string.lastIndexOf('/');
+  String fileName = "";
+  if (lastSlash != -1) {
+    fileName = String(string.substring(lastSlash + 1) + ".txt");
+  }
+
+  return fileName;
+}
+
+bool es_hora(String campo) {
+  // Se asume que el campo contiene la hora en formato 24 horas ("HH:MM:SS")
+  // Verifica que el campo tenga al menos 8 caracteres y los dos puntos en las posiciones correctas.
+  campo.trim();
+  if (campo.length() < 8) return false;
+  if (campo.charAt(2) != ':' || campo.charAt(5) != ':') return false;
+  // Opcionalmente se podría validar que los caracteres sean dígitos en posiciones específicas.
+  return true;
+}
+
+// String formato_hora(String hora12) {
+//   // Se asume que la cadena tiene el formato "hh:mm:ssXX"
+//   // donde "XX" es "AM" o "PM"
+//   String horaStr = hora12.substring(0, 2);
+//   String minutos = hora12.substring(3, 5);
+//   String segundos = hora12.substring(6, 8);
+//   String ampm = hora12.substring(8);  // extrae "AM" o "PM"
+  
+//   int hora = horaStr.toInt();
+
+//   if (ampm == "PM" && hora < 12) {
+//     hora += 12;
+//   } else if (ampm == "AM" && hora == 12) {
+//     hora = 0;
+//   }
+  
+//   // Formatear la nueva hora a dos dígitos
+//   String nuevo_formato = (hora < 10 ? "0" : "") + String(hora) + ":" + minutos + ":" + segundos;
+//   return nuevo_formato;
+// }

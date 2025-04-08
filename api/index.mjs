@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import logger from 'morgan'
 
 // Timbre
 import './timbre/timbre.mjs'
@@ -10,6 +11,7 @@ const app = express()
 app.set('json spaces', 2)
 
 // Middlewares
+app.use(logger('short'))
 app.use(cors())
 app.use(express.json())
 
