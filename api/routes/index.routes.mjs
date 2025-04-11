@@ -30,7 +30,7 @@ router.get('/timbre/exportar/horarios', async (req, res) => {
 })
 
 router.get('/timbre/exportar/eventos', async (req, res) => {
-    const results = await query({ sql: 'SELECT Fecha, Horario, Duracion FROM eventos' })
+    const results = await query({ sql: 'SELECT DATE_FORMAT(Fecha, "%Y/%m/%d") as Fecha, Horario, Duracion FROM eventos' })
 
     const csvStream = format({ headers: false })
     csvStream.pipe(res)
@@ -40,7 +40,7 @@ router.get('/timbre/exportar/eventos', async (req, res) => {
 })
 
 router.get('/timbre/exportar/apagado', async (req, res) => {
-    const results = await query({ sql: 'SELECT Fecha, hora_inicio FROM dias_apagado' })
+    const results = await query({ sql: 'SELECT DATE_FORMAT(Fecha, "%Y/%m/%d") as Fecha, hora_inicio FROM `dias_apagado`' })
 
     const csvStream = format({ headers: false })
     csvStream.pipe(res)

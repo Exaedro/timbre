@@ -10,10 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <Ethernet.h>
-#include <EthernetUdp.h>
-#include <NTPClient.h>
-#include <RTClib.h>
 #include <Wire.h>
+#include <RtcDS1302.h>
 #include <SPI.h>
 #include <SD.h>
 
@@ -26,14 +24,19 @@ int pin_sd = 4;
 int pin_ethernet = 10;
 
 int contador_backup = 0;
-int contador_backup_limite = 60; // 900 segundos (15 minutos)
+int contador_backup_limite = 5; // 900 segundos (15 minutos)
+
+bool timbre_activo = false;
+bool dia_apagado = false;
 int contador_timer = 0;
-int contador_timer_limite = 60; // 60 segundos (1 minuto)
+int contador_timer_limite = 0;
 
 // unsigned long millisPrevios = 0;  
 // const unsigned long intervalo = 1UL * 60UL * 1000UL;
 
-// RTC_DS1307 rtc;
+// RTC 
+ThreeWire myWire(12, 11, 13); // IO, SCLK, CE
+RtcDS1302<ThreeWire> Rtc(myWire);
 
 // API
 int puerto_api = 3000; 
@@ -68,6 +71,13 @@ void reconectar_api();
 bool es_hora(String linea);
 String extraer_nombre(String string);
 
+void encender_timbre(int segundos);
+
+void obtener_hora(const RtcDateTime& dt, char* horaBuffer, size_t bufferSize);
+void obtener_fecha(const RtcDateTime& dt, char* fechaBuffer, size_t bufferSize); 
+
+/* /////////////////////////////////// CODIGO PRINCIPAL /////////////////////////////////// */
+
 void setup() {
   Serial.begin(9600);
 
@@ -88,7 +98,7 @@ void setup() {
   inicializarEthernet();
 
   // RTC
-  // inicializarRTC();
+  inicializarRTC();
   
   // TIMER
   TCCR1A = 0;   
@@ -101,16 +111,97 @@ void setup() {
 }
 
 ISR(TIMER1_COMPA_vect) {
-  estado = !estado;
-  digitalWrite(led_verde, estado);  
+  if(timbre_activo) {
+    contador_timer++;
+  }
+
+  RtcDateTime tiempo_ahora = Rtc.GetDateTime();
+
+  char hora[9]; 
+  char fecha[11]; 
+
+  obtener_hora(tiempo_ahora, hora, sizeof(hora));
+  obtener_fecha(tiempo_ahora, fecha, sizeof(fecha));
+
+  Serial.println(hora);
+  
+  activarSD();
+  
+  File dias_apagado = SD.open("apagado.txt", FILE_READ);
+  
+  while(dias_apagado.available()) {
+    String linea = dias_apagado.readStringUntil('\n');
+    
+    String db_fecha = linea.substring(0, 10);
+    
+    if(db_fecha == fecha) {
+      dia_apagado = true;
+      break;
+    } else {
+      dia_apagado = false;
+    }
+  }
+  
+  dias_apagado.close();
+  
+  File eventos = SD.open("eventos.txt", FILE_READ);
+  
+  while(eventos.available()) {
+    if(dia_apagado) {
+      break;
+    }
+
+    String linea = eventos.readStringUntil('\n');
+    
+    String db_fecha = linea.substring(0, 10);   
+    String db_hora = linea.substring(11, 19);
+    String db_segundos = linea.substring(20, 21); // Tiempos de encendido del timbre
+
+    if(db_fecha == fecha && db_hora == hora) {
+      encender_timbre(db_segundos.toInt());
+    }
+  }
+  
+  eventos.close();
+  
+  File horarios = SD.open("horarios.txt", FILE_READ);
+  
+  while(horarios.available()) {
+    if(dia_apagado) {
+      break;
+    }
+    
+    String linea = horarios.readStringUntil('\n');
+    
+    String db_hora = linea.substring(0, 8);
+    String db_segundos = linea.substring(9, 10); // Tiempos de encendido del timbre  
+    
+    if(db_hora == hora) {
+      encender_timbre(db_segundos.toInt());
+    }
+  }
+
+  horarios.close();
 
   contador_backup++;
+}
+
+void encender_timbre(int segundos) {
+  timbre_activo = true;
+  contador_timer_limite = segundos;
+  digitalWrite(led_verde, HIGH);
 }
 
 void loop() { 
   // unsigned long currentMillis = millis();
   // if (currentMillis - millisPrevios >= intervalo) {
   //   millisPrevios = currentMillis;  // Reinicia el contador
+
+  if(contador_timer >= contador_timer_limite) {
+    contador_timer = 0;
+    timbre_activo = false;
+    digitalWrite(led_verde, LOW);
+  }
 
   if(contador_backup >= contador_backup_limite) {
     api_led = false;
@@ -159,12 +250,8 @@ void inicializarSD() {
 }
 
 void inicializarRTC() {
-  // if(!rtc.begin()) {
-  //   Serial.println("Error al intentar inicializar el RTC.");
-  //   return;
-  // } 
-
-  // Serial.println("RTC Inicializado.");
+  Rtc.Begin();
+  Serial.println("RTC inicializada.");
 }
 
 void backup() {
@@ -180,6 +267,7 @@ void backup() {
       
       if(!client.connect(api_ip, puerto_api)) {
         reconectar_api();
+        continue;
       }
 
       reconectar = false;
@@ -211,6 +299,7 @@ void backup() {
         Serial.println("Archivo " + nombreArchivo + " creado.");
       } else {
         Serial.println("Error al crear archivo " + nombreArchivo + ".");
+        continue;
       }
 
       while (client.connected() || client.available()) {
@@ -304,6 +393,26 @@ bool es_hora(String campo) {
   if (campo.charAt(2) != ':' || campo.charAt(5) != ':') return false;
   // Opcionalmente se podría validar que los caracteres sean dígitos en posiciones específicas.
   return true;
+}
+
+#define countof(a) (sizeof(a) / sizeof(a[0]))
+
+void obtener_hora(const RtcDateTime& dt, char* horaBuffer, size_t bufferSize) {
+  snprintf_P(horaBuffer, 
+             bufferSize,
+             PSTR("%02u:%02u:%02u"),
+             dt.Hour(),
+             dt.Minute(),
+             dt.Second());
+}
+
+void obtener_fecha(const RtcDateTime& dt, char* fechaBuffer, size_t bufferSize) {
+  snprintf_P(fechaBuffer, 
+    bufferSize,
+    PSTR("%04u/%02u/%02u"), 
+    dt.Year(),
+    dt.Month(),
+    dt.Day());
 }
 
 // String formato_hora(String hora12) {
