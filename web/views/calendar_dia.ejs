@@ -129,7 +129,7 @@
                     <%- include("form_apagado.ejs") %>
                 </section>
                 <div class="desactivado_cont">
-                    <h2>EL TIMBRE ESTÁ DESACTIVADO, POR LO TANTO, NO SONARÁ EN EL DÍA DE HOY.</h2>
+                    <h2>EL TIMBRE ESTÁ DESACTIVADO, POR LO TANTO, NO EL DÍA <% diasSemana[nombre_dia] %> <% meses[mes] %>.</h2>
                 </div>
                 <section id="calendar_dia" class="desactivado">
             <% } %>
@@ -141,7 +141,7 @@
                 <%- include("form_apagado.ejs") %>
             </section>
                <div class="desactivado_cont">
-                <h2>EL TIMBRE ESTA DESACTIVADO, POR LO TANTO NO SONARA EN EL DÍA DE HOY, A MENOS QUE LO VUELVA A ACTIVAR    </h2>
+                <h2>EL TIMBRE ESTA DESACTIVADO,EN EL DÍA <b><%- diasSemana[nombre_dia] %> <%- dia %> <%- meses[mes] %> </b>, POR LO TANTO NO SONARA, A MENOS QUE LO VUELVA A ACTIVAR </h2>
                 <section id="calendar_dia" class="desactivado">
                     <% } %> 
                 <% } else { %>
@@ -173,7 +173,7 @@
                         <div class="cont_horario_timbre <%= horario.type === 'event' ? 'evento' : 'fijo' %> s<%= horario.duracion %> <%= horario.Activo == '1' ? '' : 'horario_desac' %>">
                            
                             <h5 class="nombre_actividad"><%= horario.NombreHorario || horario.NombreEvento %></h5>
-                            <h5><%= horario.HoraInicio || horario.Horario %> - <%= horario.duracion || horario.Duracion %>s</h5>
+                            <h5 class="hora_event"><%= horario.HoraInicio || horario.Horario %> - <%= horario.duracion || horario.Duracion %>s</h5>
                             <div class="cont_icons" data-nombre="<%= horario.NombreHorario || horario.NombreEvento %>" 
                                 data-horario="<%= horario.HoraInicio || horario.Horario %>" 
                                 data-duracion="<%= horario.duracion || horario.Duracion %>" 
@@ -224,7 +224,7 @@
 
     <div id="conts_form">
         <form action="/form_enviar_horario" method="post"  id="form_enviar_horario" class="forms_class">
-            <h4 id="tit_form">Agregar horario para el dia <%-dia%> de <%-meses[mes]%></h4>
+            <h4 id="tit_form">Agregar evento para el dia <%-dia%> de <%-meses[mes]%></h4>
             <!-- <div class="cont_opciones">
                 <span class="btn_agregar_opc active">Agregar horario</span>
                 <span class="btn_desac_opc">Desactivar timbre</span>
@@ -237,18 +237,18 @@
             <input type="text" class="desac" name="fecha_enviar" value="<%-año%>-<%-mes_enviar%>-<%-dia%>">
             
             <div class="cont_input">
-                <input type="text" id="input_name_horario_enviar" name="input_name_horario_enviar" placeholder="Nombre del horario"
-                    required>
+                <input type="text" id="input_name_horario_enviar" name="input_name_horario_enviar" placeholder="Nombre del evento"
+                maxlength="40" required>
             </div>
             <div class="cont_input">
-                <input type="text" id="Descripcion" name="Descripcion" placeholder="Descripción del evento" required>
+                <input type="text" id="Descripcion" name="Descripcion" placeholder="Descripción del evento" maxlength="50" required >
             </div>
             <div class="cont_input">
                 <input type="time" id="activity_time_enviar" name="activity_time_enviar" required>
             </div>
          
             <div class="cont_input">
-                <input type="number" id="input_duracion_enviar" name="input_duracion_enviar" placeholder="Duracion del sonido" min="1" required>
+                <input type="number" id="input_duracion_enviar" name="input_duracion_enviar" placeholder="Duracion del timbre" min="1" max="6" required>
             </div>
             <div class="cont_botones">
                 <button type="submit" id="enviar">Guardar</button>

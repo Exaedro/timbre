@@ -79,9 +79,11 @@ $complemento-color-dark: #242424;
     span {
         color: rgb(223, 223, 223) !important;
     }
-    #tit_form{
+
+    #tit_form {
         color: rgb(0, 0, 0) !important;
     }
+
     .mes_hoy {
         color: #25379b !important;
     }
@@ -457,7 +459,7 @@ body {
                     border-bottom: 1px solid rgba(161, 161, 161, 0.171);
 
                     #year_text {
-                       
+
                         font-size: 3em;
                         color: $primary-color;
                     }
@@ -507,7 +509,7 @@ body {
                         align-items: flex-start;
                         height: auto;
                         flex-direction: column;
-                        gap: 15px ;
+                        gap: 15px;
                         margin-bottom: 5%;
 
                         &.desac {
@@ -526,7 +528,7 @@ body {
                             gap: 7px;
 
                             p {
-                               width: 30vw;
+                                width: 30vw;
                                 min-width: 300px;
                             }
 
@@ -647,7 +649,8 @@ body {
                             .evento {
                                 background-color: $dia_evento !important;
                                 color: white !important;
-                                &:hover{
+
+                                &:hover {
                                     background-color: $dia_evento_hov !important;
                                 }
                             }
@@ -655,7 +658,8 @@ body {
                             .apagado {
                                 background-color: $dia_apagado !important;
                                 color: white !important;
-                                &:hover{
+
+                                &:hover {
                                     background-color: $dia_apagado_hov !important;
                                 }
                             }
@@ -663,7 +667,8 @@ body {
                             .feriado_in {
                                 background-color: $dia_feriado_inamovibles !important;
                                 color: white !important;
-                                &:hover{
+
+                                &:hover {
                                     background-color: $dia_feriado_inamovibles_hov !important;
                                 }
                             }
@@ -671,7 +676,8 @@ body {
                             .feriado_mov {
                                 background-color: $dia_feriado_trasladables !important;
                                 color: white !important;
-                                &:hover{
+
+                                &:hover {
                                     background-color: $dia_feriado_trasladables_hov !important;
                                 }
                             }
@@ -739,17 +745,24 @@ body {
 
             .desactivado_cont {
                 min-height: 100%;
-                width: 100vw;
-                height: 82vh;
+                width: 80%;
+                height: auto;
                 display: flex;
                 overflow-y: hidden;
                 border-left: 1px solid rgba(134, 134, 134, 0.048);
                 padding: 20px;
+                padding-left: 60px;
                 justify-content: flex-start;
                 align-items: flex-start;
+                gap: 10px;
 
                 h2 {
-                    width: 70%;
+                    display: inline;
+                    font-size: 1.5em;
+                }
+
+                b {
+                    color: red;
                 }
             }
 
@@ -810,25 +823,47 @@ body {
                         height: 40px;
                         width: 60%;
                         color: white;
+                        .nombre_actividad{
+                            
+                            width: 70%;
+                        }
+                        .hora_event{
+                         
+                            width: 20%;
+                        }
+                        h5 {
+                            font-size: .9em;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 20px;
+                            height: auto;
+                            min-width: 100px;
+                            text-align: center;
+                        }
+
                         &.desac {
                             display: none !important;
                         }
-                        &.horario_desac{
+
+                        &.horario_desac {
                             color: #1313134d;
 
                             background-color: rgba(65, 64, 64, 0.048) !important;
-                            .trash{
+
+                            .trash {
                                 color: #1313134d;
                             }
                         }
-                       
+
 
                         .cont_icons {
                             display: flex;
                             justify-content: center;
                             align-items: center;
                             gap: 10px;
-
+                            width: 10%;
+                          
                             i {
                                 cursor: pointer;
                                 font-size: 1.2em;
@@ -860,19 +895,6 @@ body {
                             background-color: #3e9e8e;
                         }
 
-
-                        h5 {
-                            font-size: .9em;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            min-height: 20px;
-                            height: auto;
-                            min-width: 100px;
-                            width: auto;
-
-                            text-align: center;
-                        }
 
 
 
