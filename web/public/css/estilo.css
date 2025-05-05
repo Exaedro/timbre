@@ -652,6 +652,12 @@ body main #cont_main #calendar_dia .horario .cont_horario_timbre .nombre_activid
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .hora_event {
   width: 20%;
 }
+body main #cont_main #calendar_dia .horario .cont_horario_timbre .cont_icon_hora {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
 body main #cont_main #calendar_dia .horario .cont_horario_timbre h5 {
   font-size: 0.9em;
   display: flex;
