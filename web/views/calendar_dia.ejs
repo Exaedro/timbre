@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario</title>
-    <link rel="shortcut icon" href="/resources/logo.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/estilo.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-</head>
+<%- include('head.ejs') %>
 
 <% if (session.user_tema == "oscuro") { %>
     <body class="oscuro">
@@ -124,7 +117,7 @@
                 </div>
             </div>
             
-            <% if (diasSemana[nombre_dia] == "Sab" || diasSemana[nombre_dia] == "Dom") {  %>
+            <% if (diasSemana[nombre_dia] == "Sab" || diasSemana[nombre_dia] == "Dom" ) {  %>
                 <section id="cont_dia_apagado" class="desac">
                     <%- include("form_apagado.ejs") %>
                 </section>
@@ -133,6 +126,7 @@
                 </div>
                 <section id="calendar_dia" class="desactivado">
             <% } %>
+  
             <% if (results_dia_apagado_desac && results_dia_apagado_desac.length > 0) { %>
             <% if ( results_dia_apagado_desac[0].hora_inicio === "00:00:00" &&
                         results_dia_apagado_desac[0].hora_fin === "24:00:00" &&

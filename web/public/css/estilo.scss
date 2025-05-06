@@ -1353,12 +1353,36 @@ body {
     .horario {
         .cont_horario_timbre {
             width: 80% !important;
-
+            
         }
     }
 
 }
+@media (max-width: 537px) {
+    .horario {
+        .cont_horario_timbre {
+            width: 90% !important;
+           
+            .nombre_actividad{
+                width: 60px !important;
+               
+                min-width: 60px !important;
+            }
+            .cont_icon_hora{
+                width: 60px !important;
+                min-width: 100px !important;
+                gap: 2px !important;
+               justify-content: flex-start !important;
+               align-items: flex-start !important;
+              
+            }
+            .cont_icons{
 
+            }
+        }
+    }
+
+}
 @media (max-width: 450px) {
     .horario {
         .cont_horario_timbre {

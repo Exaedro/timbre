@@ -1,0 +1,11 @@
+
+            <% if () {  %>
+                <section id="cont_dia_apagado" class="desac">
+                    <%- include("form_apagado.ejs") %>
+                </section>
+                <div class="desactivado_cont">
+                    <h2>EL TIMBRE ESTÁ DESACTIVADO, EN EL DÍA <b><%- diasSemana[nombre_dia] %> <%- dia %> <%- meses[mes] %> </b>, POR LO TANTO NO SONORA.</h2>
+                </div>
+                <section id="calendar_dia" class="desactivado">
+            <% } %>
+  

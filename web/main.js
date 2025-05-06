@@ -162,13 +162,24 @@ app.get('/index', isLogged, async (req, res) => {
 });
 
 // <------------------------------------------------------------------------------------------>
-app.get('/calendar_dia', isLogged, (req, res) => {
+app.get('/calendar_dia', isLogged, async (req, res) => {
     const dia = req.query.dia;
     const mes = req.query.mes;
     let mes_enviar = parseInt(mes) + 1;
     const nombre_dia = req.query.nombre_dia;
     const año = req.query.año;
     const fecha_comp = `${año}-${mes_enviar}-${dia}`;
+    let feriados = [];
+    try {
+        const response = await fetch(`https://api.argentinadatos.com/v1/feriados/${año}/`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        feriados = await response.json();
+    } catch (error) {
+        console.error('Error al obtener los feriados:', error);
+    }
+
 
     const quyery_dia_apagago = "SELECT * FROM `dias_apagado` WHERE Fecha=? AND desac_total=?";
     connection.query(quyery_dia_apagago, [fecha_comp, 0], (err, results_dia_apagado) => {
@@ -219,7 +230,7 @@ app.get('/calendar_dia', isLogged, (req, res) => {
 
                             res.render('calendar_dia', {
                                 combinedResults, results_dia_apagado, results_dia_apagado_desac,
-                                dia, mes, nombre_dia, año, mes_enviar, session: req.session
+                                dia, mes, nombre_dia, año, mes_enviar, session: req.session , feriados
                             });
                         });
                     });

@@ -1064,6 +1064,22 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     width: 80% !important;
   }
 }
+@media (max-width: 537px) {
+  .horario .cont_horario_timbre {
+    width: 90% !important;
+  }
+  .horario .cont_horario_timbre .nombre_actividad {
+    width: 60px !important;
+    min-width: 60px !important;
+  }
+  .horario .cont_horario_timbre .cont_icon_hora {
+    width: 60px !important;
+    min-width: 100px !important;
+    gap: 2px !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+  }
+}
 @media (max-width: 450px) {
   .horario .cont_horario_timbre {
     width: 90% !important;
