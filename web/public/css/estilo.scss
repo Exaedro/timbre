@@ -752,6 +752,7 @@ body {
                 border-left: 1px solid rgba(134, 134, 134, 0.048);
                 padding: 20px;
                 padding-left: 60px;
+                height: 74vh;
                 justify-content: flex-start;
                 align-items: flex-start;
                 gap: 10px;
@@ -804,7 +805,7 @@ body {
                             left: 10;
                             top: 45%;
 
-                            width: 85vw;
+                            width: 90vw;
                             height: 1px;
                             background-color: rgba(102, 102, 102, 0.26);
                         }
@@ -1358,6 +1359,12 @@ body {
     }
 
 }
+@media (max-width: 483px) {
+  #cont_horario_nuevo{
+    left: 83% !important;
+  }
+
+}
 @media (max-width: 537px) {
     .horario {
         .cont_horario_timbre {
@@ -1373,12 +1380,12 @@ body {
                 min-width: 100px !important;
                 gap: 2px !important;
                justify-content: flex-start !important;
-               align-items: flex-start !important;
+               align-items: center !important;
               
             }
-            .cont_icons{
+            // .cont_icons{
 
-            }
+            // }
         }
     }
 
