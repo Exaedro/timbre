@@ -17,25 +17,49 @@
 
 /* /////////////////////////////////// VARIABLES ////////////////////////////////////////////// */
 
+/* /////////// LEDS y MODULOS ////////// */
+
 int led_verde = 7;
 int led_rojo = 5;
-int estado_led_rojo = 0;
 int led_amarillo = 3;
+int estado_led_rojo = 0; // Encendido o apagado
 
-int pin_sd = 4;
-int pin_ethernet = 10;
+int pin_memoria_sd = 4;
+int pin_placa_ethernet = 10;
 
+/* /////////// BACKUP ////////// */
+
+// contador_backup_limite: Es el tiempo pasado en segundos para que el backup se realice.
+// contador_backup: Se suma cada segundo para que cuando sobrepase a contador_backup_limite se realice el backup.
 int contador_backup = 0;
 int contador_backup_limite = 10; // 900 segundos (15 minutos)
-bool realizar_backup = false;
-int estado_backup = 0;
 
-bool timbre_encendido = false; // Indica si el timbre esta sonando
-bool timbre_activo = true; // Indica si el timbre esta activado (por ejemplo los sabados y los domingos no esta activado)
+// Para saber en cual etapa se encuentra el backup
+int estado_backup = 0;
+// Auxiliar para saber si el backup se encuentra en una de las etapas
+int cny =  0; 
+
+// Indica si se debe realizar el backup
+// (Los sabados y domingos queda en false)
+bool realizar_backup = false;
+
+/* /////////// TIMBRE ////////// */
+
+// Indica si el timbre esta sonando
+bool timbre_encendido = false; 
+
+// Indica si el timbre esta activado (por ejemplo los sabados y los domingos no esta activado)
+bool timbre_activo = true;
+
+// Indica si el dia de hoy debe estar apagado (apagado.txt - tabla de dias apagados)
 bool dia_apagado = false;
+
+// contador_timer_limite: Son los segundos que el timbre debe estar encendido, su valor cambia dependiendo de la hora del dia
+// contador_timer: Cuando se enciende el timbre, se suma cada segundo para que cuando sobrepase a contador_timer_limite deje de sonar
 int contador_timer = 0;
 int contador_timer_limite = 0;
 
+// Se usa para saber cuantos milisegundos pasaron desde la ultima vez que se enciende el timbre
 unsigned long millisPrevios = 0;  
 const unsigned long intervalo = 1000;
 
@@ -43,25 +67,34 @@ const unsigned long intervalo = 1000;
 RTC_DS3231 rtc;
 char dias_semana[7][12] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
 
-// API
+/* /////////// API ////////// */
+
+// Configuracion de la conexion a la API
 int puerto_api = 3000; 
-char api_ip[] = "192.168.100.6"; 
+char api_ip[] = "192.168.100.101"; 
 String endpoints[] = {
   "/timbre/exportar/horarios", 
   "/timbre/exportar/eventos",
   "/timbre/exportar/apagado"
 };
 
-int api_intentos_limite = 5; // Limite de peticiones para conectarse a la API.
-int api_intentos = 0; // Contador de peticiones a la API
-bool api_error_led = false; // LED para indicar por si no se pudo conectar a la API
+// Limite de peticiones para conectarse a la API.
+int api_intentos_limite = 5; 
 
-// Arduino
-IPAddress ip(192,168,100,177); // IP del Arduino
+// Contador de peticiones a la API
+int api_intentos = 0;  
+
+// LED para indicar por si no se pudo conectar a la API
+bool api_error_led = false; 
+
+// Configuracion de la conexion por Ethernet
+IPAddress ip(192,168,100,102);
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-IPAddress dns(192, 168, 0, 1);
+IPAddress dns(192, 168, 0, 1); 
 
 EthernetClient client;
+
+volatile int crdig = 0;
 
 /* /////////////////////////////////// FUNCIONES ////////////////////////////////////////////// */
 
@@ -71,8 +104,8 @@ void inicializarRTC();
 
 void activarSD();
 void activarEthernet();
-
 void backup(String endpoint);
+void procesar_backup();
 void reconectar_api();
 bool es_hora(String linea);
 String extraer_nombre(String string);
@@ -100,28 +133,28 @@ void setup() {
 
   // MODULOS EXTERNOS
   pinMode(53, OUTPUT);
-  pinMode(pin_sd, OUTPUT);
-  pinMode(pin_ethernet, OUTPUT);
+  pinMode(pin_memoria_sd, OUTPUT);
+  pinMode(pin_placa_ethernet, OUTPUT);
 
-  digitalWrite(pin_sd, HIGH);
-  digitalWrite(pin_ethernet, HIGH);
-  
+  digitalWrite(pin_memoria_sd, HIGH);
+  digitalWrite(pin_placa_ethernet, HIGH);
+
   // RTC
   inicializarRTC();
 
   delay(1000); // Espera a que inicie
 
   // CONEXION ETHERNET
-  digitalWrite(pin_ethernet, LOW);
+  digitalWrite(pin_placa_ethernet, LOW);
   inicializarEthernet();
-  digitalWrite(pin_ethernet, HIGH);
+  digitalWrite(pin_placa_ethernet, HIGH);
 
   delay(1000); // Espera a que inicie
 
   // MEMORIA SD
-  digitalWrite(pin_sd, LOW);
+  digitalWrite(pin_memoria_sd, LOW);
   inicializarSD();
-  digitalWrite(pin_sd, HIGH);
+  digitalWrite(pin_memoria_sd, HIGH);
   
   /* //////////// TIMERS ////////// */
   
@@ -142,13 +175,15 @@ void setup() {
   TIMSK3 |= (1 << OCIE3A);
 
   sei(); 
+
+  delay(1000); // Espera a que inicie
+
+  procesar_backup();
 }
 
-volatile int crdig = 0;
-
 ISR(TIMER1_COMPA_vect) {
-  contador_backup++;
-  crdig++;
+  contador_backup++; 
+  crdig++; 
 
   if(timbre_encendido) {
     contador_timer++;
@@ -156,6 +191,7 @@ ISR(TIMER1_COMPA_vect) {
 }
 
 ISR(TIMER3_COMPA_vect) {
+  // Si hay un error en la conexion a la API, se alterna el estado del LED
   if(api_error_led) {
     estado_led_rojo = !estado_led_rojo;
     digitalWrite(led_rojo, estado_led_rojo);
@@ -163,6 +199,8 @@ ISR(TIMER3_COMPA_vect) {
 }
 
 void loop() {
+  DateTime tiempo_ahora = rtc.now();
+
   // Si el tibre esta desactivado, no hacemos nada (Sabados y Domingos)
   if(!timbre_activo) {
     digitalWrite(led_amarillo, HIGH);
@@ -177,56 +215,21 @@ void loop() {
     timbre();
   }
 
+  // Si se paso el tiempo de encendido del timbre, se apaga el timbre
   if(contador_timer >= contador_timer_limite) {
     contador_timer = 0;
     timbre_encendido = false;
     digitalWrite(led_verde, LOW);
   }
 
+  // Si se paso el tiempo de backup, se activa el backup
   if(contador_backup >= contador_backup_limite) {
-    realizar_backup = true;
+    if(tiempo_ahora.second() >= 10 && tiempo_ahora.second() <= 40) {
+      realizar_backup = true;
+    } 
   }
 
-  if(realizar_backup) {
-    if(estado_backup == 0) {
-      Serial.println("Iniciando backup...");
-      Serial.println("-------------------");
-
-      backup(endpoints[0]);
-
-      if(crdig >= 1) {
-        estado_backup = 1;
-        crdig = 0;
-      }
-    }
-
-    if(estado_backup == 1) {
-      backup(endpoints[1]);
-      
-      if(crdig >= 1) {
-        estado_backup = 2;
-        crdig = 0;
-      }
-    }
-
-    if(estado_backup == 2) {
-      backup(endpoints[2]);
-      
-      if(crdig >= 1) {
-        estado_backup = 3;
-        crdig = 0;
-      }
-    }
-
-    if(estado_backup == 3) {
-      Serial.println("-----------------");
-      Serial.println("Backup terminado.");
-
-      realizar_backup = false;
-      estado_backup = 0;
-      contador_backup = 0;
-    }
-  }
+  procesar_backup();
 }
 
 void timbre() {
@@ -316,14 +319,15 @@ void encender_timbre(int segundos) {
 void inicializarEthernet() {
   Ethernet.begin(mac, ip, dns);
 
+  if (Ethernet.linkStatus() == LinkOFF) {
+    Serial.println("El cable Ethernet no esta conectado.");
+  }
+
   if (Ethernet.hardwareStatus() == EthernetNoHardware) {
     Serial.println("No se encontro el hardware para la conexion por Ethernet. Conecte el hardware y reinicie el Arduino.");
     while (true) {
       delay(1); 
     }
-  }
-  if (Ethernet.linkStatus() == LinkOFF) {
-    Serial.println("El cable Ethernet no esta conectado.");
   }
 
   Serial.print("Servidor en la IP: ");
@@ -331,12 +335,12 @@ void inicializarEthernet() {
 }
 
 void activarEthernet() {
-  digitalWrite(pin_sd, HIGH);
-  digitalWrite(pin_ethernet, LOW);
+  digitalWrite(pin_memoria_sd, HIGH);
+  digitalWrite(pin_placa_ethernet, LOW);
 }
 
 void inicializarSD() {
-  if(!SD.begin(pin_sd)) {
+  if(!SD.begin(pin_memoria_sd)) {
     Serial.println("Error al inicializar la memoria SD.");
     return;
   } else {
@@ -345,8 +349,8 @@ void inicializarSD() {
 }
 
 void activarSD() {
-  digitalWrite(pin_sd, LOW);
-  digitalWrite(pin_ethernet, HIGH);
+  digitalWrite(pin_memoria_sd, LOW);
+  digitalWrite(pin_placa_ethernet, HIGH);
 }
 
 void inicializarRTC() {
@@ -417,6 +421,57 @@ String obtener_fecha(DateTime tiempo_ahora) {
   dia = dia.length() == 1 ? "0" + dia : dia;
 
   return anio + "/" + mes + "/" + dia;
+}
+
+void procesar_backup() {
+  if(realizar_backup) {
+    if(estado_backup == 0) {
+      Serial.println("Iniciando backup...");
+      Serial.println("-------------------");
+
+      backup(endpoints[0]);
+
+      if(crdig >= 1) {
+        estado_backup = 1;
+        crdig = 0;
+      }
+    }
+
+    if(estado_backup == 1) {
+      if(cny == 0) {
+        backup(endpoints[1]);
+        cny = 1;
+      }
+      
+      if(crdig >= 1) {
+        estado_backup = 2;
+        crdig = 0;
+        cny = 0;
+      }
+    }
+
+    if(estado_backup == 2) {
+      if(cny == 0) {
+        backup(endpoints[2]);
+        cny = 1;
+      }
+      
+      if(crdig >= 1) {
+        estado_backup = 3;
+        crdig = 0;
+        cny = 0;
+      }
+    }
+
+    if(estado_backup == 3) {
+      Serial.println("-----------------");
+      Serial.println("Backup terminado.");
+
+      realizar_backup = false;
+      estado_backup = 0;
+      contador_backup = 0;
+    }
+  }
 }
 
 void backup(String endpoint) {
@@ -532,3 +587,4 @@ void salvar_archivo(String nombreArchivo) {
 //   String nuevo_formato = (hora < 10 ? "0" : "") + String(hora) + ":" + minutos + ":" + segundos;
 //   return nuevo_formato;
 // }
+
