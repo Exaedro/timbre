@@ -9,6 +9,7 @@ const { console } = require('node:inspector');
 const session = require('express-session')
 const { PORT } = require('./config.js');
 const { clave_sesion } = require('./config.js');
+const cors = require('cors')
 // Middlewares globales
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,10 +34,12 @@ app.use(
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+app.set('json spaces', 2);
 // Middleware para procesar JSON y datos de formularios
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/resources', express.static(path.join(__dirname, '../public/resources')));
+app.use(cors())
 
 // Conexión a la base de datos
 const connection = mysql.createConnection({
@@ -63,6 +66,8 @@ const isLogged = (req, res, next) => {
 }
 
 
+const apiRutas = require('./routes/index.routes.js')
+app.use(apiRutas)
 
 
 app.get('/', (req, res) => {

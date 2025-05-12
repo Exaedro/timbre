@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "arduino.js",
   "scripts": {
-    "start": "node --env-file=.env index.mjs",
-    "dev": "node --watch --env-file=.env index.mjs"
+    "start": "node --env-file=.env main.js",
+    "dev": "node --watch --env-file=.env main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
