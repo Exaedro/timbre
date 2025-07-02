@@ -22,8 +22,9 @@
                 <div id="cont_fixed_mes">
                     <% const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", 
                         "Septiembre", "Octubre", "Noviembre", "Diciembre"]; %>
-                    <% const diasSemana = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"]; %>
-
+                        <% const meses_comp = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"]; %>
+                     <% const diasSemana = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"]; %>
+                     <% const diasSemana_comp = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"]; %>
                 <%
                     function Datatime() {
                         const now = new Date();
@@ -129,7 +130,7 @@
                     <%- include("form_apagado.ejs") %>
                 </section>
                 <div class="desactivado_cont">
-                    <h2>EL TIMBRE ESTÁ DESACTIVADO, EN EL DÍA <b><%- diasSemana[nombre_dia] %> <%- dia %> <%- meses[mes] %> </b>, POR LO TANTO NO SONORA.</h2>
+                    <h2>EL DÍA <b><%- diasSemana_comp[nombre_dia] %> <%- dia %> DE <%- meses_comp[mes] %></b>, EL TIMBRE ESTÁ DESACTIVADO , POR LO TANTO, NO SONARÁ.</h2>
                 </div>
                 <section id="calendar_dia" class="desactivado">
             <% } %>
@@ -141,12 +142,25 @@
                 <%- include("form_apagado.ejs") %>
             </section>
                <div class="desactivado_cont">
-                <h2>EL TIMBRE ESTA DESACTIVADO,EN EL DÍA <b><%- diasSemana[nombre_dia] %> <%- dia %> <%- meses[mes] %> </b>, POR LO TANTO NO SONARA, A MENOS QUE LO VUELVA A ACTIVAR </h2>
+                <h2>EL DÍA <b><%- diasSemana_comp[nombre_dia] %> <%- dia %> DE <%- meses_comp[mes] %></b>, EL TIMBRE ESTÁ DESACTIVADO , POR LO TANTO, NO SONARÁ.</h2>
                 <section id="calendar_dia" class="desactivado">
                     <% } %> 
                 <% } else { %>
                     <section id="cont_dia_apagado">
                         <%- include("form_apagado.ejs") %>
+                        <div class="filtros_eventos">
+                            <div class="cont_inp " >
+                                <label for="checkbox_horarios" class="custom-checkbox-label">
+                                    <input type="checkbox" id="checkbox_horarios" checked> <span class="checkmark"></span> <span class="checkbox-text">Ver horarios fijos</span>
+                                </label>
+                            </div>
+                            
+                            <div class="cont_inp">
+                                <label for="checkbox_eventos" class="custom-checkbox-label">
+                                    <input type="checkbox" id="checkbox_eventos" checked> <span class="checkmark"></span> <span class="checkbox-text">Ver eventos</span>
+                                </label>
+                            </div>
+                        </div>
                     </section>
                     <div class="activado_cont">
                     <section id="calendar_dia" class="activo">

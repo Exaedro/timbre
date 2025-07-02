@@ -554,15 +554,55 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_
   color: white;
 }
 body main #cont_main #cont_dia_apagado {
-  padding-top: 7%;
+  padding-top: 60px;
   padding-left: 3%;
   width: 100%;
+  gap: 90px;
+}
+body main #cont_main #cont_dia_apagado .filtros_eventos {
+  margin-top: 20px;
+  padding: 30px 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;
+  width: 40vw;
+  background-color: rgba(31, 31, 31, 0.349);
+  border-radius: 20px;
+}
+body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkbox-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease-in-out;
+}
+body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkbox-label input {
+  border-radius: 10px;
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+}
+body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkbox-label span {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
 }
 body main #cont_main #cont_dia_apagado form {
   gap: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: 40vw;
+  padding: 30px 30px;
+  background-color: rgba(31, 31, 31, 0.349);
+  border-radius: 20px;
 }
 body main #cont_main #cont_dia_apagado form input {
   height: 20px;

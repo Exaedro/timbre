@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const cont_main_calendar_dia = document.getElementById("cont_main_calendar_dia");
 
     setTimeout(() => {
-        cont_main_calendar_dia.classList.add ("active");
-        
+        cont_main_calendar_dia.classList.add("active");
+
     }, 100); // 200 milisegundos = 0.2 segundos
 
     btn_agregar_opc.forEach(element => {
@@ -109,3 +109,23 @@ document.addEventListener("DOMContentLoaded", () => {
 function adjustHeight() {
     conts_form.style.height = `${Math.max(document.documentElement.scrollHeight, window.innerHeight)}px`;
 }
+
+const checkbox_horarios = document.getElementById("checkbox_horarios");
+
+const checkbox_eventos = document.getElementById("checkbox_eventos");
+
+const hor_fijo = document.querySelectorAll(".fijo ")
+
+const eventos = document.querySelectorAll(".evento ")
+
+checkbox_eventos.addEventListener("click", () => {
+    eventos.forEach(evento => {
+        evento.classList.toggle("desac")
+    });
+})
+
+checkbox_horarios.addEventListener("click", () => {
+    hor_fijo.forEach(fijo => {
+        fijo.classList.toggle("desac")
+    });
+})

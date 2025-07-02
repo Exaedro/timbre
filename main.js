@@ -66,8 +66,7 @@ const isLogged = (req, res, next) => {
 }
 
 
-const apiRutas = require('./routes/index.routes.js')
-app.use(apiRutas)
+
 
 
 app.get('/', (req, res) => {
@@ -175,6 +174,8 @@ app.get('/calendar_dia', isLogged, (req, res) => {
     const año = req.query.año;
     const fecha_comp = `${año}-${mes_enviar}-${dia}`;
 
+
+    
     const quyery_dia_apagago = "SELECT * FROM `dias_apagado` WHERE Fecha=? AND desac_total=?";
     connection.query(quyery_dia_apagago, [fecha_comp, 0], (err, results_dia_apagado) => {
         if (err) {
