@@ -526,7 +526,11 @@ body {
                             justify-content: center;
                             flex-direction: row;
                             gap: 7px;
-
+                            padding-left: 20px;
+                            input{
+                                width: 20px;
+                                height: 20px;
+                            }
                             p {
                                 width: 30vw;
                                 min-width: 300px;
@@ -635,7 +639,10 @@ body {
                             grid-row-gap: 2px;
                             color: black;
                             text-decoration: none;
-
+                            opacity: 1;
+                            .desac{
+                               opacity: 0;
+                            }
                             .dia_vacio {
                                 width: 40px;
                                 height: 40px;

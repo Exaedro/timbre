@@ -14,12 +14,12 @@
 //         const text_mes = document.createElement("h3");
 //         text_mes.classList.add("text_mes");
 //         div_mes.classList.add("div_mes");
- 
-      
+
+
 //         const header_dias = document.createElement("div");
 //         header_dias.classList.add("header_dias");
 
-      
+
 //         diasSemana.forEach((dia) => {
 //             const diaSemana = document.createElement("span");
 //             diaSemana.textContent = dia;
@@ -81,8 +81,62 @@
 const query = document.getElementById("cont_main_query")
 const cont_query = document.getElementById("cont_items_query")
 const icon = document.getElementById("icon")
-query.addEventListener("click",()=>{
+query.addEventListener("click", () => {
     cont_query.classList.toggle("desac")
-  
+
 })
 
+const feriado_in = document.querySelectorAll(".feriado_in")
+const dia_mes = document.querySelectorAll(".dia_mes")
+const apagado = document.querySelectorAll(".apagado")
+const feriado_mov = document.querySelectorAll(".feriado_mov")
+const evento = document.querySelectorAll(".evento")
+const hoy = document.querySelectorAll(".hoy")
+
+document.getElementById("checkbox_rojo").addEventListener("click", () => {
+
+    apagado.forEach(element => {
+        element.classList.toggle('desac')
+    });
+})
+document.getElementById("checkbox_verde").addEventListener("click", () => {
+    evento.forEach(element => {
+        element.classList.toggle('desac')
+    });
+
+})
+document.getElementById("checkbox_azul").addEventListener("click", () => {
+    hoy.forEach(element => {
+        element.classList.toggle('desac')
+    });
+})
+
+document.getElementById("checkbox_violeta").addEventListener("click", () => {
+    feriado_in.forEach(element => {
+        element.classList.toggle('desac')
+    });
+})
+
+document.getElementById("checkbox_amarilo").addEventListener("click", () => {
+    feriado_mov.forEach(element => {
+        element.classList.toggle('desac')
+    });
+})
+document.getElementById("checkbox_sin").addEventListener("click", () => {
+    dia_mes.forEach(element => {
+        const hasDiaMes = element.classList.contains('dia_mes');
+        const hasDesac = element.classList.contains('desac'); 
+
+        
+        if (hasDiaMes && element.classList.length === 1 && !hasDesac) {
+            element.classList.add('desac'); 
+           
+        }
+    
+        else if (hasDiaMes && element.classList.length === 2 && hasDesac) {
+            element.classList.remove('desac'); 
+            
+        }
+        
+    });
+});

@@ -402,6 +402,11 @@ body main #cont_main #cont_calendario #cont_query #cont_items_query .items {
   justify-content: center;
   flex-direction: row;
   gap: 7px;
+  padding-left: 20px;
+}
+body main #cont_main #cont_calendario #cont_query #cont_items_query .items input {
+  width: 20px;
+  height: 20px;
 }
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items p {
   width: 30vw;
@@ -488,6 +493,10 @@ body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias {
   grid-row-gap: 2px;
   color: black;
   text-decoration: none;
+  opacity: 1;
+}
+body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .desac {
+  opacity: 0;
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_vacio {
   width: 40px;
