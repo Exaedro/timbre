@@ -44,8 +44,8 @@ RTC_DS3231 rtc;
 char dias_semana[7][12] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
 
 // API
-int puerto_api = 3000; 
-char api_ip[] = "192.168.100.6"; 
+int puerto_api = 4000; 
+char api_ip[] = "3.131.83.33"; 
 String endpoints[] = {
   "/timbre/exportar/horarios", 
   "/timbre/exportar/eventos",
@@ -57,7 +57,7 @@ int api_intentos = 0; // Contador de peticiones a la API
 bool api_error_led = false; // LED para indicar por si no se pudo conectar a la API
 
 // Arduino
-IPAddress ip(192,168,100,177); // IP del Arduino
+IPAddress ip(0, 0, 0, 0); // IP del Arduino
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 IPAddress dns(192, 168, 0, 1);
 
@@ -122,6 +122,8 @@ void setup() {
   digitalWrite(pin_sd, LOW);
   inicializarSD();
   digitalWrite(pin_sd, HIGH);
+
+  Serial.println(Ethernet.localIP());
   
   /* //////////// TIMERS ////////// */
   
@@ -184,7 +186,11 @@ void loop() {
   }
 
   if(contador_backup >= contador_backup_limite) {
-    realizar_backup = true;
+    int segundo = rtc.now().second();
+
+    if(segundo > 7 && segundo < 45) { 
+      realizar_backup = true;
+    }
   }
 
   if(realizar_backup) {
@@ -241,6 +247,8 @@ void timbre() {
   //   Serial.println("Hoy es " + dia + " por lo tanto el timbre no estara activo.");
   //   return;
   // }
+
+
 
   String linea;
   String db_fecha;
@@ -314,7 +322,7 @@ void encender_timbre(int segundos) {
 }
 
 void inicializarEthernet() {
-  Ethernet.begin(mac, ip, dns);
+  Ethernet.begin(mac);
 
   if (Ethernet.hardwareStatus() == EthernetNoHardware) {
     Serial.println("No se encontro el hardware para la conexion por Ethernet. Conecte el hardware y reinicie el Arduino.");
@@ -532,3 +540,4 @@ void salvar_archivo(String nombreArchivo) {
 //   String nuevo_formato = (hora < 10 ? "0" : "") + String(hora) + ":" + minutos + ":" + segundos;
 //   return nuevo_formato;
 // }
+// 
