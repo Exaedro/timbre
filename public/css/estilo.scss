@@ -527,10 +527,12 @@ body {
                             flex-direction: row;
                             gap: 7px;
                             padding-left: 20px;
-                            input{
+
+                            input {
                                 width: 20px;
                                 height: 20px;
                             }
+
                             p {
                                 width: 30vw;
                                 min-width: 300px;
@@ -640,9 +642,11 @@ body {
                             color: black;
                             text-decoration: none;
                             opacity: 1;
-                            .desac{
-                               opacity: 0;
+
+                            .desac {
+                                opacity: 0;
                             }
+
                             .dia_vacio {
                                 width: 40px;
                                 height: 40px;
@@ -742,15 +746,20 @@ body {
                     align-items: center;
                     gap: 30px;
                     width: 40vw;
-                    background-color: rgba(31, 31, 31, 0.349);
+                    background-color: #4180ab;
                     border-radius: 20px;
-                  
+                    *{
+                        color: white !important;
+                    }
                     .cont_inp {
 
                         display: flex;
-                        justify-content: center;
+                        justify-content: flex-start;
                         align-items: center;
                         gap: 40px;
+                        padding-left: 20px;
+                        width: 250px;
+                        height: 40px;
 
                         .custom-checkbox-label {
                             display: flex;
@@ -789,13 +798,13 @@ body {
                     align-items: center;
                     width: 40vw;
                     padding: 30px 30px;
-                    background-color: rgba(31, 31, 31, 0.349);
+                    background-color: #4180ab;
                     border-radius: 20px;
-
+                    *{color: white !important;}
                     input {
                         height: 20px;
                         width: 20px;
-                        
+
                     }
 
                     span {
@@ -1426,11 +1435,12 @@ body {
 }
 
 @media (max-width: 450px) {
+  
     .horario {
         .cont_horario_timbre {
-            width: 90% !important;
+            width: 100% !important;
             gap: 20px !important;
-
+            transform: scale(.8);
             h5 {
                 font-size: .7em !important;
             }
@@ -1447,7 +1457,7 @@ body {
 @media (max-width: 870px) {
 
     .forms_class {
-        background-color: red;
+
         width: 350px !important;
     }
 
@@ -1564,5 +1574,29 @@ body {
     .forms_class {
         width: 300px !important;
     }
+
+}
+
+
+@media (max-width: 450px) {
+
+    #cont_dia_apagado {
+        display: flex;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 30px !important;
+        flex-direction: column;
+
+        #enviar_dia_apagado {
+            width: 80% !important;
+        }
+
+        .filtros_eventos {
+            width: 80% !important;
+            flex-direction: column !important;
+        }
+    }
+
+
 
 }
