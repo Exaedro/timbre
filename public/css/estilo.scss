@@ -92,8 +92,7 @@ $complemento-color-dark: #242424;
         transition: all .2s ease-in-out;
 
         &:hover {
-            color: #25379b !important;
-
+            color: #4180ab !important;
         }
 
         &#year_text {
@@ -495,8 +494,7 @@ body {
 
                         &:hover {
                             h3 {
-
-                                color: #6171c7;
+                                color: var() !important;
                             }
                         }
 
@@ -582,7 +580,6 @@ body {
                     padding-left: 5%;
                     padding-right: 5%;
                     width: 85vw;
-
                     height: 100%;
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
@@ -592,7 +589,7 @@ body {
 
                     .div_mes {
                         display: flex;
-                        justify-content: flex-start;
+                        justify-content: center;
                         align-items: flex-start;
                         flex-direction: column;
                         gap: 10px;
@@ -1306,12 +1303,14 @@ body {
         grid-template-columns: repeat(1, 1fr) !important;
         display: flex !important;
         flex-direction: column;
+        width: 100vw !important;
+        padding-left: 0 !important;
         justify-content: center !important;
         align-items: center !important;
 
         .div_mes {
 
-            width: 80% !important;
+            width: 70% !important;
 
         }
     }
@@ -1319,12 +1318,10 @@ body {
 
 @media (max-width: 800px) {
     .calendario-body {
-
         grid-template-columns: repeat(1, 1fr) !important;
 
         .div_mes {
             width: 80% !important;
-
             font-size: .8em;
 
             .header_dias {
@@ -1364,8 +1361,8 @@ body {
 
     #cont_item {
         width: 180px !important;
-
-
+        gap: 20px !important;
+        
         .item {
 
             padding-left: 0px !important;
@@ -1395,6 +1392,7 @@ body {
 
         #cont_fixed {
             width: 60px !important;
+            min-height: 100vh !important;
 
             a,
             form {
@@ -1425,6 +1423,7 @@ body {
 }
 
 @media (max-width: 850px) {
+    
     .horario {
         .cont_horario_timbre {
             width: 80% !important;
@@ -1434,8 +1433,27 @@ body {
 
 }
 
+
+
 @media (max-width: 450px) {
   
+    #cont_item {
+        width: 180px !important;
+        gap: 20px !important;
+        .item {
+
+            padding-left: 0px !important;
+            display: flex;
+            gap: 3px !important;
+            width: 100% !important;
+            justify-content: center !important;
+            align-items: center !important;
+            flex-direction: column;
+            text-align: center;
+        }
+
+    }
+    
     .horario {
         .cont_horario_timbre {
             width: 100% !important;
