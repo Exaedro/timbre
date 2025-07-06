@@ -538,3 +538,4 @@ void salvar_archivo(String nombreArchivo) {
 //   String nuevo_formato = (hora < 10 ? "0" : "") + String(hora) + ":" + minutos + ":" + segundos;
 //   return nuevo_formato;
 // }
+// 
