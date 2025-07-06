@@ -122,8 +122,6 @@ void setup() {
   digitalWrite(pin_sd, LOW);
   inicializarSD();
   digitalWrite(pin_sd, HIGH);
-
-  Serial.println(Ethernet.localIP());
   
   /* //////////// TIMERS ////////// */
   
@@ -247,6 +245,8 @@ void timbre() {
   //   Serial.println("Hoy es " + dia + " por lo tanto el timbre no estara activo.");
   //   return;
   // }
+
+
 
   String linea;
   String db_fecha;
@@ -538,4 +538,3 @@ void salvar_archivo(String nombreArchivo) {
 //   String nuevo_formato = (hora < 10 ? "0" : "") + String(hora) + ":" + minutos + ":" + segundos;
 //   return nuevo_formato;
 // }
-// 

@@ -43,7 +43,7 @@
   transition: all 0.2s ease-in-out;
 }
 .oscuro h3:hover {
-  color: #25379b !important;
+  color: #4180ab !important;
 }
 .oscuro h3#year_text {
   color: #4180ab !important;
@@ -380,7 +380,7 @@ body main #cont_main #cont_calendario #cont_query #cont_main_query h3 {
   transition: all 0.2 ease-in-out;
 }
 body main #cont_main #cont_calendario #cont_query #cont_main_query:hover h3 {
-  color: #6171c7;
+  color: var() !important;
 }
 body main #cont_main #cont_calendario #cont_query #cont_items_query {
   transition: all 0.1s ease-in-out;
@@ -452,7 +452,7 @@ body main #cont_main #cont_calendario .calendario-body {
 }
 body main #cont_main #cont_calendario .calendario-body .div_mes {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   flex-direction: column;
   gap: 10px;
@@ -576,14 +576,20 @@ body main #cont_main #cont_dia_apagado .filtros_eventos {
   align-items: center;
   gap: 30px;
   width: 40vw;
-  background-color: rgba(31, 31, 31, 0.349);
+  background-color: #4180ab;
   border-radius: 20px;
+}
+body main #cont_main #cont_dia_apagado .filtros_eventos * {
+  color: white !important;
 }
 body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 40px;
+  padding-left: 20px;
+  width: 250px;
+  height: 40px;
 }
 body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkbox-label {
   display: flex;
@@ -610,8 +616,11 @@ body main #cont_main #cont_dia_apagado form {
   align-items: center;
   width: 40vw;
   padding: 30px 30px;
-  background-color: rgba(31, 31, 31, 0.349);
+  background-color: #4180ab;
   border-radius: 20px;
+}
+body main #cont_main #cont_dia_apagado form * {
+  color: white !important;
 }
 body main #cont_main #cont_dia_apagado form input {
   height: 20px;
@@ -1018,11 +1027,13 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     grid-template-columns: repeat(1, 1fr) !important;
     display: flex !important;
     flex-direction: column;
+    width: 100vw !important;
+    padding-left: 0 !important;
     justify-content: center !important;
     align-items: center !important;
   }
   .calendario-body .div_mes {
-    width: 80% !important;
+    width: 70% !important;
   }
 }
 @media (max-width: 800px) {
@@ -1062,6 +1073,7 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   #cont_item {
     width: 180px !important;
+    gap: 20px !important;
   }
   #cont_item .item {
     padding-left: 0px !important;
@@ -1085,6 +1097,7 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   #menu_lateral #cont_fixed {
     width: 60px !important;
+    min-height: 100vh !important;
   }
   #menu_lateral #cont_fixed a,
   #menu_lateral #cont_fixed form {
@@ -1114,9 +1127,24 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
 }
 @media (max-width: 450px) {
-  .horario .cont_horario_timbre {
-    width: 90% !important;
+  #cont_item {
+    width: 180px !important;
     gap: 20px !important;
+  }
+  #cont_item .item {
+    padding-left: 0px !important;
+    display: flex;
+    gap: 3px !important;
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column;
+    text-align: center;
+  }
+  .horario .cont_horario_timbre {
+    width: 100% !important;
+    gap: 20px !important;
+    transform: scale(0.8);
   }
   .horario .cont_horario_timbre h5 {
     font-size: 0.7em !important;
@@ -1127,7 +1155,6 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
 }
 @media (max-width: 870px) {
   .forms_class {
-    background-color: red;
     width: 350px !important;
   }
   .cont_horario {
@@ -1203,5 +1230,21 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   .forms_class {
     width: 300px !important;
+  }
+}
+@media (max-width: 450px) {
+  #cont_dia_apagado {
+    display: flex;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 30px !important;
+    flex-direction: column;
+  }
+  #cont_dia_apagado #enviar_dia_apagado {
+    width: 80% !important;
+  }
+  #cont_dia_apagado .filtros_eventos {
+    width: 80% !important;
+    flex-direction: column !important;
   }
 }/*# sourceMappingURL=estilo.css.map */
