@@ -1,17 +1,20 @@
 * {
   margin: 0px;
   padding: 0px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 * {
+  -webkit-transition: backgroung_color 1s ease-in-out;
   transition: backgroung_color 1s ease-in-out;
 }
 
 .oscuro {
   background-color: #131313 !important;
 }
+
 .oscuro #menu_lateral,
 .oscuro #cont_fixed,
 .oscuro .cont_header,
@@ -21,39 +24,50 @@
 .oscuro main {
   background-color: #131313 !important;
 }
+
 .oscuro h4,
 .oscuro h2 {
   color: #ffffff !important;
 }
+
 .oscuro p,
 .oscuro li,
 .oscuro h1,
 .oscuro h3,
 .oscuro a,
 .oscuro span {
-  color: rgb(223, 223, 223) !important;
+  color: #dfdfdf !important;
 }
+
 .oscuro #tit_form {
-  color: rgb(0, 0, 0) !important;
+  color: black !important;
 }
+
 .oscuro .mes_hoy {
-  color: #25379b !important;
+  color: #4180ab !important;
 }
+
 .oscuro h3 {
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 .oscuro h3:hover {
   color: #4180ab !important;
 }
+
 .oscuro h3#year_text {
   color: #4180ab !important;
 }
+
 .oscuro #menu {
   color: #dfdfdf !important;
 }
+
 .oscuro #agregar_horario_fijo {
   background-color: #242424 !important;
 }
+
 .oscuro #agregar_horario_fijo input {
   color: #dfdfdf !important;
 }
@@ -63,125 +77,193 @@ body {
   width: 100vw;
   overflow-x: hidden;
 }
+
 body main {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: auto;
   min-height: 100%;
-  justify-content: flex-start;
-  align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   overflow-x: hidden;
   width: 100vw;
 }
+
 body main#cont_main_calendar_dia {
   position: relative;
   top: -1000px;
-  transition: all 0.6s ease-in-out;
+  -webkit-transition: all .6s ease-in-out;
+  transition: all .6s ease-in-out;
 }
+
 body main#cont_main_calendar_dia.active {
   top: 0px;
 }
+
 body main #menu_lateral {
   height: 100%;
   width: 15vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   background-color: #ffffff;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 body main #menu_lateral.desactive {
   width: 60px !important;
 }
+
 body main #menu_lateral #cont_fixed {
   padding-top: 20px;
   height: 100vh;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   gap: 10px;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 body main #menu_lateral #cont_fixed #menu {
   position: fixed;
   left: 10px;
   margin-top: 10px;
   top: 2%;
   font-size: 1.7em;
-  color: rgb(36, 36, 36);
+  color: #242424;
   padding: 15px;
   border-radius: 50%;
   height: 40px;
   width: 40px;
   cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s ease-in-out;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 body main #menu_lateral #cont_fixed #menu:hover {
   background-color: rgba(172, 172, 172, 0.13);
 }
+
 body main #menu_lateral #cont_fixed img {
   height: auto;
   width: auto;
 }
+
 body main #menu_lateral #cont_fixed #cont_item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   position: fixed;
   gap: 40px;
   height: auto;
   width: 10%;
   list-style: none;
 }
+
 body main #menu_lateral #cont_fixed #cont_item.desactive a,
 body main #menu_lateral #cont_fixed #cont_item.desactive form {
   width: 40px;
   height: 40px;
 }
+
 body main #menu_lateral #cont_fixed #cont_item.desactive a .item,
 body main #menu_lateral #cont_fixed #cont_item.desactive form .item {
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   padding-left: 0px;
 }
+
 body main #menu_lateral #cont_fixed #cont_item.desactive a .item span,
 body main #menu_lateral #cont_fixed #cont_item.desactive form .item span {
   display: none;
 }
+
 body main #menu_lateral #cont_fixed #cont_item.desactive a .item i,
 body main #menu_lateral #cont_fixed #cont_item.desactive form .item i {
   font-size: 1em;
 }
+
 body main #menu_lateral #cont_fixed #cont_item a,
 body main #menu_lateral #cont_fixed #cont_item form {
   width: 100%;
   height: 6vh;
   text-decoration: none;
 }
+
 body main #menu_lateral #cont_fixed #cont_item a button,
 body main #menu_lateral #cont_fixed #cont_item form button {
   border: none !important;
 }
+
 body main #menu_lateral #cont_fixed #cont_item a .item,
 body main #menu_lateral #cont_fixed #cont_item form .item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   padding-left: 20px;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 10px;
   background-color: #4180ab;
   border-radius: 10px;
   width: 100%;
   height: 100%;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 body main #menu_lateral #cont_fixed #cont_item a .item span,
 body main #menu_lateral #cont_fixed #cont_item form .item span {
   font-weight: bolder;
@@ -189,74 +271,119 @@ body main #menu_lateral #cont_fixed #cont_item form .item span {
   color: white;
   height: auto;
 }
+
 body main #menu_lateral #cont_fixed #cont_item a .item i,
 body main #menu_lateral #cont_fixed #cont_item form .item i {
   color: white;
   font-size: 1.2em;
 }
+
 body main #menu_lateral #cont_fixed #cont_item a .item:hover,
 body main #menu_lateral #cont_fixed #cont_item form .item:hover {
   background-color: #3b7399;
-  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
 }
+
 body main #cont_main {
   overflow-x: hidden;
   height: auto;
   width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   border-left: 1px solid rgba(134, 134, 134, 0.233);
 }
+
 body main #cont_main #cont_text_info {
   margin-top: 10px;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 10px;
 }
+
 body main #cont_main #cont_text_info h3 {
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 body main #cont_main #cont_text_info h3:hover {
   color: #25379b;
 }
+
 body main #cont_main #cont_text_info h1,
 body main #cont_main #cont_text_info h3,
 body main #cont_main #cont_text_info p {
   width: 500px;
   text-align: center;
 }
+
 body main #cont_main #cont_text_info .cont_text_query {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   opacity: 1;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 body main #cont_main #cont_text_info .cont_text_query.desactive {
   opacity: 0;
 }
+
 body main #cont_main #text_main_horarios_fijos {
   margin-top: 3%;
   font-size: 2.5em;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bolder;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 body main #cont_main .cont_header {
   width: 85vw;
   height: 12vh;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 10px;
   background-color: white;
   height: 12%;
@@ -268,174 +395,277 @@ body main #cont_main .cont_header #cont_fixed_mes {
   padding-left: 5%;
   gap: 10px;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes span {
   font-size: 1.5em;
   font-weight: 100;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes span.nombre_dia {
   font-size: 1em;
   color: #25379b;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes #cont_dias_flechas {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 100%;
   gap: 10px;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes #cont_dias_flechas a {
   font-size: 1.2em;
-  color: rgb(37, 37, 37);
+  color: #252525;
   font-weight: bolder;
   padding: 10px;
   border-radius: 50%;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
   height: 40px;
   width: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   text-decoration: none;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes #cont_dias_flechas a:hover {
   background-color: rgba(128, 128, 128, 0.137);
 }
+
 body main #cont_main .cont_header #cont_fixed_mes span {
   font-size: 1.5em;
   font-weight: 100;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes span.nombre_dia {
   font-size: 1em;
   color: #25379b;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes .cont_dia {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   padding-bottom: 18px;
   padding-left: 20px;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes .cont_dia .dia {
   background-color: transparent;
   padding: 15px;
   height: 40px;
   width: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-radius: 50%;
-  color: rgb(0, 0, 0);
+  color: black;
 }
+
 body main #cont_main .cont_header #cont_fixed_mes .cont_dia .dia.actual {
-  color: rgb(255, 255, 255) !important;
+  color: white !important;
   background-color: #4180ab;
 }
+
 body main #cont_main #panel_options {
   width: 100%;
   height: auto;
   padding-top: 50px;
   padding-left: 5%;
 }
+
 body main #cont_main #cont_calendario {
   width: auto;
   height: auto;
   margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
+
 body main #cont_main #cont_calendario .cont_year {
   padding-left: 7%;
   width: 100%;
   border-bottom: 1px solid rgba(161, 161, 161, 0.171);
 }
+
 body main #cont_main #cont_calendario .cont_year #year_text {
   font-size: 3em;
   color: #4180ab;
 }
+
 body main #cont_main #cont_calendario #cont_query {
   padding-top: 2%;
   padding-left: 6%;
   gap: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: 100%;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_main_query {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   gap: 5px;
   cursor: pointer;
   border: 0px solid black;
   width: 100%;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_main_query h3 {
   width: auto;
-  transition: all 0.2 ease-in-out;
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_main_query:hover h3 {
-  color: var() !important;
+  color: #4180ab !important;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query {
-  transition: all 0.1s ease-in-out;
+  -webkit-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   height: auto;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 15px;
   margin-bottom: 5%;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query.desac {
   height: 0;
   display: none;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   gap: 7px;
   padding-left: 20px;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items input {
   width: 20px;
   height: 20px;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items p {
   width: 30vw;
   min-width: 300px;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span {
   height: 20px !important;
   width: 20px !important;
   border-radius: 50%;
   border: 1px solid rgba(128, 128, 128, 0.226);
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_apagado {
-  background-color: rgba(224, 20, 20, 0.4745098039);
+  background-color: #e0141479;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_evento {
-  background-color: rgba(62, 158, 142, 0.5882352941);
+  background-color: #3e9e8e96;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_normal {
   background-color: transparent;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#dia_hoy {
   background-color: #4180ab !important;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#feriado_ina {
-  background-color: rgba(142, 62, 158, 0.5882352941) !important;
+  background-color: #8e3e9e96 !important;
 }
+
 body main #cont_main #cont_calendario #cont_query #cont_items_query .items span#feriado_mov {
-  background-color: rgba(191, 201, 56, 0.5882352941) !important;
+  background-color: #bfc93896 !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body {
   overflow-x: hidden;
   padding-top: 2%;
@@ -444,244 +674,362 @@ body main #cont_main #cont_calendario .calendario-body {
   padding-right: 5%;
   width: 85vw;
   height: 100%;
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -ms-grid-rows: (1fr)[4];
+      grid-template-rows: repeat(4, 1fr);
   grid-column-gap: 60px;
   grid-row-gap: 60px;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 10px;
   height: auto;
   width: auto;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .header_dias {
   width: 100%;
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(1, 1fr);
+  -ms-grid-columns: (1fr)[7];
+      grid-template-columns: repeat(7, 1fr);
+  -ms-grid-rows: (1fr)[1];
+      grid-template-rows: repeat(1, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .header_dias span {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   padding-right: 10px;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 52.5px;
   height: 50px;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .text_mes {
   font-size: 1.8em;
   font-weight: bold;
   padding-left: 3%;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .text_mes.mes_hoy {
   color: #4180ab;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias {
   height: 100%;
   width: 100%;
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  -ms-grid-columns: (1fr)[7];
+      grid-template-columns: repeat(7, 1fr);
+  -ms-grid-rows: (1fr)[6];
+      grid-template-rows: repeat(6, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 2px;
   color: black;
   text-decoration: none;
   opacity: 1;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .desac {
   opacity: 0;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_vacio {
   width: 40px;
   height: 40px;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes {
   color: black;
   text-decoration: none;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .evento {
-  background-color: rgba(62, 158, 142, 0.5882352941) !important;
+  background-color: #3e9e8e96 !important;
   color: white !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .evento:hover {
-  background-color: rgba(57, 145, 130, 0.5882352941) !important;
+  background-color: #39918296 !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .apagado {
-  background-color: rgba(224, 20, 20, 0.4745098039) !important;
+  background-color: #e0141479 !important;
   color: white !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .apagado:hover {
-  background-color: rgba(196, 23, 23, 0.4745098039) !important;
+  background-color: #c4171779 !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado_in {
-  background-color: rgba(142, 62, 158, 0.5882352941) !important;
+  background-color: #8e3e9e96 !important;
   color: white !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado_in:hover {
-  background-color: rgba(127, 57, 141, 0.5882352941) !important;
+  background-color: #7f398d96 !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado_mov {
-  background-color: rgba(191, 201, 56, 0.5882352941) !important;
+  background-color: #bfc93896 !important;
   color: white !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .feriado_mov:hover {
-  background-color: rgba(165, 173, 49, 0.5882352941) !important;
+  background-color: #a5ad3196 !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy {
   color: white !important;
   background-color: #4180ab;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .hoy:hover {
   background-color: #3b7399 !important;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   cursor: pointer;
-  transition: all 0.1s ease-in-out;
+  -webkit-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes:hover {
   background-color: rgba(201, 201, 201, 0.397);
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes a {
   text-decoration: none;
   color: black;
 }
+
 body main #cont_main #cont_calendario .calendario-body .div_mes .cont_dias .dia_mes a:hover {
   color: white;
 }
+
 body main #cont_main #cont_dia_apagado {
   padding-top: 60px;
   padding-left: 3%;
   width: 100%;
   gap: 90px;
 }
+
 body main #cont_main #cont_dia_apagado .filtros_eventos {
   margin-top: 20px;
   padding: 30px 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 30px;
   width: 40vw;
   background-color: #4180ab;
   border-radius: 20px;
 }
+
 body main #cont_main #cont_dia_apagado .filtros_eventos * {
   color: white !important;
 }
+
 body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 40px;
   padding-left: 20px;
   width: 250px;
   height: 40px;
 }
+
 body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkbox-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 10px;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkbox-label input {
   border-radius: 10px;
   background-color: transparent;
   width: 20px;
   height: 20px;
 }
+
 body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkbox-label span {
   font-size: 1.2em;
   font-weight: bold;
   text-align: center;
 }
+
 body main #cont_main #cont_dia_apagado form {
   gap: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 40vw;
   padding: 30px 30px;
   background-color: #4180ab;
   border-radius: 20px;
 }
+
 body main #cont_main #cont_dia_apagado form * {
   color: white !important;
 }
+
 body main #cont_main #cont_dia_apagado form input {
   height: 20px;
   width: 20px;
 }
+
 body main #cont_main #cont_dia_apagado form span {
   font-weight: 400;
   font-size: 1.3em;
 }
+
 body main #cont_main .desactivado_cont {
   min-height: 100%;
   width: 80%;
   height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   overflow-y: hidden;
   border-left: 1px solid rgba(134, 134, 134, 0.048);
   padding: 20px;
   padding-left: 60px;
-  justify-content: flex-start;
-  align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   gap: 10px;
 }
+
 body main #cont_main .desactivado_cont h2 {
   display: inline;
   font-size: 1.5em;
 }
+
 body main #cont_main .desactivado_cont b {
   color: red;
 }
+
 body main #cont_main #calendar_dia {
   padding-top: 2%;
   padding-left: 2%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
 }
+
 body main #cont_main #calendar_dia.desactivado {
   display: none;
 }
+
 body main #cont_main #calendar_dia .horario {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   min-height: 8vh;
   height: auto;
   width: 100%;
   gap: 10px;
 }
+
 body main #cont_main #calendar_dia .horario .hour-item {
   position: relative;
   display: inline-block;
   font-size: 14px;
   margin: 10px 0;
   font-weight: 100;
-  color: rgba(102, 102, 102, 0.8156862745);
+  color: #666666d0;
 }
+
 body main #cont_main #calendar_dia .horario .hour-item::after {
-  content: "";
+  content: '';
   margin-left: 4px;
   position: absolute;
   left: 10;
@@ -690,11 +1038,17 @@ body main #cont_main #calendar_dia .horario .hour-item::after {
   height: 1px;
   background-color: rgba(102, 102, 102, 0.26);
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre {
   border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding-left: 20px;
   font-size: 1em;
   gap: 40px;
@@ -704,146 +1058,235 @@ body main #cont_main #calendar_dia .horario .cont_horario_timbre {
   width: 60%;
   color: white;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .nombre_actividad {
   width: 70%;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .hora_event {
   width: 20%;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .cont_icon_hora {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 5px;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre h5 {
-  font-size: 0.9em;
+  font-size: .9em;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   min-height: 20px;
   height: auto;
   min-width: 100px;
   text-align: center;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre.desac {
   display: none !important;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre.horario_desac {
-  color: rgba(19, 19, 19, 0.3019607843);
+  color: #1313134d;
   background-color: rgba(65, 64, 64, 0.048) !important;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre.horario_desac .trash {
-  color: rgba(19, 19, 19, 0.3019607843);
+  color: #1313134d;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .cont_icons {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 10px;
   width: 10%;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .cont_icons i {
   cursor: pointer;
   font-size: 1.2em;
   color: white;
   border-radius: 50%;
   padding: 10px;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .cont_icons i:hover {
   background-color: rgba(100, 100, 100, 0.185);
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .cont_icons button {
   border: none;
   background-color: transparent;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre .desac {
   display: none;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre.fijo {
   background-color: #25379b;
 }
+
 body main #cont_main #calendar_dia .horario .cont_horario_timbre.evento {
   background-color: #3e9e8e;
 }
+
 body main #cont_main #cont_horarios_fijos {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: auto;
   width: 100%;
   gap: 20px;
   padding: 4% 0px;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 0% 3%;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 80px;
   width: 600px;
   border: 1px solid #bdd1de;
   border-radius: 10px;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .desac {
   display: none;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_text {
   width: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 10px;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_text .cont_sub_text {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   gap: 10px;
   display: flex;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_text .cont_sub_text .nombre_horario {
   font-size: 1.2em;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 10px;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button {
   height: 3.2vh;
   width: 60px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 10px;
   font-size: 1em;
   font-weight: 600;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
   color: white;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.editar {
   color: gray;
   background-color: transparent;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.editar:hover {
   background-color: rgba(128, 128, 128, 0.09) !important;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.eliminar {
-  background-color: rgb(42, 82, 155) !important;
+  background-color: #2a529b !important;
 }
+
 body main #cont_main #cont_horarios_fijos .cont_horario .cont_butones button.eliminar:hover {
-  background-color: rgb(40, 88, 177);
+  background-color: #2858b1;
 }
+
 body main #cont_main #cont_horarios_fijos #boton_agregar {
   margin-top: 3%;
   width: 230px;
@@ -855,41 +1298,63 @@ body main #cont_main #cont_horarios_fijos #boton_agregar {
   font-size: 1em;
   font-weight: bolder;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
-  transform: scale(1.03);
+  -webkit-transform: scale(1.03);
+          transform: scale(1.03);
   background-color: #3b7399;
 }
 
 .forms_class h4 {
   width: 80%;
 }
+
 .forms_class .cont_opciones {
   width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .forms_class .cont_opciones span {
   padding: 8px;
   border-radius: 10px;
   font-weight: 500;
-  font-size: 0.9em;
+  font-size: .9em;
   cursor: pointer;
 }
+
 .forms_class .cont_opciones span.active {
   background-color: #3b7399;
   color: white;
 }
+
 .forms_class .cont_input {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   gap: 10px;
-  align-items: center;
-  flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
+
 .forms_class .cont_input input {
   background-color: transparent;
   border: none;
@@ -897,18 +1362,27 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   border-bottom: 1px solid rgba(87, 87, 87, 0.336);
   width: 60%;
 }
+
 .forms_class .cont_input label {
   width: 60%;
   font-weight: bold;
   text-align: start;
 }
+
 .forms_class .cont_botones {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   width: 100%;
   gap: 10px;
 }
+
 .forms_class .cont_botones button {
   border-radius: 10px;
   width: 30%;
@@ -916,15 +1390,19 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   height: 40px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 .forms_class .cont_botones button:hover {
   background-color: #dddddd;
 }
+
 .forms_class .cont_botones button#enviar {
   color: white;
   background-color: #4180ab;
 }
+
 .forms_class .cont_botones button#enviar:hover {
   background-color: #3b7399;
 }
@@ -932,27 +1410,45 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
 #form_enviar_horario {
   display: none;
 }
+
 #form_enviar_horario.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   gap: 40px;
   padding-top: 30px;
   height: 500px;
   width: 400px;
   border-radius: 20px;
   background-color: white;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 #conts_form {
   display: none;
 }
+
 #conts_form.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   padding-top: 5%;
   position: absolute;
   top: 0;
@@ -966,21 +1462,33 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   -webkit-backdrop-filter: blur(100px);
           backdrop-filter: blur(100px);
 }
+
 #conts_form form {
   display: none;
 }
+
 #conts_form form.active {
   background-color: white;
   border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 600px;
   width: 500px;
   padding-top: 3%;
-  justify-content: flex-start;
-  align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 40px;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
+
 #conts_form form.active h4 {
   text-align: center;
   font-size: 1.5em;
@@ -991,23 +1499,32 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   position: fixed;
   left: 94%;
   top: 90%;
-  background-color: rgb(226, 226, 226);
+  background-color: #e2e2e2;
   color: white;
   height: 60px;
   width: 60px;
   border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
+
 #cont_horario_nuevo i {
-  color: rgb(44, 44, 44);
+  color: #2c2c2c;
   font-size: 1.5em;
 }
+
 #cont_horario_nuevo:hover {
-  background-color: rgb(230, 230, 230);
+  background-color: #e6e6e6;
 }
 
 .desac {
@@ -1016,41 +1533,61 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
 
 @media (max-width: 1560px) {
   .calendario-body {
-    grid-template-columns: repeat(2, 1fr) !important;
+    -ms-grid-columns: (1fr)[2] !important;
+        grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
 @media (max-width: 1000px) {
   #cont_horario_nuevo {
     left: 90%;
   }
   .calendario-body {
-    grid-template-columns: repeat(1, 1fr) !important;
+    -ms-grid-columns: (1fr)[1] !important;
+        grid-template-columns: repeat(1, 1fr) !important;
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
     display: flex !important;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     width: 100vw !important;
     padding-left: 0 !important;
-    justify-content: center !important;
-    align-items: center !important;
+    -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+            justify-content: center !important;
+    -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+            align-items: center !important;
   }
   .calendario-body .div_mes {
     width: 70% !important;
   }
 }
+
 @media (max-width: 800px) {
   .calendario-body {
-    grid-template-columns: repeat(1, 1fr) !important;
+    -ms-grid-columns: (1fr)[1] !important;
+        grid-template-columns: repeat(1, 1fr) !important;
   }
   .calendario-body .div_mes {
     width: 80% !important;
-    font-size: 0.8em;
+    font-size: .8em;
   }
   .calendario-body .div_mes .header_dias {
     width: 80% !important;
   }
   .calendario-body .div_mes .header_dias .dia_semana {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center !important;
-    align-items: center !important;
+    -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+            justify-content: center !important;
+    -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+            align-items: center !important;
     width: 40px !important;
     height: 40px !important;
     padding: 10px;
@@ -1064,6 +1601,7 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     width: 40px !important;
   }
 }
+
 @media (max-width: 1360px) {
   #menu_lateral {
     width: 200px !important;
@@ -1072,20 +1610,28 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     width: 200px !important;
   }
   #cont_item {
-    width: 180px !important;
-    gap: 20px !important;
+    width: 100% !important;
   }
   #cont_item .item {
     padding-left: 0px !important;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    gap: 3px !important;
     width: 100% !important;
-    justify-content: center !important;
-    align-items: center !important;
-    flex-direction: column;
+    -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+            justify-content: center !important;
+    -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+            align-items: center !important;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     text-align: center;
   }
 }
+
 @media (max-width: 613px) {
   #cont_horario_nuevo {
     left: 89%;
@@ -1108,8 +1654,12 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   #menu_lateral #cont_fixed form .item {
     width: 100%;
     height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     padding-left: 0px;
   }
   #menu_lateral #cont_fixed a .item span,
@@ -1121,11 +1671,13 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     font-size: 1em;
   }
 }
+
 @media (max-width: 850px) {
   .horario .cont_horario_timbre {
     width: 80% !important;
   }
 }
+
 @media (max-width: 450px) {
   #cont_item {
     width: 180px !important;
@@ -1133,26 +1685,37 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   #cont_item .item {
     padding-left: 0px !important;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     gap: 3px !important;
     width: 100% !important;
-    justify-content: center !important;
-    align-items: center !important;
-    flex-direction: column;
+    -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+            justify-content: center !important;
+    -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+            align-items: center !important;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     text-align: center;
   }
   .horario .cont_horario_timbre {
     width: 100% !important;
     gap: 20px !important;
-    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
   }
   .horario .cont_horario_timbre h5 {
-    font-size: 0.7em !important;
+    font-size: .7em !important;
   }
   .horario .cont_horario_timbre .cont_icons {
-    font-size: 0.8em !important;
+    font-size: .8em !important;
   }
 }
+
 @media (max-width: 870px) {
   .forms_class {
     width: 350px !important;
@@ -1161,23 +1724,30 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     width: 400px !important;
   }
   .cont_horario .cont_text .cont_sub_text {
-    justify-content: space-between !important;
-    align-items: flex-start !important;
+    -webkit-box-pack: justify !important;
+        -ms-flex-pack: justify !important;
+            justify-content: space-between !important;
+    -webkit-box-align: start !important;
+        -ms-flex-align: start !important;
+            align-items: flex-start !important;
     gap: 10px !important;
     width: 200px !important;
   }
   .cont_horario .cont_text .cont_sub_text .nombre_horario {
-    font-size: 0.9em !important;
+    font-size: .9em !important;
     height: auto;
   }
   .cont_horario .cont_text .cont_sub_text .hora {
-    font-size: 0.9em !important;
+    font-size: .9em !important;
     height: auto;
   }
 }
+
 @media (max-width: 520px) {
   #text_main_horarios_fijos {
     text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     width: 70vw !important;
   }
@@ -1185,27 +1755,40 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     padding: 10px 0px !important;
     height: auto !important;
     min-height: 15vh;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     width: 60vw !important;
   }
   .cont_horario .cont_text {
     padding-left: 15px;
   }
   .cont_horario .cont_text .cont_sub_text {
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     width: 50vw !important;
   }
   .cont_horario .cont_butones {
     margin-top: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     width: 50vw;
-    justify-content: flex-start !important;
-    align-items: center;
+    -webkit-box-pack: start !important;
+        -ms-flex-pack: start !important;
+            justify-content: flex-start !important;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   #boton_agregar {
     width: 200px !important;
   }
 }
+
 @media (max-width: 400px) {
   .calendario-body {
     margin-top: 8%;
@@ -1214,6 +1797,7 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     width: 100% !important;
   }
 }
+
 @media (max-width: 450px) {
   .cont_header #cont_fixed_mes #cont_dias_flechas {
     gap: 0px !important;
@@ -1223,28 +1807,94 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     margin-left: 0px !important;
   }
   .cont_header #cont_fixed_mes #cont_dias {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column-reverse;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
   }
   .forms_class {
     width: 300px !important;
   }
 }
+
 @media (max-width: 450px) {
   #cont_dia_apagado {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: flex-start !important;
-    align-items: center !important;
+    -webkit-box-pack: start !important;
+        -ms-flex-pack: start !important;
+            justify-content: flex-start !important;
+    -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+            align-items: center !important;
     gap: 30px !important;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
   #cont_dia_apagado #enviar_dia_apagado {
     width: 80% !important;
   }
   #cont_dia_apagado .filtros_eventos {
     width: 80% !important;
-    flex-direction: column !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
   }
-}/*# sourceMappingURL=estilo.css.map */
+}
+
+@media (max-width: 825px) {
+  #cont_dia_apagado {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start !important;
+        -ms-flex-pack: start !important;
+            justify-content: flex-start !important;
+    -webkit-box-align: start !important;
+        -ms-flex-align: start !important;
+            align-items: flex-start !important;
+    gap: 30px !important;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  #cont_dia_apagado #enviar_dia_apagado {
+    width: 80% !important;
+  }
+  #cont_dia_apagado .filtros_eventos {
+    width: 80% !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
+  }
+}
+
+@media (max-height: 500px) {
+  #cont_fixed {
+    padding-top: 50px !important;
+  }
+  #cont_item {
+    gap: 25px !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  #cont_item .item {
+    width: 100% !important;
+  }
+}
+/*# sourceMappingURL=estilo.css.map */

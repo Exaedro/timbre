@@ -85,7 +85,7 @@ $complemento-color-dark: #242424;
     }
 
     .mes_hoy {
-        color: #25379b !important;
+        color: #4180ab !important;
     }
 
     h3 {
@@ -143,7 +143,6 @@ body {
         }
 
         #menu_lateral {
-
             height: 100%;
             width: 15vw;
             display: flex;
@@ -164,7 +163,7 @@ body {
                 display: flex;
                 gap: 10px;
                 flex-direction: column;
-                justify-content: space-around;
+                justify-content: center;
                 align-items: center;
 
                 #menu {
@@ -488,13 +487,12 @@ body {
 
                         h3 {
                             width: auto;
-
-                            transition: all .2 ease-in-out;
+                            transition: all .15s ease-in-out;
                         }
 
                         &:hover {
                             h3 {
-                                color: var() !important;
+                                color: $primary-color !important;
                             }
                         }
 
@@ -1360,14 +1358,13 @@ body {
     }
 
     #cont_item {
-        width: 180px !important;
-        gap: 20px !important;
+        width: 100% !important;
+        
         
         .item {
-
             padding-left: 0px !important;
             display: flex;
-            gap: 3px !important;
+          
             width: 100% !important;
             justify-content: center !important;
             align-items: center !important;
@@ -1615,6 +1612,44 @@ body {
         }
     }
 
+}
 
 
+@media (max-width: 825px) {
+
+    #cont_dia_apagado {
+        display: flex;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+        gap: 30px !important;
+        flex-direction: column;
+
+        #enviar_dia_apagado {
+            width: 80% !important;
+        }
+
+        .filtros_eventos {
+            width: 80% !important;
+            flex-direction: column !important;
+        }
+    }
+
+}
+
+
+
+@media (max-height: 500px) {
+
+    #cont_fixed {
+        padding-top: 50px !important;
+        
+    }
+    #cont_item {
+        gap: 25px !important;
+        width: auto !important;
+        height: auto !important;
+        .item {
+            width: 100% !important;
+        }
+    }
 }
