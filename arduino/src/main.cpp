@@ -122,8 +122,6 @@ void setup() {
   digitalWrite(pin_sd, LOW);
   inicializarSD();
   digitalWrite(pin_sd, HIGH);
-
-  Serial.println(Ethernet.localIP());
   
   /* //////////// TIMERS ////////// */
   
