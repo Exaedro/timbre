@@ -738,7 +738,7 @@ body {
                     padding: 30px 30px;
                     display: flex;
                     justify-content: flex-start;
-                    align-items: center;
+                    
                     gap: 30px;
                     width: 40vw;
                     background-color: #4180ab;
@@ -752,7 +752,7 @@ body {
                         justify-content: flex-start;
                         align-items: center;
                         gap: 40px;
-                        padding-left: 20px;
+                      
                         width: 250px;
                         height: 40px;
 
@@ -1459,7 +1459,7 @@ body {
             h5 {
                 font-size: .7em !important;
             }
-
+            
             .cont_icons {
 
                 font-size: .8em !important;
@@ -1556,6 +1556,7 @@ body {
 
         .div_mes {
             width: 100% !important;
+            padding: 4% !important;
         }
     }
 }
@@ -1609,6 +1610,7 @@ body {
         .filtros_eventos {
             width: 80% !important;
             flex-direction: column !important;
+            padding-right: 15px !important;
         }
     }
 
@@ -1621,7 +1623,7 @@ body {
         display: flex;
         justify-content: flex-start !important;
         align-items: flex-start !important;
-        gap: 30px !important;
+        gap: 30px !important;   
         flex-direction: column;
 
         #enviar_dia_apagado {
@@ -1629,8 +1631,8 @@ body {
         }
 
         .filtros_eventos {
-            width: 80% !important;
-            flex-direction: column !important;
+            width: 80% !important;  
+            text-align: start !important    ;
         }
     }
 
@@ -1642,6 +1644,7 @@ body {
 
     #cont_fixed {
         padding-top: 50px !important;
+        min-height: 100vh !important;
         
     }
     #cont_item {
@@ -1653,3 +1656,16 @@ body {
         }
     }
 }
+
+@media (max-width: 370px) {
+    .filtros_eventos {
+    min-width: 90% !important;
+    }
+    #enviar_dia_apagado{
+    min-width: 90% !important;     
+    }
+
+    .cont_dia_apagado {
+        min-width: 100% !important;
+    }
+}   

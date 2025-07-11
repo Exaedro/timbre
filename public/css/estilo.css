@@ -863,9 +863,6 @@ body main #cont_main #cont_dia_apagado .filtros_eventos {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   gap: 30px;
   width: 40vw;
   background-color: #4180ab;
@@ -887,7 +884,6 @@ body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp {
       -ms-flex-align: center;
           align-items: center;
   gap: 40px;
-  padding-left: 20px;
   width: 250px;
   height: 40px;
 }
@@ -1795,6 +1791,7 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   .calendario-body .div_mes {
     width: 100% !important;
+    padding: 4% !important;
   }
 }
 
@@ -1852,6 +1849,7 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
     -webkit-box-direction: normal !important;
         -ms-flex-direction: column !important;
             flex-direction: column !important;
+    padding-right: 15px !important;
   }
 }
 
@@ -1877,16 +1875,14 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   #cont_dia_apagado .filtros_eventos {
     width: 80% !important;
-    -webkit-box-orient: vertical !important;
-    -webkit-box-direction: normal !important;
-        -ms-flex-direction: column !important;
-            flex-direction: column !important;
+    text-align: start !important;
   }
 }
 
 @media (max-height: 500px) {
   #cont_fixed {
     padding-top: 50px !important;
+    min-height: 100vh !important;
   }
   #cont_item {
     gap: 25px !important;
@@ -1895,6 +1891,18 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   #cont_item .item {
     width: 100% !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .filtros_eventos {
+    min-width: 90% !important;
+  }
+  #enviar_dia_apagado {
+    min-width: 90% !important;
+  }
+  .cont_dia_apagado {
+    min-width: 100% !important;
   }
 }
 /*# sourceMappingURL=estilo.css.map */
