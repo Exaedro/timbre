@@ -574,7 +574,7 @@ body main #cont_main #cont_dia_apagado .filtros_eventos {
   display: flex;
   justify-content: flex-start;
   gap: 30px;
-  width: 40vw;
+  width: 30vw;
   background-color: #4180ab;
   border-radius: 20px;
 }
@@ -603,7 +603,7 @@ body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkb
   height: 20px;
 }
 body main #cont_main #cont_dia_apagado .filtros_eventos .cont_inp .custom-checkbox-label span {
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
   text-align: center;
 }
@@ -612,7 +612,7 @@ body main #cont_main #cont_dia_apagado form {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 40vw;
+  width: 30vw;
   padding: 30px 30px;
   background-color: #4180ab;
   border-radius: 20px;
@@ -626,7 +626,7 @@ body main #cont_main #cont_dia_apagado form input {
 }
 body main #cont_main #cont_dia_apagado form span {
   font-weight: 400;
-  font-size: 1.3em;
+  font-size: 1em;
 }
 body main #cont_main .desactivado_cont {
   min-height: 100%;
@@ -1018,6 +1018,15 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
 }
 @media (max-width: 1000px) {
+  #cont_query {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 30px;
+  }
+  #cont_query #cont_main_query {
+    width: auto !important;
+  }
   #cont_horario_nuevo {
     left: 90%;
   }
@@ -1035,12 +1044,12 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
 }
 @media (max-width: 600px) {
+  #panel_options {
+    font-size: 0.7em !important;
+  }
   .calendario-body .div_mes {
     width: 80% !important;
     font-size: 0.8em;
-    display: flex;
-    justify-content: center !important;
-    align-items: center !important;
   }
   .calendario-body .div_mes .header_dias {
     width: 80% !important;
@@ -1123,6 +1132,9 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
 }
 @media (max-width: 450px) {
+  #cont_horario_nuevo {
+    left: 85% !important;
+  }
   #cont_item {
     width: 180px !important;
     gap: 20px !important;
@@ -1139,8 +1151,10 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
   .horario .cont_horario_timbre {
     width: 100% !important;
+    margin-left: 0px !important;
     gap: 20px !important;
     transform: scale(0.8);
+    padding: 4px !important;
   }
   .horario .cont_horario_timbre h5 {
     font-size: 0.7em !important;
@@ -1263,6 +1277,25 @@ body main #cont_main #cont_horarios_fijos #boton_agregar:hover {
   }
 }
 @media (max-height: 500px) {
+  .filtros_eventos {
+    background-color: red !important;
+    min-width: 90% !important;
+  }
+  .filtros_eventos * {
+    font-size: 0.7em !important;
+  }
+  #enviar_dia_apagado {
+    min-width: 90% !important;
+  }
+  #enviar_dia_apagado * {
+    font-size: 0.7em !important;
+  }
+  .cont_dia_apagado {
+    min-width: 100% !important;
+  }
+  .cont_dia_apagado * {
+    font-size: 0.7em !important;
+  }
   #cont_fixed {
     padding-top: 50px !important;
     min-height: 100vh !important;

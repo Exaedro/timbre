@@ -738,21 +738,23 @@ body {
                     padding: 30px 30px;
                     display: flex;
                     justify-content: flex-start;
-                    
+
                     gap: 30px;
-                    width: 40vw;
+                    width: 30vw;
                     background-color: #4180ab;
                     border-radius: 20px;
-                    *{
+
+                    * {
                         color: white !important;
                     }
+
                     .cont_inp {
 
                         display: flex;
                         justify-content: flex-start;
                         align-items: center;
                         gap: 40px;
-                      
+
                         width: 250px;
                         height: 40px;
 
@@ -774,7 +776,7 @@ body {
                             }
 
                             span {
-                                font-size: 1.2em;
+                                font-size: 1em;
                                 font-weight: bold;
                                 text-align: center;
 
@@ -791,11 +793,15 @@ body {
                     display: flex;
                     justify-content: flex-start;
                     align-items: center;
-                    width: 40vw;
+                    width: 30vw;
                     padding: 30px 30px;
                     background-color: #4180ab;
                     border-radius: 20px;
-                    *{color: white !important;}
+
+                    * {
+                        color: white !important;
+                    }
+
                     input {
                         height: 20px;
                         width: 20px;
@@ -804,7 +810,7 @@ body {
 
                     span {
                         font-weight: 400;
-                        font-size: 1.3em;
+                        font-size: 1em;
                     }
                 }
             }
@@ -1291,6 +1297,19 @@ body {
 }
 
 @media (max-width: 1000px) {
+    #cont_query {
+
+        display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 30px;
+
+        #cont_main_query {
+
+            width: auto !important;
+
+        }
+    }
 
     #cont_horario_nuevo {
         left: 90%;
@@ -1315,15 +1334,17 @@ body {
 }
 
 @media (max-width: 600px) {
+    #panel_options {
+        font-size: .7em !important;
+    }
+
     .calendario-body {
-      
+
 
         .div_mes {
             width: 80% !important;
             font-size: .8em;
-            display: flex;
-            justify-content: center !important;
-            align-items: center !important;
+
             .header_dias {
                 width: 80% !important;
 
@@ -1361,12 +1382,12 @@ body {
 
     #cont_item {
         width: 100% !important;
-        
-        
+
+
         .item {
             padding-left: 0px !important;
             display: flex;
-          
+
             width: 100% !important;
             justify-content: center !important;
             align-items: center !important;
@@ -1422,7 +1443,7 @@ body {
 }
 
 @media (max-width: 850px) {
-    
+
     .horario {
         .cont_horario_timbre {
             width: 80% !important;
@@ -1435,10 +1456,14 @@ body {
 
 
 @media (max-width: 450px) {
-  
+    #cont_horario_nuevo {
+        left: 85% !important;
+    }
+
     #cont_item {
         width: 180px !important;
         gap: 20px !important;
+
         .item {
 
             padding-left: 0px !important;
@@ -1452,16 +1477,19 @@ body {
         }
 
     }
-    
+
     .horario {
         .cont_horario_timbre {
             width: 100% !important;
+            margin-left: 0px !important;
             gap: 20px !important;
             transform: scale(.8);
+            padding: 4px !important;
+
             h5 {
                 font-size: .7em !important;
             }
-            
+
             .cont_icons {
 
                 font-size: .8em !important;
@@ -1625,7 +1653,7 @@ body {
         display: flex;
         justify-content: flex-start !important;
         align-items: flex-start !important;
-        gap: 30px !important;   
+        gap: 30px !important;
         flex-direction: column;
 
         #enviar_dia_apagado {
@@ -1633,8 +1661,8 @@ body {
         }
 
         .filtros_eventos {
-            width: 80% !important;  
-            text-align: start !important    ;
+            width: 80% !important;
+            text-align: start !important;
         }
     }
 
@@ -1643,16 +1671,43 @@ body {
 
 
 @media (max-height: 500px) {
+    .filtros_eventos {
+        background-color: red !important;
+        min-width: 90% !important;
+        *{
+            font-size: .7em !important;
+        }
+    }
+
+    #enviar_dia_apagado {
+
+        min-width: 90% !important;
+        *{
+            font-size: .7em !important;
+        }
+    }
+
+    .cont_dia_apagado {
+        min-width: 100% !important;
+        *{
+            font-size: .7em !important;
+        }
+    }
+
+
+
 
     #cont_fixed {
         padding-top: 50px !important;
         min-height: 100vh !important;
-        
+
     }
+
     #cont_item {
         gap: 25px !important;
         width: auto !important;
         height: auto !important;
+
         .item {
             width: 100% !important;
         }
@@ -1661,13 +1716,18 @@ body {
 
 @media (max-width: 370px) {
     .filtros_eventos {
-    min-width: 90% !important;
+        min-width: 90% !important;
+      
     }
-    #enviar_dia_apagado{
-    min-width: 90% !important;     
+
+    #enviar_dia_apagado {
+
+        min-width: 90% !important;
+       
     }
 
     .cont_dia_apagado {
         min-width: 100% !important;
+
     }
-}   
+}
