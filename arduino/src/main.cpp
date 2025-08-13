@@ -1,5 +1,8 @@
 
 
+
+
+
 /* /////////////////////////////////// LIBRERIAS ////////////////////////////////////////////// */
 
 #include <Arduino.h>
@@ -14,11 +17,14 @@
 
 /* /////////////////////////////////// VARIABLES ////////////////////////////////////////////// */
 
-int led_verde = 7;
-int led_rojo = 5;
-int estado_led_rojo = 0;
-int led_amarillo = 3;
+int led_rojo = A1;
+int led_verde = A2;
+int led_azul = A3;
 
+int estado_led_amarillo = 0;
+int estado_led_rojo = 0;
+
+int pin_rele = 7;
 int pin_sd = 4;
 int pin_ethernet = 10;
 
@@ -26,6 +32,8 @@ int contador_backup = 0;
 int contador_backup_limite = 10; // 900 segundos (15 minutos)
 bool realizar_backup = false;
 int estado_backup = 0;
+bool datos_guardados = false;
+int contador_datos_guardados = 0;
 
 // Sincronizacion para el RTC
 int contador_sincronizacion = 0;
@@ -47,7 +55,7 @@ char dias_semana[7][12] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", 
 
 // API
 int puerto_api = 4000;
-char api_ip[] = "3.131.83.33";
+char api_ip[] = "18.191.196.128";
 String endpoints[] = {
     "/timbre/exportar/horarios",
     "/timbre/exportar/eventos",
@@ -75,7 +83,6 @@ void activarEthernet();
 
 void sincronizarRTCconNTP();
 void backup(String endpoint);
-void reconectar_api();
 bool es_hora(String linea);
 String extraer_nombre(String string);
 
@@ -89,18 +96,30 @@ String obtener_fecha(DateTime tiempo_ahora);
 
 /* /////////////////////////////////// CODIGO PRINCIPAL /////////////////////////////////// */
 
+// funcion para encender o apagar el LED
+void led(int r, int g, int b) {
+  analogWrite(led_rojo, r);
+  analogWrite(led_verde, g);
+  analogWrite(led_azul, b);
+}
+
 void setup()
 {
   Serial.begin(9600);
 
   // LEDS
-  pinMode(led_amarillo, OUTPUT);
-  digitalWrite(led_amarillo, LOW);
-  pinMode(led_verde, OUTPUT);
-  digitalWrite(led_verde, LOW);
   pinMode(led_rojo, OUTPUT);
-  digitalWrite(led_rojo, LOW);
+  pinMode(led_verde, OUTPUT);
+  pinMode(led_azul, OUTPUT);
 
+  analogWrite(led_rojo, 255);
+  analogWrite(led_verde, 255);
+  analogWrite(led_azul, 255);
+  
+  // RELE 
+  pinMode(pin_rele, OUTPUT);
+  digitalWrite(pin_rele, LOW);
+  
   // MODULOS EXTERNOS
   pinMode(53, OUTPUT);
   pinMode(pin_sd, OUTPUT);
@@ -166,10 +185,33 @@ ISR(TIMER1_COMPA_vect)
 
 ISR(TIMER3_COMPA_vect)
 {
+  if (datos_guardados && !api_error_led) {
+    contador_datos_guardados++;
+    estado_led_amarillo = !estado_led_amarillo;
+
+    if (estado_led_amarillo == true) {
+      led(0, 0, 255);
+    } else {
+      led(255, 255, 255);
+    }
+
+    if (contador_datos_guardados >= 10) {
+      datos_guardados = false;
+      contador_datos_guardados = 0;
+
+      led(255, 255, 255);
+    }
+  }
+
   if (api_error_led)
   {
     estado_led_rojo = !estado_led_rojo;
-    digitalWrite(led_rojo, estado_led_rojo);
+
+    if (estado_led_rojo == true) {
+      led(0, 255, 255);
+    } else {
+      led(255, 255, 255);
+    }
   }
 }
 
@@ -178,7 +220,6 @@ void loop()
   // Si el tibre esta desactivado, no hacemos nada (Sabados y Domingos)
   if (!timbre_activo)
   {
-    digitalWrite(led_amarillo, HIGH);
     return;
   }
 
@@ -212,11 +253,13 @@ void loop()
     timbre();
   }
 
+  // APAGADO DEL TIMBRE
   if (contador_timer >= contador_timer_limite)
   {
     contador_timer = 0;
     timbre_encendido = false;
-    digitalWrite(led_verde, LOW);
+    led(255, 255, 255);
+    digitalWrite(pin_rele, LOW);
   }
 
   if (contador_backup >= contador_backup_limite)
@@ -271,6 +314,7 @@ void loop()
     {
       Serial.println("-----------------");
       Serial.println("Backup terminado.");
+      datos_guardados = true;
 
       realizar_backup = false;
       estado_backup = 0;
@@ -372,7 +416,8 @@ void encender_timbre(int segundos)
 {
   timbre_encendido = true;
   contador_timer_limite = segundos;
-  digitalWrite(led_verde, HIGH);
+  led(255, 0, 255);
+  digitalWrite(pin_rele, HIGH);
 }
 
 void inicializarEthernet()
@@ -433,23 +478,6 @@ void inicializarRTC()
   }
 
   Serial.println("RTC inicializado.");
-}
-
-void reconectar_api()
-{
-
-  // api_intentos++;
-
-  // if(api_intentos >= api_intentos_limite) {
-  //   Serial.println("Se ha alcanzado el limite de intentos para conectar a la API.");
-  //   Serial.println("Volviendo a intentar dentro de 15 minutos.");
-  //   Serial.println("------------------------------------------");
-  //   api_intentos = 0;
-  //   api_led = true;
-  //   return;
-  // }
-
-  // Serial.println("Reconectando...");
 }
 
 String extraer_nombre(String string)
@@ -666,25 +694,3 @@ void sincronizarRTCconNTP()
     Serial.println("No se pudo obtener la hora por NTP.");
   }
 }
-
-// String formato_hora(String hora12) {
-//   // Se asume que la cadena tiene el formato "hh:mm:ssXX"
-//   // donde "XX" es "AM" o "PM"
-//   String horaStr = hora12.substring(0, 2);
-//   String minutos = hora12.substring(3, 5);
-//   String segundos = hora12.substring(6, 8);
-//   String ampm = hora12.substring(8);  // extrae "AM" o "PM"
-
-//   int hora = horaStr.toInt();
-
-//   if (ampm == "PM" && hora < 12) {
-//     hora += 12;
-//   } else if (ampm == "AM" && hora == 12) {
-//     hora = 0;
-//   }
-
-//   // Formatear la nueva hora a dos dígitos
-//   String nuevo_formato = (hora < 10 ? "0" : "") + String(hora) + ":" + minutos + ":" + segundos;
-//   return nuevo_formato;
-// }
-//
